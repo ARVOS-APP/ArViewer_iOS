@@ -1,0 +1,529 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D05FFC5516D819B00037EE18 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D05FFC5416D819B00037EE18 /* UIKit.framework */; };
+		D05FFC5716D819B00037EE18 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D05FFC5616D819B00037EE18 /* Foundation.framework */; };
+		D05FFC5916D819B00037EE18 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D05FFC5816D819B00037EE18 /* CoreGraphics.framework */; };
+		D05FFC5F16D819B00037EE18 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D05FFC5D16D819B00037EE18 /* InfoPlist.strings */; };
+		D05FFC6116D819B00037EE18 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D05FFC6016D819B00037EE18 /* main.m */; };
+		D05FFC6516D819B00037EE18 /* ARAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D05FFC6416D819B00037EE18 /* ARAppDelegate.m */; };
+		D05FFC6716D819B00037EE18 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D05FFC6616D819B00037EE18 /* Default.png */; };
+		D05FFC6916D819B00037EE18 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D05FFC6816D819B00037EE18 /* Default@2x.png */; };
+		D05FFC6B16D819B00037EE18 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D05FFC6A16D819B00037EE18 /* Default-568h@2x.png */; };
+		D05FFC6E16D819B00037EE18 /* ARFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D05FFC6D16D819B00037EE18 /* ARFirstViewController.m */; };
+		D05FFC7016D819B00037EE18 /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = D05FFC6F16D819B00037EE18 /* first.png */; };
+		D05FFC7216D819B00037EE18 /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D05FFC7116D819B00037EE18 /* first@2x.png */; };
+		D05FFC7516D819B00037EE18 /* ARSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D05FFC7416D819B00037EE18 /* ARSecondViewController.m */; };
+		D05FFC7716D819B00037EE18 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = D05FFC7616D819B00037EE18 /* second.png */; };
+		D05FFC7916D819B00037EE18 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D05FFC7816D819B00037EE18 /* second@2x.png */; };
+		D05FFC7C16D819B00037EE18 /* ARFirstViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = D05FFC7A16D819B00037EE18 /* ARFirstViewController_iPhone.xib */; };
+		D05FFC7F16D819B00037EE18 /* ARFirstViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = D05FFC7D16D819B00037EE18 /* ARFirstViewController_iPad.xib */; };
+		D05FFC8216D819B00037EE18 /* ARSecondViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = D05FFC8016D819B00037EE18 /* ARSecondViewController_iPhone.xib */; };
+		D05FFC8516D819B00037EE18 /* ARSecondViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = D05FFC8316D819B00037EE18 /* ARSecondViewController_iPad.xib */; };
+		D05FFC8D16D819B00037EE18 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D05FFC8C16D819B00037EE18 /* SenTestingKit.framework */; };
+		D05FFC8E16D819B00037EE18 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D05FFC5416D819B00037EE18 /* UIKit.framework */; };
+		D05FFC8F16D819B00037EE18 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D05FFC5616D819B00037EE18 /* Foundation.framework */; };
+		D05FFC9716D819B10037EE18 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D05FFC9516D819B10037EE18 /* InfoPlist.strings */; };
+		D05FFC9A16D819B10037EE18 /* ArViewer_iOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D05FFC9916D819B10037EE18 /* ArViewer_iOSTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D05FFC9016D819B00037EE18 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D05FFC4916D819B00037EE18 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D05FFC5016D819B00037EE18;
+			remoteInfo = "ArViewer-iOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D05FFC5116D819B00037EE18 /* ArViewer-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ArViewer-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D05FFC5416D819B00037EE18 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D05FFC5616D819B00037EE18 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D05FFC5816D819B00037EE18 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D05FFC5C16D819B00037EE18 /* ArViewer-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ArViewer-iOS-Info.plist"; sourceTree = "<group>"; };
+		D05FFC5E16D819B00037EE18 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D05FFC6016D819B00037EE18 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D05FFC6216D819B00037EE18 /* ArViewer-iOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ArViewer-iOS-Prefix.pch"; sourceTree = "<group>"; };
+		D05FFC6316D819B00037EE18 /* ARAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARAppDelegate.h; sourceTree = "<group>"; };
+		D05FFC6416D819B00037EE18 /* ARAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARAppDelegate.m; sourceTree = "<group>"; };
+		D05FFC6616D819B00037EE18 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		D05FFC6816D819B00037EE18 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		D05FFC6A16D819B00037EE18 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		D05FFC6C16D819B00037EE18 /* ARFirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARFirstViewController.h; sourceTree = "<group>"; };
+		D05FFC6D16D819B00037EE18 /* ARFirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARFirstViewController.m; sourceTree = "<group>"; };
+		D05FFC6F16D819B00037EE18 /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
+		D05FFC7116D819B00037EE18 /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
+		D05FFC7316D819B00037EE18 /* ARSecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARSecondViewController.h; sourceTree = "<group>"; };
+		D05FFC7416D819B00037EE18 /* ARSecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARSecondViewController.m; sourceTree = "<group>"; };
+		D05FFC7616D819B00037EE18 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
+		D05FFC7816D819B00037EE18 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
+		D05FFC7B16D819B00037EE18 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ARFirstViewController_iPhone.xib; sourceTree = "<group>"; };
+		D05FFC7E16D819B00037EE18 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ARFirstViewController_iPad.xib; sourceTree = "<group>"; };
+		D05FFC8116D819B00037EE18 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ARSecondViewController_iPhone.xib; sourceTree = "<group>"; };
+		D05FFC8416D819B00037EE18 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ARSecondViewController_iPad.xib; sourceTree = "<group>"; };
+		D05FFC8B16D819B00037EE18 /* ArViewer-iOSTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ArViewer-iOSTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D05FFC8C16D819B00037EE18 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		D05FFC9416D819B10037EE18 /* ArViewer-iOSTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ArViewer-iOSTests-Info.plist"; sourceTree = "<group>"; };
+		D05FFC9616D819B10037EE18 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D05FFC9816D819B10037EE18 /* ArViewer_iOSTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArViewer_iOSTests.h; sourceTree = "<group>"; };
+		D05FFC9916D819B10037EE18 /* ArViewer_iOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArViewer_iOSTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D05FFC4E16D819B00037EE18 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D05FFC5516D819B00037EE18 /* UIKit.framework in Frameworks */,
+				D05FFC5716D819B00037EE18 /* Foundation.framework in Frameworks */,
+				D05FFC5916D819B00037EE18 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D05FFC8716D819B00037EE18 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D05FFC8D16D819B00037EE18 /* SenTestingKit.framework in Frameworks */,
+				D05FFC8E16D819B00037EE18 /* UIKit.framework in Frameworks */,
+				D05FFC8F16D819B00037EE18 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D05FFC4816D819B00037EE18 = {
+			isa = PBXGroup;
+			children = (
+				D05FFC5A16D819B00037EE18 /* ArViewer-iOS */,
+				D05FFC9216D819B00037EE18 /* ArViewer-iOSTests */,
+				D05FFC5316D819B00037EE18 /* Frameworks */,
+				D05FFC5216D819B00037EE18 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D05FFC5216D819B00037EE18 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D05FFC5116D819B00037EE18 /* ArViewer-iOS.app */,
+				D05FFC8B16D819B00037EE18 /* ArViewer-iOSTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D05FFC5316D819B00037EE18 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D05FFC5416D819B00037EE18 /* UIKit.framework */,
+				D05FFC5616D819B00037EE18 /* Foundation.framework */,
+				D05FFC5816D819B00037EE18 /* CoreGraphics.framework */,
+				D05FFC8C16D819B00037EE18 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D05FFC5A16D819B00037EE18 /* ArViewer-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				D05FFC6316D819B00037EE18 /* ARAppDelegate.h */,
+				D05FFC6416D819B00037EE18 /* ARAppDelegate.m */,
+				D05FFC6C16D819B00037EE18 /* ARFirstViewController.h */,
+				D05FFC6D16D819B00037EE18 /* ARFirstViewController.m */,
+				D05FFC6F16D819B00037EE18 /* first.png */,
+				D05FFC7116D819B00037EE18 /* first@2x.png */,
+				D05FFC7316D819B00037EE18 /* ARSecondViewController.h */,
+				D05FFC7416D819B00037EE18 /* ARSecondViewController.m */,
+				D05FFC7616D819B00037EE18 /* second.png */,
+				D05FFC7816D819B00037EE18 /* second@2x.png */,
+				D05FFC7A16D819B00037EE18 /* ARFirstViewController_iPhone.xib */,
+				D05FFC7D16D819B00037EE18 /* ARFirstViewController_iPad.xib */,
+				D05FFC8016D819B00037EE18 /* ARSecondViewController_iPhone.xib */,
+				D05FFC8316D819B00037EE18 /* ARSecondViewController_iPad.xib */,
+				D05FFC5B16D819B00037EE18 /* Supporting Files */,
+			);
+			path = "ArViewer-iOS";
+			sourceTree = "<group>";
+		};
+		D05FFC5B16D819B00037EE18 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D05FFC5C16D819B00037EE18 /* ArViewer-iOS-Info.plist */,
+				D05FFC5D16D819B00037EE18 /* InfoPlist.strings */,
+				D05FFC6016D819B00037EE18 /* main.m */,
+				D05FFC6216D819B00037EE18 /* ArViewer-iOS-Prefix.pch */,
+				D05FFC6616D819B00037EE18 /* Default.png */,
+				D05FFC6816D819B00037EE18 /* Default@2x.png */,
+				D05FFC6A16D819B00037EE18 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D05FFC9216D819B00037EE18 /* ArViewer-iOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				D05FFC9816D819B10037EE18 /* ArViewer_iOSTests.h */,
+				D05FFC9916D819B10037EE18 /* ArViewer_iOSTests.m */,
+				D05FFC9316D819B10037EE18 /* Supporting Files */,
+			);
+			path = "ArViewer-iOSTests";
+			sourceTree = "<group>";
+		};
+		D05FFC9316D819B10037EE18 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D05FFC9416D819B10037EE18 /* ArViewer-iOSTests-Info.plist */,
+				D05FFC9516D819B10037EE18 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D05FFC5016D819B00037EE18 /* ArViewer-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D05FFC9D16D819B10037EE18 /* Build configuration list for PBXNativeTarget "ArViewer-iOS" */;
+			buildPhases = (
+				D05FFC4D16D819B00037EE18 /* Sources */,
+				D05FFC4E16D819B00037EE18 /* Frameworks */,
+				D05FFC4F16D819B00037EE18 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ArViewer-iOS";
+			productName = "ArViewer-iOS";
+			productReference = D05FFC5116D819B00037EE18 /* ArViewer-iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D05FFC8A16D819B00037EE18 /* ArViewer-iOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D05FFCA016D819B10037EE18 /* Build configuration list for PBXNativeTarget "ArViewer-iOSTests" */;
+			buildPhases = (
+				D05FFC8616D819B00037EE18 /* Sources */,
+				D05FFC8716D819B00037EE18 /* Frameworks */,
+				D05FFC8816D819B00037EE18 /* Resources */,
+				D05FFC8916D819B00037EE18 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D05FFC9116D819B00037EE18 /* PBXTargetDependency */,
+			);
+			name = "ArViewer-iOSTests";
+			productName = "ArViewer-iOSTests";
+			productReference = D05FFC8B16D819B00037EE18 /* ArViewer-iOSTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D05FFC4916D819B00037EE18 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = AR;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Peter Graf";
+			};
+			buildConfigurationList = D05FFC4C16D819B00037EE18 /* Build configuration list for PBXProject "ArViewer-iOS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D05FFC4816D819B00037EE18;
+			productRefGroup = D05FFC5216D819B00037EE18 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D05FFC5016D819B00037EE18 /* ArViewer-iOS */,
+				D05FFC8A16D819B00037EE18 /* ArViewer-iOSTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D05FFC4F16D819B00037EE18 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D05FFC5F16D819B00037EE18 /* InfoPlist.strings in Resources */,
+				D05FFC6716D819B00037EE18 /* Default.png in Resources */,
+				D05FFC6916D819B00037EE18 /* Default@2x.png in Resources */,
+				D05FFC6B16D819B00037EE18 /* Default-568h@2x.png in Resources */,
+				D05FFC7016D819B00037EE18 /* first.png in Resources */,
+				D05FFC7216D819B00037EE18 /* first@2x.png in Resources */,
+				D05FFC7716D819B00037EE18 /* second.png in Resources */,
+				D05FFC7916D819B00037EE18 /* second@2x.png in Resources */,
+				D05FFC7C16D819B00037EE18 /* ARFirstViewController_iPhone.xib in Resources */,
+				D05FFC7F16D819B00037EE18 /* ARFirstViewController_iPad.xib in Resources */,
+				D05FFC8216D819B00037EE18 /* ARSecondViewController_iPhone.xib in Resources */,
+				D05FFC8516D819B00037EE18 /* ARSecondViewController_iPad.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D05FFC8816D819B00037EE18 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D05FFC9716D819B10037EE18 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D05FFC8916D819B00037EE18 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D05FFC4D16D819B00037EE18 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D05FFC6116D819B00037EE18 /* main.m in Sources */,
+				D05FFC6516D819B00037EE18 /* ARAppDelegate.m in Sources */,
+				D05FFC6E16D819B00037EE18 /* ARFirstViewController.m in Sources */,
+				D05FFC7516D819B00037EE18 /* ARSecondViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D05FFC8616D819B00037EE18 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D05FFC9A16D819B10037EE18 /* ArViewer_iOSTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D05FFC9116D819B00037EE18 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D05FFC5016D819B00037EE18 /* ArViewer-iOS */;
+			targetProxy = D05FFC9016D819B00037EE18 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D05FFC5D16D819B00037EE18 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D05FFC5E16D819B00037EE18 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		D05FFC7A16D819B00037EE18 /* ARFirstViewController_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D05FFC7B16D819B00037EE18 /* en */,
+			);
+			name = ARFirstViewController_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		D05FFC7D16D819B00037EE18 /* ARFirstViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D05FFC7E16D819B00037EE18 /* en */,
+			);
+			name = ARFirstViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
+		D05FFC8016D819B00037EE18 /* ARSecondViewController_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D05FFC8116D819B00037EE18 /* en */,
+			);
+			name = ARSecondViewController_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		D05FFC8316D819B00037EE18 /* ARSecondViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D05FFC8416D819B00037EE18 /* en */,
+			);
+			name = ARSecondViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
+		D05FFC9516D819B10037EE18 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D05FFC9616D819B10037EE18 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D05FFC9B16D819B10037EE18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D05FFC9C16D819B10037EE18 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D05FFC9E16D819B10037EE18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ArViewer-iOS/ArViewer-iOS-Prefix.pch";
+				INFOPLIST_FILE = "ArViewer-iOS/ArViewer-iOS-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D05FFC9F16D819B10037EE18 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ArViewer-iOS/ArViewer-iOS-Prefix.pch";
+				INFOPLIST_FILE = "ArViewer-iOS/ArViewer-iOS-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		D05FFCA116D819B10037EE18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ArViewer-iOS.app/ArViewer-iOS";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ArViewer-iOS/ArViewer-iOS-Prefix.pch";
+				INFOPLIST_FILE = "ArViewer-iOSTests/ArViewer-iOSTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		D05FFCA216D819B10037EE18 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ArViewer-iOS.app/ArViewer-iOS";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ArViewer-iOS/ArViewer-iOS-Prefix.pch";
+				INFOPLIST_FILE = "ArViewer-iOSTests/ArViewer-iOSTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D05FFC4C16D819B00037EE18 /* Build configuration list for PBXProject "ArViewer-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D05FFC9B16D819B10037EE18 /* Debug */,
+				D05FFC9C16D819B10037EE18 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D05FFC9D16D819B10037EE18 /* Build configuration list for PBXNativeTarget "ArViewer-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D05FFC9E16D819B10037EE18 /* Debug */,
+				D05FFC9F16D819B10037EE18 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		D05FFCA016D819B10037EE18 /* Build configuration list for PBXNativeTarget "ArViewer-iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D05FFCA116D819B10037EE18 /* Debug */,
+				D05FFCA216D819B10037EE18 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D05FFC4916D819B00037EE18 /* Project object */;
+}
