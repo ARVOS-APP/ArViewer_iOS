@@ -24,8 +24,13 @@
  */
 
 #import "ArvosViewerViewController.h"
+#import "ArvosCameraController.h"
+#import "EAGLView.h"
 
 @interface ArvosViewerViewController ()
+{
+    EAGLView* mGlView;
+}
 
 @end
 
@@ -42,28 +47,39 @@
     return self;
 }
 
-- (void) goBack{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void) viewDidAppear:(BOOL)paramAnimated{
+- (void)viewDidAppear:(BOOL)paramAnimated {
     [super viewDidAppear:paramAnimated];
-    [self performSelector:@selector(goBack)
-               withObject:nil
-               afterDelay:5.0f];
 }
 
-- (void)viewDidLoad{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor blueColor];
     self.title = self.augmentName;
+    self.cameraController = [[ArvosCameraController alloc] init];
+    [self.cameraController addVideoInput];
+    [self.cameraController addVideoPreviewLayer];
+    [self.cameraController setPortrait];
+	[[self.view layer] addSublayer:[self.cameraController previewLayer]];
+    [[self.cameraController captureSession] startRunning];
+    
+    CGRect rect = self.view.bounds;
+    rect.size.width /= 2.f;
+    rect.size.height /= 2.f;
+    rect.origin.x = rect.size.width / 2.f;
+    rect.origin.y = rect.size.height / 2.f;
+    
+    mGlView = [[EAGLView alloc] initWithFrame:rect];
+    [self.view.layer addSublayer:mGlView.layer];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (BOOL)shouldAutorotate {
+    return YES;
 }
 
 @end

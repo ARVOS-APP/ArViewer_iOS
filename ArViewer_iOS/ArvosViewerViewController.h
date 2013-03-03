@@ -25,8 +25,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class ArvosCameraController;
+
 @interface ArvosViewerViewController : UIViewController
 
+@property (nonatomic, strong) ArvosCameraController* cameraController;
 @property(nonatomic, strong) NSString* augmentName;
 
 @end

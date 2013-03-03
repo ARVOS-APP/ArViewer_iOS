@@ -130,7 +130,7 @@
 }
 // End --- UITableViewDelegate --- methods
 
-- (void) viewDidAppear:(BOOL)paramAnimated{
+- (void) viewDidAppear:(BOOL)paramAnimated {
     [super viewDidAppear:paramAnimated];
 }
 
