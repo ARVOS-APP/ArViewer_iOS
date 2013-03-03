@@ -1,37 +1,54 @@
-//
-//  ARAppDelegate.m
-//  ArViewer-iOS
-//
-//  Created by Peter Graf on 22.02.13.
-//  Copyright (c) 2013 Peter Graf. All rights reserved.
-//
+/*
+ ArvosAppDelegate.m - ArViewer_iOS
+ 
+ Copyright (C) 2013, Peter Graf
+ 
+ This file is part of Arvos - AR Viewer Open Source for iOS.
+ Arvos is free software.
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+ For more information on the AR Viewer Open Source or Peter Graf,
+ please see: http://www.mission-base.com/.
+ */
 
-/**/
+#import "ArvosAppDelegate.h"
+#import "ArvosRootViewController.h"
 
-#import "ARAppDelegate.h"
+@implementation ArvosAppDelegate
 
-#import "ARFirstViewController.h"
-
-#import "ARSecondViewController.h"
-
-@implementation ARAppDelegate
+@synthesize window = _window;
+@synthesize navigationController;
+@synthesize rootViewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    UIViewController *viewController1, *viewController2;
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        viewController1 = [[ARFirstViewController alloc] initWithNibName:@"ARFirstViewController_iPhone" bundle:nil];
-        viewController2 = [[ARSecondViewController alloc] initWithNibName:@"ARSecondViewController_iPhone" bundle:nil];
-    } else {
-        viewController1 = [[ARFirstViewController alloc] initWithNibName:@"ARFirstViewController_iPad" bundle:nil];
-        viewController2 = [[ARSecondViewController alloc] initWithNibName:@"ARSecondViewController_iPad" bundle:nil];
-    }
-    self.tabBarController = [[UITabBarController alloc] init];
-    self.tabBarController.viewControllers = @[viewController1, viewController2];
-    self.window.rootViewController = self.tabBarController;
+
     [self.window makeKeyAndVisible];
+    
+    self.rootViewController = [[ArvosRootViewController alloc]
+                               initWithNibName:nil
+                               bundle:NULL];
+    
+    self.navigationController =
+    [[UINavigationController alloc]
+     initWithRootViewController:self.rootViewController];
+    
+    [self.window addSubview:self.navigationController.view];
+    
     return YES;
 }
 
@@ -61,21 +78,5 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
-/*
-// Optional UITabBarControllerDelegate method.
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
-{
-}
-*/
-
-/*
-// Optional UITabBarControllerDelegate method.
-- (void)tabBarController:(UITabBarController *)tabBarController didEndCustomizingViewControllers:(NSArray *)viewControllers changed:(BOOL)changed
-{
-}
-*/
-
-/* change */
 
 @end
