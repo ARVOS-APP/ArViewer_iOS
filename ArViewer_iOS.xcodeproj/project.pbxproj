@@ -29,6 +29,7 @@
 		D0251A4216E3CE8300800246 /* reflect.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D0251A3A16E3CE5600800246 /* reflect.fsh */; };
 		D0251A4316E3CE8300800246 /* character.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D0251A3B16E3CE5600800246 /* character.vsh */; };
 		D0251A4416E3CE8300800246 /* character.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D0251A3C16E3CE5600800246 /* character.fsh */; };
+		D0424C6416E40E8A005A7815 /* ArvosAugment.m in Sources */ = {isa = PBXBuildFile; fileRef = D0424C6316E40E8A005A7815 /* ArvosAugment.m */; };
 		D0F50B0116E362BB00B0E66A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F50B0016E362BB00B0E66A /* UIKit.framework */; };
 		D0F50B0316E362BB00B0E66A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F50B0216E362BB00B0E66A /* Foundation.framework */; };
 		D0F50B0516E362BB00B0E66A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F50B0416E362BB00B0E66A /* CoreGraphics.framework */; };
@@ -72,6 +73,8 @@
 		D0251A3A16E3CE5600800246 /* reflect.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = reflect.fsh; sourceTree = "<group>"; };
 		D0251A3B16E3CE5600800246 /* character.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = character.vsh; sourceTree = "<group>"; };
 		D0251A3C16E3CE5600800246 /* character.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = character.fsh; sourceTree = "<group>"; };
+		D0424C6216E40E8A005A7815 /* ArvosAugment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArvosAugment.h; path = Viewer/ArvosAugment.h; sourceTree = "<group>"; };
+		D0424C6316E40E8A005A7815 /* ArvosAugment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArvosAugment.m; path = Viewer/ArvosAugment.m; sourceTree = "<group>"; };
 		D0F50AFD16E362BB00B0E66A /* ArViewer_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArViewer_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0F50B0016E362BB00B0E66A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D0F50B0216E362BB00B0E66A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -122,6 +125,15 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		D0424C5E16E40D25005A7815 /* Viewer */ = {
+			isa = PBXGroup;
+			children = (
+				D0424C6216E40E8A005A7815 /* ArvosAugment.h */,
+				D0424C6316E40E8A005A7815 /* ArvosAugment.m */,
+			);
+			name = Viewer;
+			sourceTree = "<group>";
+		};
 		D0F50AF416E362BB00B0E66A = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +167,7 @@
 		D0F50B0616E362BB00B0E66A /* ArViewer_iOS */ = {
 			isa = PBXGroup;
 			children = (
+				D0424C5E16E40D25005A7815 /* Viewer */,
 				D0251A3416E3CDA700800246 /* Resources */,
 				D0F50B0F16E362BB00B0E66A /* ArvosAppDelegate.h */,
 				D0F50B1016E362BB00B0E66A /* ArvosAppDelegate.m */,
@@ -291,6 +304,7 @@
 				D0251A3E16E3CE5600800246 /* reflect.fsh in Sources */,
 				D0251A3F16E3CE5600800246 /* character.vsh in Sources */,
 				D0251A4016E3CE5600800246 /* character.fsh in Sources */,
+				D0424C6416E40E8A005A7815 /* ArvosAugment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
