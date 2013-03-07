@@ -24,9 +24,13 @@
   */
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface ArvosRootViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface ArvosRootViewController : UIViewController <UITableViewDelegate,
+                                                       UITableViewDataSource,
+                                                       CLLocationManagerDelegate>
 
 @property(nonatomic, strong) UITableView* augmentsTableView;
+@property (nonatomic, strong) CLLocationManager *myLocationManager;
 
 @end

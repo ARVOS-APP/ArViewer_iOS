@@ -1,5 +1,5 @@
 /*
- ArvosAppDelegate.h - ArViewer_iOS
+ Arvos.m - ArViewer_iOS
  
  Copyright (C) 2013, Peter Graf
  
@@ -23,15 +23,17 @@
  please see: http://www.mission-base.com/.
  */
 
-#import <UIKit/UIKit.h>
+#import "Arvos.h"
 
-@class Arvos;
-@class ArvosRootViewController;
+@implementation Arvos
 
-@interface ArvosAppDelegate : UIResponder <UIApplicationDelegate>
-
-@property (strong, nonatomic) UIWindow *window;
-@property (nonatomic, strong) UINavigationController *navigationController;
-@property (nonatomic, strong) ArvosRootViewController *rootViewController;
++ (id) getInstance{
+    static Arvos *SharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        SharedInstance = [Arvos new];
+    });
+    return SharedInstance;
+}
 
 @end

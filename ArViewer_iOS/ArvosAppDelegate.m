@@ -39,15 +39,13 @@
 
     [self.window makeKeyAndVisible];
     
-    self.rootViewController = [[ArvosRootViewController alloc]
-                               initWithNibName:nil
-                               bundle:NULL];
+    self.rootViewController = [[ArvosRootViewController alloc] initWithNibName:nil bundle:NULL];
     
-    self.navigationController =
-    [[UINavigationController alloc]
-     initWithRootViewController:self.rootViewController];
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.rootViewController];
     
-    [self.window addSubview:self.navigationController.view];
+    // [self.window addSubview:self.navigationController.view]; caused a warning
+    
+    [self.window setRootViewController:self.navigationController];
     
     return YES;
 }

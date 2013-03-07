@@ -30,6 +30,8 @@
 		D0251A4316E3CE8300800246 /* character.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D0251A3B16E3CE5600800246 /* character.vsh */; };
 		D0251A4416E3CE8300800246 /* character.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D0251A3C16E3CE5600800246 /* character.fsh */; };
 		D0424C6416E40E8A005A7815 /* ArvosAugment.m in Sources */ = {isa = PBXBuildFile; fileRef = D0424C6316E40E8A005A7815 /* ArvosAugment.m */; };
+		D051C7AD16E91D6F0006B8AF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D051C7AC16E91D6F0006B8AF /* CoreLocation.framework */; };
+		D051C7B016E932B10006B8AF /* Arvos.m in Sources */ = {isa = PBXBuildFile; fileRef = D051C7AF16E932B10006B8AF /* Arvos.m */; };
 		D0F50B0116E362BB00B0E66A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F50B0016E362BB00B0E66A /* UIKit.framework */; };
 		D0F50B0316E362BB00B0E66A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F50B0216E362BB00B0E66A /* Foundation.framework */; };
 		D0F50B0516E362BB00B0E66A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F50B0416E362BB00B0E66A /* CoreGraphics.framework */; };
@@ -75,6 +77,9 @@
 		D0251A3C16E3CE5600800246 /* character.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = character.fsh; sourceTree = "<group>"; };
 		D0424C6216E40E8A005A7815 /* ArvosAugment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArvosAugment.h; path = Viewer/ArvosAugment.h; sourceTree = "<group>"; };
 		D0424C6316E40E8A005A7815 /* ArvosAugment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArvosAugment.m; path = Viewer/ArvosAugment.m; sourceTree = "<group>"; };
+		D051C7AC16E91D6F0006B8AF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		D051C7AE16E932B10006B8AF /* Arvos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Arvos.h; sourceTree = "<group>"; };
+		D051C7AF16E932B10006B8AF /* Arvos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Arvos.m; sourceTree = "<group>"; };
 		D0F50AFD16E362BB00B0E66A /* ArViewer_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArViewer_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0F50B0016E362BB00B0E66A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D0F50B0216E362BB00B0E66A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -100,6 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D051C7AD16E91D6F0006B8AF /* CoreLocation.framework in Frameworks */,
 				D0251A3316E3C61400800246 /* QuartzCore.framework in Frameworks */,
 				D0251A3116E3C5D400800246 /* OpenGLES.framework in Frameworks */,
 				D0251A1616E3C24800800246 /* AVFoundation.framework in Frameworks */,
@@ -137,6 +143,7 @@
 		D0F50AF416E362BB00B0E66A = {
 			isa = PBXGroup;
 			children = (
+				D051C7AC16E91D6F0006B8AF /* CoreLocation.framework */,
 				D0251A3216E3C61400800246 /* QuartzCore.framework */,
 				D0251A3016E3C5D400800246 /* OpenGLES.framework */,
 				D0251A1516E3C24800800246 /* AVFoundation.framework */,
@@ -195,6 +202,8 @@
 				D0251A2816E3C59E00800246 /* imageUtil.m */,
 				D0251A2916E3C59E00800246 /* imageUtil.h */,
 				D0251A2A16E3C59E00800246 /* glUtil.h */,
+				D051C7AE16E932B10006B8AF /* Arvos.h */,
+				D051C7AF16E932B10006B8AF /* Arvos.m */,
 			);
 			path = ArViewer_iOS;
 			sourceTree = "<group>";
@@ -305,6 +314,7 @@
 				D0251A3F16E3CE5600800246 /* character.vsh in Sources */,
 				D0251A4016E3CE5600800246 /* character.fsh in Sources */,
 				D0424C6416E40E8A005A7815 /* ArvosAugment.m in Sources */,
+				D051C7B016E932B10006B8AF /* Arvos.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

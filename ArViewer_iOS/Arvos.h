@@ -1,5 +1,5 @@
 /*
- ArvosAppDelegate.h - ArViewer_iOS
+ Arvos.h - ArViewer_iOS
  
  Copyright (C) 2013, Peter Graf
  
@@ -23,15 +23,15 @@
  please see: http://www.mission-base.com/.
  */
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
-@class Arvos;
-@class ArvosRootViewController;
+@interface Arvos : NSObject
 
-@interface ArvosAppDelegate : UIResponder <UIApplicationDelegate>
+@property(nonatomic) NSInteger mIsAuthor;
+@property(nonatomic) CLLocationDegrees mLongitude;
+@property(nonatomic) CLLocationDegrees mLatitude;
 
-@property (strong, nonatomic) UIWindow *window;
-@property (nonatomic, strong) UINavigationController *navigationController;
-@property (nonatomic, strong) ArvosRootViewController *rootViewController;
++ (Arvos*)getInstance;
 
 @end

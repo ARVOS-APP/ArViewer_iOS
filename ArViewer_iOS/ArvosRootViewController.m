@@ -23,16 +23,26 @@
  please see: http://www.mission-base.com/.
  */
 
+#import "Arvos.h"
 #import "ArvosRootViewController.h"
 #import "ArvosViewerViewController.h"
+
+#define ERROR_OK 0
+#define ERROR_NO_LOCATION_SERVICES 1
 
 @interface ArvosRootViewController ()
 
 @end
 
-@implementation ArvosRootViewController
+@implementation ArvosRootViewController{
+    Arvos* mInstance;
+    int errorNumber;
+    int firstLocationReceived;
+}
 
 @synthesize augmentsTableView;
+@synthesize myLocationManager;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -59,11 +69,19 @@
 
 - (void) performRefresh:(id)paramSender{
     NSLog(@"Refresh called.");
+    
+    if (errorNumber == ERROR_NO_LOCATION_SERVICES)
+    {
+        errorNumber = ERROR_OK;
+        
+        [self onLocationServiceNeedsStart];
+        return;
+    }
 }
 
 // Start --- UITableViewDataSource --- methods
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView{
     
     NSInteger result = 0;
     if ([tableView isEqual:self.augmentsTableView]){
@@ -83,7 +101,7 @@
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView
-              cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+          cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     UITableViewCell *result = nil;
     
@@ -130,6 +148,77 @@
 }
 // End --- UITableViewDelegate --- methods
 
+// Start --- CLLocationManagerDelegate --- methods
+
+- (void)locationManager:(CLLocationManager *)manager
+    didUpdateToLocation:(CLLocation *)newLocation
+           fromLocation:(CLLocation *)oldLocation{
+    
+    /* We received the new location */
+    
+    NSLog(@"Latitude = %f", newLocation.coordinate.latitude);
+    NSLog(@"Longitude = %f", newLocation.coordinate.longitude);
+    
+    if( !firstLocationReceived )
+    {
+        firstLocationReceived = 1;
+        
+        // Create the table view for the augments list
+        //
+        self.augmentsTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        self.augmentsTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        self.augmentsTableView.dataSource = self;
+        self.augmentsTableView.delegate = self;
+        
+        [self.view addSubview:self.augmentsTableView];
+    }
+    mInstance.mLatitude = newLocation.coordinate.latitude;
+    mInstance.mLongitude = newLocation.coordinate.longitude;
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+       didFailWithError:(NSError *)error{
+    
+    [self onLocationServiceDisabled];
+}
+
+// End --- CLLocationManagerDelegate --- methods
+
+- (void) onLocationServiceDisabled{
+    
+    errorNumber = ERROR_NO_LOCATION_SERVICES;
+    
+    NSString *message = @"Please enable location services under 'Settings > Privacy > Location Services' and try again.";
+    UIAlertView *alertView = [[UIAlertView alloc]
+                              initWithTitle:@"Location services are disabled!"
+                              message:message
+                              delegate:nil
+                              cancelButtonTitle:[self okButtonTitle]
+                              otherButtonTitles: nil];
+    [alertView show];
+}
+
+- (void) onLocationServiceNeedsStart{
+    
+    if ([CLLocationManager locationServicesEnabled]){
+        self.myLocationManager = [[CLLocationManager alloc] init];
+        self.myLocationManager.delegate = self;
+        
+        self.myLocationManager.purpose =
+        @"To provide functionality based on user's current location.";
+        
+        [self.myLocationManager startUpdatingLocation];
+        
+    } else {
+        
+        [self onLocationServiceDisabled];
+    }
+}
+
+- (NSString *) okButtonTitle{
+    return @"OK";
+}
+
 - (void) viewDidAppear:(BOOL)paramAnimated {
     [super viewDidAppear:paramAnimated];
 }
@@ -137,8 +226,24 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
+    firstLocationReceived = 0;
+    mInstance = [Arvos getInstance];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"Augments";
+    
+    if ([CLLocationManager locationServicesEnabled]){
+        self.myLocationManager = [[CLLocationManager alloc] init];
+        self.myLocationManager.delegate = self;
+        
+        self.myLocationManager.purpose = @"To provide functionality based on user's current location.";
+        
+        [self.myLocationManager startUpdatingLocation];
+        
+    } else {
+        
+        [self onLocationServiceDisabled];
+    }
     
     // Create an Image View to be used as left bar button
     //
@@ -158,15 +263,12 @@
                                                                                action:@selector(performEdit:)];
     
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:editButton, refreshButton, nil];
-    
-    // Create the table view for the augments list
-    //
-    self.augmentsTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    self.augmentsTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    self.augmentsTableView.dataSource = self;
-    self.augmentsTableView.delegate = self;
-    
-    [self.view addSubview:self.augmentsTableView];
+}
+
+- (void) viewDidUnload{
+    [super viewDidUnload];
+    [self.myLocationManager stopUpdatingLocation];
+    self.myLocationManager = nil;
 }
 
 - (void)didReceiveMemoryWarning
