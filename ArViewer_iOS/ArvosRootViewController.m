@@ -24,16 +24,19 @@
  */
 
 #import "Arvos.h"
+#import "ArvosAugment.h"
 #import "ArvosRootViewController.h"
 #import "ArvosViewerViewController.h"
 
 #define ERROR_OK                   0
 #define ERROR_NO_LOCATION_SERVICES 1
 
+static const CLLocationDistance _reloadDistanceThreshold = 10.;
+
 @interface ArvosRootViewController () {
 	Arvos* mInstance;
+	NSMutableArray*	mAugments;
 	int errorNumber;
-	int firstLocationReceived;
 }
 
 @end
@@ -42,7 +45,7 @@
 
 - (void)onLocationServiceDisabled;
 - (void)onLocationServiceNeedsStart;
-
+- (void)loadAugmentsForLocation:(CLLocation*)location;
 @end
 
 @implementation ArvosRootViewController
@@ -52,8 +55,8 @@
 - (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil {
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 	if (self) {
-		firstLocationReceived = 0;
 		mInstance = [Arvos sharedInstance];
+		mAugments = [NSMutableArray array];
 	}
 	return self;
 }
@@ -81,6 +84,8 @@
 
 		[self onLocationServiceNeedsStart];
 		return;
+	} else {
+		[self loadAugmentsForLocation:mInstance.location];
 	}
 }
 
@@ -100,7 +105,7 @@
 	NSInteger result = 0;
 
 	if ([tableView isEqual:self.augmentsTableView]) {
-		result = 29;
+		result = mAugments.count;
 	}
 	return result;
 }
@@ -119,11 +124,9 @@
 					  initWithStyle:UITableViewCellStyleSubtitle
 					  reuseIdentifier:TableViewCellIdentifier];
 		}
-
-		result.textLabel.text = [NSString stringWithFormat:@"Section %ld, Cell %ld",
-								 (long)indexPath.section,
-								 (long)indexPath.row];
-		result.detailTextLabel.text = @"Subtitle";
+		ArvosAugment* augment = mAugments[indexPath.row];
+		result.textLabel.text = augment.name;
+		result.detailTextLabel.text = augment.description;
 		result.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
 	}
 	return result;
@@ -156,11 +159,12 @@
 	NBLog(@"Latitude = %f", newLocation.coordinate.latitude);
 	NBLog(@"Longitude = %f", newLocation.coordinate.longitude);
 
-	if (!firstLocationReceived) {
-		firstLocationReceived = 1;
+	CLLocationDistance delta = fabs([newLocation distanceFromLocation:oldLocation]);
+	if (delta > _reloadDistanceThreshold || nil == oldLocation) {
+		[self loadAugmentsForLocation:newLocation];
 	}
-	mInstance.mLatitude = newLocation.coordinate.latitude;
-	mInstance.mLongitude = newLocation.coordinate.longitude;
+
+	mInstance.location = newLocation;
 }
 
 - (void)locationManager:(CLLocationManager*)manager
@@ -251,6 +255,22 @@
 	} else {
 		[self onLocationServiceDisabled];
 	}
+}
+
+- (void)loadAugmentsForLocation:(CLLocation*)location {
+	// Create some example augments
+
+	NSAssert(location != nil, @"location must not be nil");
+	CLLocationCoordinate2D myCoord = location.coordinate;
+
+	for (int i=0; i<10; ++i) {
+		ArvosAugment* newAugment = [ArvosAugment new];
+		newAugment.name = [NSString stringWithFormat:@"Augment %i", i];
+		newAugment.description = [NSString stringWithFormat:@"Description for %i", i];
+		newAugment.coordinate = myCoord;
+		[mAugments addObject:newAugment];
+	}
+	[self.augmentsTableView reloadData];
 }
 
 @end
