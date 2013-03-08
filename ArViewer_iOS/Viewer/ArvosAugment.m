@@ -25,6 +25,63 @@
 
 #import "ArvosAugment.h"
 
+static NSString* _keyName	= @"name";
+static NSString* _keyUrl	= @"url";
+static NSString* _keyAuthor	= @"author";
+static NSString* _keyDesc	= @"description";
+static NSString* _keyLon	= @"long";
+static NSString* _keyLat	= @"lat";
+static NSString*_keyDevKey	= @"devKey";
+
 @implementation ArvosAugment
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	self = [super init];
+	if (self) {
+		self.name	= [aDecoder decodeObjectForKey:_keyName];
+		self.url	= [aDecoder decodeObjectForKey:_keyUrl];
+		self.author	= [aDecoder decodeObjectForKey:_keyAuthor];
+		self.description = [aDecoder decodeObjectForKey:_keyDesc];
+		self.developerKey = [aDecoder decodeObjectForKey:_keyDevKey];
+
+		CLLocationCoordinate2D c = {
+			.longitude = [aDecoder decodeDoubleForKey:_keyLon],
+			.latitude = [aDecoder decodeDoubleForKey:_keyLat]
+		};
+		self.coordinate = c;
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+	[aCoder encodeObject:self.name forKey:_keyName];
+	[aCoder encodeObject:self.url forKey:_keyUrl];
+	[aCoder encodeObject:self.author forKey:_keyAuthor];
+	[aCoder encodeObject:self.description forKey:_keyDesc];
+	[aCoder encodeObject:self.developerKey forKey:_keyDevKey];
+	[aCoder encodeDouble:self.longitude forKey:_keyLon];
+	[aCoder encodeDouble:self.latitude forKey:_keyLat];
+}
+
+
+- (CLLocationDegrees)longitude {
+	return self.coordinate.longitude;
+}
+
+- (void)setLongitude:(CLLocationDegrees)longitude {
+	CLLocationCoordinate2D c = self.coordinate;
+	c.longitude = longitude;
+	self.coordinate = c;
+}
+
+- (CLLocationDegrees)latitude {
+	return self.coordinate.latitude;
+}
+
+- (void)setLatitude:(CLLocationDegrees)latitude {
+	CLLocationCoordinate2D c = self.coordinate;
+	c.latitude = latitude;
+	self.coordinate = c;
+}
 
 @end
