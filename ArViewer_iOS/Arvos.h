@@ -32,6 +32,6 @@
 @property(nonatomic) CLLocationDegrees mLongitude;
 @property(nonatomic) CLLocationDegrees mLatitude;
 
-+ (Arvos*)getInstance;
++ (Arvos*)sharedInstance;
 
 @end

@@ -27,13 +27,30 @@
 
 @implementation Arvos
 
-+ (id) getInstance{
-    static Arvos *SharedInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        SharedInstance = [Arvos new];
-    });
-    return SharedInstance;
+static Arvos* _sharedInstance = nil;
+
++ (Arvos*)sharedInstance {
+    if (nil == _sharedInstance) {
+        _sharedInstance = [[super allocWithZone:NULL] init];
+    }
+	return _sharedInstance;
 }
+
++ (id)allocWithZone:(NSZone *)zone {
+    return [self sharedInstance];
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    return self;
+}
+
+- (id)init {
+	if (_sharedInstance) {
+		return _sharedInstance;
+	}
+	_sharedInstance = self = [super init];
+	return self;
+}
+
 
 @end

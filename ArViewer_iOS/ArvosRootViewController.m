@@ -54,7 +54,7 @@
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 	if (self) {
 		firstLocationReceived = 0;
-		mInstance = [Arvos getInstance];
+		mInstance = [Arvos sharedInstance];
 	}
 	return self;
 }
