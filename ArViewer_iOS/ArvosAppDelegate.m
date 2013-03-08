@@ -39,7 +39,7 @@
 
     [self.window makeKeyAndVisible];
     
-    self.rootViewController = [[ArvosRootViewController alloc] initWithNibName:nil bundle:NULL];
+    self.rootViewController = [[ArvosRootViewController alloc] initWithNibName:@"ArvosRootViewController-iPhone" bundle:nil];
     
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.rootViewController];
     

@@ -46,7 +46,6 @@
 @end
 
 @implementation ArvosRootViewController
-@synthesize augmentsTableView;
 @synthesize myLocationManager;
 
 
@@ -111,19 +110,20 @@
 	UITableViewCell* result = nil;
 
 	if ([tableView isEqual:self.augmentsTableView]) {
-		static NSString* TableViewCellIdentifier = @"MyCells";
+		static NSString* TableViewCellIdentifier = @"AugmentCell";
 
 		result = [tableView dequeueReusableCellWithIdentifier:TableViewCellIdentifier];
 
 		if (result == nil) {
 			result = [[UITableViewCell alloc]
-					  initWithStyle:UITableViewCellStyleDefault
+					  initWithStyle:UITableViewCellStyleSubtitle
 					  reuseIdentifier:TableViewCellIdentifier];
 		}
 
 		result.textLabel.text = [NSString stringWithFormat:@"Section %ld, Cell %ld",
 								 (long)indexPath.section,
 								 (long)indexPath.row];
+		result.detailTextLabel.text = @"Subtitle";
 		result.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
 	}
 	return result;
@@ -133,7 +133,6 @@
 
 - (void)                           tableView:(UITableView*)tableView
 	accessoryButtonTappedForRowWithIndexPath:(NSIndexPath*)indexPath {
-	/* Do something when the accessory button is tapped */
 	NBLog(@"Accessory button is tapped for cell at index path = %@", indexPath);
 
 	NSString* augmentName = [NSString stringWithFormat:@"Section %ld, Cell %ld",
@@ -159,15 +158,6 @@
 
 	if (!firstLocationReceived) {
 		firstLocationReceived = 1;
-
-		// Create the table view for the augments list
-		//
-		self.augmentsTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-		self.augmentsTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-		self.augmentsTableView.dataSource = self;
-		self.augmentsTableView.delegate = self;
-
-		[self.view addSubview:self.augmentsTableView];
 	}
 	mInstance.mLatitude = newLocation.coordinate.latitude;
 	mInstance.mLongitude = newLocation.coordinate.longitude;
@@ -189,9 +179,9 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-
-	self.view.backgroundColor = [UIColor whiteColor];
 	self.title = @"Augments";
+	self.augmentsTableView.dataSource = self;
+	self.augmentsTableView.delegate = self;
 
 	if ([CLLocationManager locationServicesEnabled]) {
 		self.myLocationManager = [[CLLocationManager alloc] init];
@@ -210,7 +200,7 @@
 		[[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 100.0f, 40.0f)];
 	imageView.contentMode = UIViewContentModeScaleAspectFit;
 	[imageView setImage:[UIImage imageNamed:@"arvos_logo_rgb.png"]];
-	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageView];
+	//self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageView];
 
 	// Create and set the two right bar buttons
 	//
@@ -256,9 +246,7 @@
 	if ([CLLocationManager locationServicesEnabled]) {
 		self.myLocationManager = [[CLLocationManager alloc] init];
 		self.myLocationManager.delegate = self;
-
 		self.myLocationManager.purpose = @"To provide functionality based on user's current location.";
-
 		[self.myLocationManager startUpdatingLocation];
 	} else {
 		[self onLocationServiceDisabled];
