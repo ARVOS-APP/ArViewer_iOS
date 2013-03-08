@@ -29,9 +29,8 @@
 @interface Arvos : NSObject
 
 @property(nonatomic) NSInteger mIsAuthor;
-@property(nonatomic) CLLocationDegrees mLongitude;
-@property(nonatomic) CLLocationDegrees mLatitude;
+@property CLLocation* location;
 
-+ (Arvos*)getInstance;
++ (Arvos*)sharedInstance;
 
 @end

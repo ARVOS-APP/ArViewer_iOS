@@ -59,7 +59,7 @@
 {														\
 	GLenum err = glGetError();							\
 	while (err != GL_NO_ERROR) {						\
-		NSLog(@"GLError %s set in File:%s Line:%d\n",	\
+		NBLog(@"GLError %s set in File:%s Line:%d\n",	\
 				GetGLErrorString(err),					\
 				__FILE__,								\
 				__LINE__);								\
@@ -668,7 +668,7 @@ static GLsizei GetGLTypeSize(GLenum type)
 	
 	if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
-		NSLog(@"failed to make complete framebuffer object %x", glCheckFramebufferStatus(GL_FRAMEBUFFER));
+		NBLog(@"failed to make complete framebuffer object %x", glCheckFramebufferStatus(GL_FRAMEBUFFER));
 		[self destroyFBO:fboName];
 		return 0;
 	}
@@ -748,14 +748,14 @@ static GLsizei GetGLTypeSize(GLenum type)
 	{
 		GLchar *log = (GLchar*) malloc(logLength);
 		glGetShaderInfoLog(vertexShader, logLength, &logLength, log);
-		NSLog(@"Vtx Shader compile log:%s\n", log);
+		NBLog(@"Vtx Shader compile log:%s\n", log);
 		free(log);
 	}
 	
 	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &status);
 	if (status == 0)
 	{
-		NSLog(@"Failed to compile vtx shader:\n%s\n", sourceString);
+		NBLog(@"Failed to compile vtx shader:\n%s\n", sourceString);
 		return 0;
 	}
 	
@@ -785,14 +785,14 @@ static GLsizei GetGLTypeSize(GLenum type)
 	{
 		GLchar *log = (GLchar*)malloc(logLength);
 		glGetShaderInfoLog(fragShader, logLength, &logLength, log);
-		NSLog(@"Frag Shader compile log:\n%s\n", log);
+		NBLog(@"Frag Shader compile log:\n%s\n", log);
 		free(log);
 	}
 	
 	glGetShaderiv(fragShader, GL_COMPILE_STATUS, &status);
 	if (status == 0)
 	{
-		NSLog(@"Failed to compile frag shader:\n%s\n", sourceString);
+		NBLog(@"Failed to compile frag shader:\n%s\n", sourceString);
 		return 0;
 	}
 	
@@ -813,14 +813,14 @@ static GLsizei GetGLTypeSize(GLenum type)
 	{
 		GLchar *log = (GLchar*)malloc(logLength);
 		glGetProgramInfoLog(prgName, logLength, &logLength, log);
-		NSLog(@"Program link log:\n%s\n", log);
+		NBLog(@"Program link log:\n%s\n", log);
 		free(log);
 	}
 	
 	glGetProgramiv(prgName, GL_LINK_STATUS, &status);
 	if (status == 0)
 	{
-		NSLog(@"Failed to link program");
+		NBLog(@"Failed to link program");
 		return 0;
 	}
 	
@@ -830,14 +830,14 @@ static GLsizei GetGLTypeSize(GLenum type)
 	{
 		GLchar *log = (GLchar*)malloc(logLength);
 		glGetProgramInfoLog(prgName, logLength, &logLength, log);
-		NSLog(@"Program validate log:\n%s\n", log);
+		NBLog(@"Program validate log:\n%s\n", log);
 		free(log);
 	}
 	
 	glGetProgramiv(prgName, GL_VALIDATE_STATUS, &status);
 	if (status == 0)
 	{
-		NSLog(@"Failed to validate program");
+		NBLog(@"Failed to validate program");
 		return 0;
 	}
 	
@@ -900,7 +900,7 @@ static GLsizei GetGLTypeSize(GLenum type)
 {
 	if((self = [super init]))
 	{
-		NSLog(@"%s %s", glGetString(GL_RENDERER), glGetString(GL_VERSION));
+		NBLog(@"%s %s", glGetString(GL_RENDERER), glGetString(GL_VERSION));
 		
 		////////////////////////////////////////////////////
 		// Build all of our and setup initial state here  //
@@ -981,7 +981,7 @@ static GLsizei GetGLTypeSize(GLenum type)
 		
 		if(m_characterMvpUniformIdx < 0)
 		{
-			NSLog(@"No modelViewProjectionMatrix in character shader");
+			NBLog(@"No modelViewProjectionMatrix in character shader");
 		}
 		
 		
@@ -1050,21 +1050,21 @@ static GLsizei GetGLTypeSize(GLenum type)
 		
 		if(m_reflectModelViewUniformIdx < 0)
 		{
-			NSLog(@"No modelViewMatrix in reflection shader");
+			NBLog(@"No modelViewMatrix in reflection shader");
 		}
 		
 		m_reflectProjectionUniformIdx = glGetUniformLocation(m_reflectPrgName, "modelViewProjectionMatrix");
 		
 		if(m_reflectProjectionUniformIdx < 0)
 		{
-			NSLog(@"No modelViewProjectionMatrix in reflection shader");
+			NBLog(@"No modelViewProjectionMatrix in reflection shader");
 		}
 		
 		m_reflectNormalMatrixUniformIdx = glGetUniformLocation(m_reflectPrgName, "normalMatrix");
 		
 		if(m_reflectNormalMatrixUniformIdx < 0)
 		{
-			NSLog(@"No normalMatrix in reflection shader");
+			NBLog(@"No normalMatrix in reflection shader");
 		}
 #endif // RENDER_REFLECTION
 		

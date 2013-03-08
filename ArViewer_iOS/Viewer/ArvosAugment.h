@@ -24,15 +24,17 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface ArvosAugment : NSObject
+@interface ArvosAugment : NSObject<NSCoding>
 
-@property(nonatomic, strong) NSString* mName;
-@property(nonatomic, strong) NSString* mUrl;
-@property(nonatomic, strong) NSString* mAuthor;
-@property(nonatomic, strong) NSString* mDescription;
-@property(nonatomic) CGFloat mLongitude;
-@property(nonatomic) CGFloat mLatitude;
-@property(nonatomic, strong) NSString* mDeveloperKey;
+@property(strong) NSString* name;
+@property(strong) NSURL* url;
+@property(strong) NSString* author;
+@property(strong) NSString* description;
+@property CLLocationDegrees longitude;
+@property CLLocationDegrees latitude;
+@property CLLocationCoordinate2D coordinate;
+@property(strong) NSString* developerKey;
 
 @end
