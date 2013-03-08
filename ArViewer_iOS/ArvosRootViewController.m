@@ -48,7 +48,9 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        
+        firstLocationReceived = 0;
+        mInstance = [Arvos getInstance];
     }
     return self;
 }
@@ -225,9 +227,6 @@
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-    
-    firstLocationReceived = 0;
-    mInstance = [Arvos getInstance];
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"Augments";
