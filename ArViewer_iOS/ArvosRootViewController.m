@@ -71,11 +71,11 @@
 }
 
 - (void)performEdit:(id)paramSender {
-	NSLog(@"Edit called.");
+	NBLog(@"Edit called.");
 }
 
 - (void)performRefresh:(id)paramSender {
-	NSLog(@"Refresh called.");
+	NBLog(@"Refresh called.");
 
 	if (errorNumber == ERROR_NO_LOCATION_SERVICES) {
 		errorNumber = ERROR_OK;
@@ -134,7 +134,7 @@
 - (void)                           tableView:(UITableView*)tableView
 	accessoryButtonTappedForRowWithIndexPath:(NSIndexPath*)indexPath {
 	/* Do something when the accessory button is tapped */
-	NSLog(@"Accessory button is tapped for cell at index path = %@", indexPath);
+	NBLog(@"Accessory button is tapped for cell at index path = %@", indexPath);
 
 	NSString* augmentName = [NSString stringWithFormat:@"Section %ld, Cell %ld",
 							 (long)indexPath.section,
@@ -144,7 +144,7 @@
 
 	UITableViewCell* ownerCell = [tableView cellForRowAtIndexPath:indexPath];
 
-	NSLog(@"Cell Title = %@", ownerCell.textLabel.text);
+	NBLog(@"Cell Title = %@", ownerCell.textLabel.text);
 }
 
 #pragma mark CLLocationManagerDelegate --- methods
@@ -154,8 +154,8 @@
 		   fromLocation:(CLLocation*)oldLocation {
 	/* We received the new location */
 
-	NSLog(@"Latitude = %f", newLocation.coordinate.latitude);
-	NSLog(@"Longitude = %f", newLocation.coordinate.longitude);
+	NBLog(@"Latitude = %f", newLocation.coordinate.latitude);
+	NBLog(@"Longitude = %f", newLocation.coordinate.longitude);
 
 	if (!firstLocationReceived) {
 		firstLocationReceived = 1;

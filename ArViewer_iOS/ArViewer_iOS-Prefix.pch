@@ -11,6 +11,12 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+
+#if DEBUG
+#define	NBLog(args...)			NSLog( @"%s: %@", __PRETTY_FUNCTION__, [NSString stringWithFormat: args])
+#else
+#define	NBLog(args...)			// stubbed out
+#endif
 #endif
 
 #define ESSENTIAL_GL_PRACTICES_IOS 1

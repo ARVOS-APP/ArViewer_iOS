@@ -55,13 +55,13 @@
 			if ([[self captureSession] canAddInput:videoIn])
 				[[self captureSession] addInput:videoIn];
 			else
-				NSLog(@"Couldn't add video input");
+				NBLog(@"Couldn't add video input");
 		}
 		else
-			NSLog(@"Couldn't create video input");
+			NBLog(@"Couldn't create video input");
 	}
 	else
-		NSLog(@"Couldn't create video capture device");
+		NBLog(@"Couldn't create video capture device");
 }
 
 - (void)setPortrait {
