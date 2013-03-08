@@ -118,6 +118,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		61CB8C0516E9E416002002A9 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				D0F50B2116E366A200B0E66A /* ArvosRootViewController.h */,
+				D0F50B2216E366A200B0E66A /* ArvosRootViewController.m */,
+				D0F50B2416E3760F00B0E66A /* ArvosViewerViewController.h */,
+				D0F50B2516E3760F00B0E66A /* ArvosViewerViewController.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
 		D0251A3416E3CDA700800246 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -179,10 +190,7 @@
 				D0F50B0F16E362BB00B0E66A /* ArvosAppDelegate.h */,
 				D0F50B1016E362BB00B0E66A /* ArvosAppDelegate.m */,
 				D0F50B0716E362BB00B0E66A /* Supporting Files */,
-				D0F50B2116E366A200B0E66A /* ArvosRootViewController.h */,
-				D0F50B2216E366A200B0E66A /* ArvosRootViewController.m */,
-				D0F50B2416E3760F00B0E66A /* ArvosViewerViewController.h */,
-				D0F50B2516E3760F00B0E66A /* ArvosViewerViewController.m */,
+				61CB8C0516E9E416002002A9 /* ViewControllers */,
 				D0251A1216E3BFDB00800246 /* ArvosCameraController.h */,
 				D0251A1316E3BFDB00800246 /* ArvosCameraController.m */,
 				D0251A1A16E3C54C00800246 /* ES2Renderer.h */,
