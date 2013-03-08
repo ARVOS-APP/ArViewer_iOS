@@ -143,10 +143,6 @@
 		D0F50AF416E362BB00B0E66A = {
 			isa = PBXGroup;
 			children = (
-				D051C7AC16E91D6F0006B8AF /* CoreLocation.framework */,
-				D0251A3216E3C61400800246 /* QuartzCore.framework */,
-				D0251A3016E3C5D400800246 /* OpenGLES.framework */,
-				D0251A1516E3C24800800246 /* AVFoundation.framework */,
 				D0F50B0616E362BB00B0E66A /* ArViewer_iOS */,
 				D0F50AFF16E362BB00B0E66A /* Frameworks */,
 				D0F50AFE16E362BB00B0E66A /* Products */,
@@ -164,6 +160,10 @@
 		D0F50AFF16E362BB00B0E66A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D051C7AC16E91D6F0006B8AF /* CoreLocation.framework */,
+				D0251A3216E3C61400800246 /* QuartzCore.framework */,
+				D0251A3016E3C5D400800246 /* OpenGLES.framework */,
+				D0251A1516E3C24800800246 /* AVFoundation.framework */,
 				D0F50B0016E362BB00B0E66A /* UIKit.framework */,
 				D0F50B0216E362BB00B0E66A /* Foundation.framework */,
 				D0F50B0416E362BB00B0E66A /* CoreGraphics.framework */,
