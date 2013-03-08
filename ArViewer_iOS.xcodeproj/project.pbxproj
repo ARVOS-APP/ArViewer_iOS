@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		61CB8C0D16E9E98B002002A9 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61CB8C0C16E9E98B002002A9 /* SenTestingKit.framework */; };
+		61CB8C0E16E9E98B002002A9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F50B0016E362BB00B0E66A /* UIKit.framework */; };
+		61CB8C0F16E9E98B002002A9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F50B0216E362BB00B0E66A /* Foundation.framework */; };
+		61CB8C1516E9E98B002002A9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 61CB8C1316E9E98B002002A9 /* InfoPlist.strings */; };
+		61CB8C1D16E9EA31002002A9 /* ArvosAugment.m in Sources */ = {isa = PBXBuildFile; fileRef = D0424C6316E40E8A005A7815 /* ArvosAugment.m */; };
+		61CB8C2016E9EA4A002002A9 /* ArvosAugment_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CB8C1F16E9EA4A002002A9 /* ArvosAugment_Test.m */; };
 		D0251A1416E3BFDB00800246 /* ArvosCameraController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0251A1316E3BFDB00800246 /* ArvosCameraController.m */; };
 		D0251A1616E3C24800800246 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0251A1516E3C24800800246 /* AVFoundation.framework */; };
 		D0251A1916E3C51E00800246 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0251A1816E3C51E00800246 /* EAGLView.m */; };
@@ -47,6 +53,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		61CB8C0B16E9E98B002002A9 /* ArViewer_iOS-Test.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ArViewer_iOS-Test.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		61CB8C0C16E9E98B002002A9 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = SDKROOT; };
+		61CB8C1216E9E98B002002A9 /* ArViewer_iOS-Test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ArViewer_iOS-Test-Info.plist"; sourceTree = "<group>"; };
+		61CB8C1416E9E98B002002A9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		61CB8C1916E9E98B002002A9 /* ArViewer_iOS-Test-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ArViewer_iOS-Test-Prefix.pch"; sourceTree = "<group>"; };
+		61CB8C1F16E9EA4A002002A9 /* ArvosAugment_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArvosAugment_Test.m; sourceTree = "<group>"; };
 		D0251A1216E3BFDB00800246 /* ArvosCameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArvosCameraController.h; sourceTree = "<group>"; };
 		D0251A1316E3BFDB00800246 /* ArvosCameraController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArvosCameraController.m; sourceTree = "<group>"; };
 		D0251A1516E3C24800800246 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -101,6 +113,16 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		61CB8C0716E9E98B002002A9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61CB8C0D16E9E98B002002A9 /* SenTestingKit.framework in Frameworks */,
+				61CB8C0E16E9E98B002002A9 /* UIKit.framework in Frameworks */,
+				61CB8C0F16E9E98B002002A9 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D0F50AFA16E362BB00B0E66A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -129,6 +151,25 @@
 			name = ViewControllers;
 			sourceTree = "<group>";
 		};
+		61CB8C1016E9E98B002002A9 /* ArViewer_iOS-Test */ = {
+			isa = PBXGroup;
+			children = (
+				61CB8C1116E9E98B002002A9 /* Supporting Files */,
+				61CB8C1F16E9EA4A002002A9 /* ArvosAugment_Test.m */,
+			);
+			path = "ArViewer_iOS-Test";
+			sourceTree = "<group>";
+		};
+		61CB8C1116E9E98B002002A9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				61CB8C1216E9E98B002002A9 /* ArViewer_iOS-Test-Info.plist */,
+				61CB8C1316E9E98B002002A9 /* InfoPlist.strings */,
+				61CB8C1916E9E98B002002A9 /* ArViewer_iOS-Test-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		D0251A3416E3CDA700800246 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				D0F50B0616E362BB00B0E66A /* ArViewer_iOS */,
+				61CB8C1016E9E98B002002A9 /* ArViewer_iOS-Test */,
 				D0F50AFF16E362BB00B0E66A /* Frameworks */,
 				D0F50AFE16E362BB00B0E66A /* Products */,
 			);
@@ -164,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				D0F50AFD16E362BB00B0E66A /* ArViewer_iOS.app */,
+				61CB8C0B16E9E98B002002A9 /* ArViewer_iOS-Test.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -178,6 +221,7 @@
 				D0F50B0016E362BB00B0E66A /* UIKit.framework */,
 				D0F50B0216E362BB00B0E66A /* Foundation.framework */,
 				D0F50B0416E362BB00B0E66A /* CoreGraphics.framework */,
+				61CB8C0C16E9E98B002002A9 /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -234,6 +278,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		61CB8C0A16E9E98B002002A9 /* ArViewer_iOS-Test */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 61CB8C1A16E9E98B002002A9 /* Build configuration list for PBXNativeTarget "ArViewer_iOS-Test" */;
+			buildPhases = (
+				61CB8C0616E9E98B002002A9 /* Sources */,
+				61CB8C0716E9E98B002002A9 /* Frameworks */,
+				61CB8C0816E9E98B002002A9 /* Resources */,
+				61CB8C0916E9E98B002002A9 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ArViewer_iOS-Test";
+			productName = "ArViewer_iOS-Test";
+			productReference = 61CB8C0B16E9E98B002002A9 /* ArViewer_iOS-Test.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
 		D0F50AFC16E362BB00B0E66A /* ArViewer_iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D0F50B1A16E362BB00B0E66A /* Build configuration list for PBXNativeTarget "ArViewer_iOS" */;
@@ -274,11 +336,20 @@
 			projectRoot = "";
 			targets = (
 				D0F50AFC16E362BB00B0E66A /* ArViewer_iOS */,
+				61CB8C0A16E9E98B002002A9 /* ArViewer_iOS-Test */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		61CB8C0816E9E98B002002A9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61CB8C1516E9E98B002002A9 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D0F50AFB16E362BB00B0E66A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -299,7 +370,32 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		61CB8C0916E9E98B002002A9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		61CB8C0616E9E98B002002A9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61CB8C1D16E9EA31002002A9 /* ArvosAugment.m in Sources */,
+				61CB8C2016E9EA4A002002A9 /* ArvosAugment_Test.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D0F50AF916E362BB00B0E66A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -329,6 +425,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		61CB8C1316E9E98B002002A9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				61CB8C1416E9E98B002002A9 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		D0F50B0916E362BB00B0E66A /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -340,6 +444,36 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		61CB8C1B16E9E98B002002A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ArViewer_iOS-Test/ArViewer_iOS-Test-Prefix.pch";
+				INFOPLIST_FILE = "ArViewer_iOS-Test/ArViewer_iOS-Test-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		61CB8C1C16E9E98B002002A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ArViewer_iOS-Test/ArViewer_iOS-Test-Prefix.pch";
+				INFOPLIST_FILE = "ArViewer_iOS-Test/ArViewer_iOS-Test-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
 		D0F50B1816E362BB00B0E66A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -425,6 +559,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		61CB8C1A16E9E98B002002A9 /* Build configuration list for PBXNativeTarget "ArViewer_iOS-Test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				61CB8C1B16E9E98B002002A9 /* Debug */,
+				61CB8C1C16E9E98B002002A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		D0F50AF816E362BB00B0E66A /* Build configuration list for PBXProject "ArViewer_iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
