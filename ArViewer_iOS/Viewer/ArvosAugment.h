@@ -29,7 +29,7 @@
 @interface ArvosAugment : NSObject<NSCoding>
 
 @property(strong) NSString* name;
-@property(strong) NSString* url;
+@property(strong) NSURL* url;
 @property(strong) NSString* author;
 @property(strong) NSString* description;
 @property CLLocationDegrees longitude;
