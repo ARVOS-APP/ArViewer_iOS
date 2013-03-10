@@ -32,6 +32,10 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         SharedInstance = [Arvos new];
+        
+        SharedInstance.mVersion = 1;
+        SharedInstance.mUseCache = 1;
+        SharedInstance.mAugmentsUrl = @"http://www.mission-base.com/arvos/augments-iOS.json";
     });
     return SharedInstance;
 }

@@ -29,8 +29,21 @@
 @interface Arvos : NSObject
 
 @property(nonatomic) NSInteger mIsAuthor;
+@property(nonatomic) NSString* mAuthorKey;
+@property(nonatomic) NSString* mDeveloperKey;
+@property(nonatomic) NSString* mSessionId;
 @property(nonatomic) CLLocationDegrees mLongitude;
 @property(nonatomic) CLLocationDegrees mLatitude;
+@property(nonatomic) NSInteger mVersion;
+
+@property(nonatomic)  float mAzimuth;
+@property(nonatomic)  float mCorrectedAzimuth;
+@property(nonatomic)  float mPitch;
+@property(nonatomic)  float mRoll;
+
+@property(nonatomic)  NSInteger mUseCache;
+
+@property(nonatomic) NSString* mAugmentsUrl;
 
 + (Arvos*)getInstance;
 
