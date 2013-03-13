@@ -30,6 +30,19 @@
 
 @property(nonatomic) NSInteger mIsAuthor;
 @property CLLocation* location;
+@property(nonatomic) NSString* mAuthorKey;
+@property(nonatomic) NSString* mDeveloperKey;
+@property(nonatomic) NSString* mSessionId;
+@property(nonatomic) NSInteger mVersion;
+
+@property(nonatomic)  float mAzimuth;
+@property(nonatomic)  float mCorrectedAzimuth;
+@property(nonatomic)  float mPitch;
+@property(nonatomic)  float mRoll;
+
+@property(nonatomic)  NSInteger mUseCache;
+
+@property(nonatomic) NSString* mAugmentsUrl;
 
 + (Arvos*)sharedInstance;
 

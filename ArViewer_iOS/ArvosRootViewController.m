@@ -28,8 +28,9 @@
 #import "ArvosRootViewController.h"
 #import "ArvosViewerViewController.h"
 
-#define ERROR_OK                   0
-#define ERROR_NO_LOCATION_SERVICES 1
+#define ERROR_OK					0
+#define ERROR_NO_LOCATION_SERVICES	1
+#define ERROR_INTERNET				2
 
 static const CLLocationDistance _reloadDistanceThreshold = 10.;
 
@@ -76,17 +77,19 @@ static const CLLocationDistance _reloadDistanceThreshold = 10.;
 	NBLog(@"Edit called.");
 }
 
-- (void)performRefresh:(id)paramSender {
-	NBLog(@"Refresh called.");
-
-	if (errorNumber == ERROR_NO_LOCATION_SERVICES) {
-		errorNumber = ERROR_OK;
-
-		[self onLocationServiceNeedsStart];
-		return;
-	} else {
-		[self loadAugmentsForLocation:mInstance.location];
-	}
+- (void)performRefresh:(id)paramSender{
+    NBLog(@"Refresh called.");
+    
+    if (errorNumber == ERROR_NO_LOCATION_SERVICES) {
+        errorNumber = ERROR_OK;
+        [self onLocationServiceNeedsStart];
+        return;
+    }
+    if (errorNumber == ERROR_INTERNET) {
+        errorNumber = ERROR_OK;
+        [self onLocationServiceNeedsStart];
+        return;
+    }
 }
 
 #pragma mark UITableViewDataSource --- methods
@@ -151,30 +154,161 @@ static const CLLocationDistance _reloadDistanceThreshold = 10.;
 
 #pragma mark CLLocationManagerDelegate --- methods
 
-- (void)locationManager:(CLLocationManager*)manager
-	didUpdateToLocation:(CLLocation*)newLocation
-		   fromLocation:(CLLocation*)oldLocation {
-	/* We received the new location */
-
-	NBLog(@"Latitude = %f", newLocation.coordinate.latitude);
-	NBLog(@"Longitude = %f", newLocation.coordinate.longitude);
-
-	CLLocationDistance delta = fabs([newLocation distanceFromLocation:oldLocation]);
-	if (delta > _reloadDistanceThreshold || nil == oldLocation) {
-		[self loadAugmentsForLocation:newLocation];
-	}
+- (void)locationManager:(CLLocationManager *)manager
+    didUpdateToLocation:(CLLocation *)newLocation
+           fromLocation:(CLLocation *)oldLocation{
+    
+    /* We received the new location */
+    
+    NSLog(@"Latitude = %f", newLocation.coordinate.latitude);
+    NSLog(@"Longitude = %f", newLocation.coordinate.longitude);
 
 	mInstance.location = newLocation;
+
+    if( nil == oldLocation) {      
+        // Fetch the augments list
+        //
+        NSString *urlParameters = @"";
+        urlParameters = [urlParameters stringByAppendingString:@"id="];
+        urlParameters = [urlParameters stringByAppendingString:((mInstance.mSessionId == nil )? @"" : mInstance.mSessionId)];
+        urlParameters = [urlParameters stringByAppendingString:@"&lat="];
+        urlParameters = [urlParameters stringByAppendingString:([NSString stringWithFormat:@"%.6f", mInstance.location.coordinate.latitude])];
+        urlParameters = [urlParameters stringByAppendingString:@"&lon="];
+        urlParameters = [urlParameters stringByAppendingString:([NSString stringWithFormat:@"%.6f", mInstance.location.coordinate.longitude])];
+        urlParameters = [urlParameters stringByAppendingString:@"&azi="];
+        urlParameters = [urlParameters stringByAppendingString:([NSString stringWithFormat:@"%.6f", mInstance.mCorrectedAzimuth])];
+        urlParameters = [urlParameters stringByAppendingString:@"&aut="];
+        urlParameters = [urlParameters stringByAppendingString:((mInstance.mIsAuthor)? @"1" : @"0")];
+        urlParameters = [urlParameters stringByAppendingString:@"&ver="];
+        urlParameters = [urlParameters stringByAppendingString:([NSString stringWithFormat:@"%d", mInstance.mVersion])];
+        urlParameters = [urlParameters stringByAppendingString:@"&plat=iOS"];
+        
+        NSString* key = mInstance.mAuthorKey;
+        if(mInstance.mIsAuthor && key != nil && key.length >= 20 )
+        {
+            urlParameters = [urlParameters stringByAppendingString:@"&akey="];
+            
+            NSString *encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                                                          NULL,
+                                                                                          (CFStringRef)key,
+                                                                                          NULL,
+                                                                                          (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                          kCFStringEncodingUTF8 ));
+            urlParameters = [urlParameters stringByAppendingString:encodedString];
+        }
+        
+        key = mInstance.mDeveloperKey;
+        if(key != nil && key.length > 0 )
+        {
+            urlParameters = [urlParameters stringByAppendingString:@"&dkey="];
+            NSString *encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                                                          NULL,
+                                                                                          (CFStringRef)key,
+                                                                                          NULL,
+                                                                                          (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                          kCFStringEncodingUTF8 ));
+            urlParameters = [urlParameters stringByAppendingString:encodedString];
+        }
+        
+        NSString * urlAsString = mInstance.mAugmentsUrl;
+        urlAsString = [urlAsString stringByAppendingString:@"?"];
+        urlAsString = [urlAsString stringByAppendingString:urlParameters];
+        
+        NSLog(@"url = %@", urlAsString);
+        
+        NSURL *url = [NSURL URLWithString:urlAsString];
+        
+        NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+        [urlRequest setTimeoutInterval:30.0f];
+        [urlRequest setHTTPMethod:@"GET"];
+        
+        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+        
+        [NSURLConnection
+         sendAsynchronousRequest:urlRequest
+         queue:queue
+         completionHandler:^(NSURLResponse *response,
+                             NSData *data,
+                             NSError *error) {
+             
+             if ([data length] > 0  && error == nil){
+                 [self onInternetResponse:data];
+             }
+             else if ([data length] == 0 && error == nil){
+                 [self onInternetError:error];
+                 return;
+             }
+             else if (error != nil){
+                 [self onInternetError:error];
+                 return;
+             }
+         }];
+    }
 }
 
-- (void)locationManager:(CLLocationManager*)manager
-	   didFailWithError:(NSError*)error {
-	[self onLocationServiceDisabled];
+- (void)locationManager:(CLLocationManager *)manager
+       didFailWithError:(NSError *)error{
+    
+    [self onLocationServiceDisabled];
 }
 
+// End --- CLLocationManagerDelegate --- methods
 
-- (NSString*)okButtonTitle {
-	return @"OK";
+- (void) onInternetResponse:(NSData*)data{
+    
+    dispatch_async(dispatch_get_main_queue(), ^(void ) {
+        
+        NSString *html = [[NSString alloc] initWithData:data
+                                               encoding:NSUTF8StringEncoding];
+        NSLog(@"HTML = %@", html);
+   
+        // Create the table view for the augments list
+        //
+        self.augmentsTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        self.augmentsTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        self.augmentsTableView.dataSource = self;
+        self.augmentsTableView.delegate = self;
+        
+        NSLog(@"add tableView");
+        [self.view addSubview:self.augmentsTableView];
+    });
+}
+
+- (void) onInternetError:(NSError*)error{
+    
+    errorNumber = ERROR_INTERNET;
+    
+    dispatch_async(dispatch_get_main_queue(), ^(void ) {
+        NSString * title = @"The Internet connection appears to be offline!";
+        if( error != nil)
+        {
+            NSLog(@"Error happened = %@", error);
+            title = error.localizedDescription;
+        }
+        
+        NSString *message = @"Please enable the internet connection and try again.";
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:title
+                                  message:message
+                                  delegate:nil
+                                  cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+                                  otherButtonTitles: nil];
+        [alertView show];
+    });
+}
+
+- (void) onLocationServiceDisabled{
+    
+    errorNumber = ERROR_NO_LOCATION_SERVICES;
+    
+    NSString *message = @"Please enable location services under 'Settings > Privacy > Location Services' and try again.";
+    UIAlertView *alertView = [[UIAlertView alloc]
+                              initWithTitle:@"Location services are disabled!"
+                              message:message
+                              delegate:nil
+                              cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+                              otherButtonTitles: nil];
+    [alertView show];
 }
 
 - (void)viewDidAppear:(BOOL)paramAnimated {
@@ -241,7 +375,7 @@ static const CLLocationDistance _reloadDistanceThreshold = 10.;
 							  initWithTitle:@"Location services are disabled!"
 							  message:message
 							  delegate:nil
-							  cancelButtonTitle:[self okButtonTitle]
+							  cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
 							  otherButtonTitles:nil];
 	[alertView show];
 }
