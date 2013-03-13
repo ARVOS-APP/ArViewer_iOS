@@ -169,44 +169,41 @@ static const CLLocationDistance _reloadDistanceThreshold = 10.;
 	if (nil == oldLocation) {
 		// Fetch the augments list
 		//
-		NSString* urlParameters = @"";
-		urlParameters = [urlParameters stringByAppendingString:@"id="];
-		urlParameters = [urlParameters stringByAppendingString:((mInstance.mSessionId == nil ) ? @"" : mInstance.mSessionId)];
-		urlParameters = [urlParameters stringByAppendingString:@"&lat="];
-		urlParameters = [urlParameters stringByAppendingString:([NSString stringWithFormat:@"%.6f", mInstance.location.coordinate.latitude])];
-		urlParameters = [urlParameters stringByAppendingString:@"&lon="];
-		urlParameters = [urlParameters stringByAppendingString:([NSString stringWithFormat:@"%.6f", mInstance.location.coordinate.longitude])];
-		urlParameters = [urlParameters stringByAppendingString:@"&azi="];
-		urlParameters = [urlParameters stringByAppendingString:([NSString stringWithFormat:@"%.6f", mInstance.mCorrectedAzimuth])];
-		urlParameters = [urlParameters stringByAppendingString:@"&aut="];
-		urlParameters = [urlParameters stringByAppendingString:((mInstance.mIsAuthor) ? @"1" : @"0")];
-		urlParameters = [urlParameters stringByAppendingString:@"&ver="];
-		urlParameters = [urlParameters stringByAppendingString:([NSString stringWithFormat:@"%d", mInstance.mVersion])];
-		urlParameters = [urlParameters stringByAppendingString:@"&plat=iOS"];
+		NSMutableString* urlParameters = [NSMutableString stringWithString:@""];
+		[urlParameters appendString:@"id="];
+		[urlParameters appendString:((mInstance.mSessionId == nil ) ? @"" : mInstance.mSessionId)];
+		[urlParameters appendString:@"&lat="];
+		[urlParameters appendString:([NSString stringWithFormat:@"%.6f", mInstance.location.coordinate.latitude])];
+		[urlParameters appendString:@"&lon="];
+		[urlParameters appendString:([NSString stringWithFormat:@"%.6f", mInstance.location.coordinate.longitude])];
+		[urlParameters appendString:@"&azi="];
+		[urlParameters appendString:([NSString stringWithFormat:@"%.6f", mInstance.mCorrectedAzimuth])];
+		[urlParameters appendString:@"&aut="];
+		[urlParameters appendString:((mInstance.mIsAuthor) ? @"1" : @"0")];
+		[urlParameters appendString:@"&ver="];
+		[urlParameters appendString:([NSString stringWithFormat:@"%d", mInstance.mVersion])];
+		[urlParameters appendString:@"&plat=iOS"];
 
 		NSString* key = mInstance.mAuthorKey;
-		if (mInstance.mIsAuthor && key != nil && key.length >= 20) {
-			urlParameters = [urlParameters stringByAppendingString:@"&akey="];
+		if (mInstance.mIsAuthor && key.length >= 20) {
+			[urlParameters appendString:@"&akey="];
 
-			NSString* encodedString = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
-																	   NULL,
-																	   (CFStringRef)key,
-																	   NULL,
-																	   (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-																	   kCFStringEncodingUTF8));
-			urlParameters = [urlParameters stringByAppendingString:encodedString];
+			NSString* encodedString = [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+			NSAssert(encodedString != nil, @"encoded string is nil");
+			[urlParameters appendString:encodedString];
 		}
 
 		key = mInstance.mDeveloperKey;
 		if (key != nil && key.length > 0) {
-			urlParameters = [urlParameters stringByAppendingString:@"&dkey="];
+			[urlParameters appendString:@"&dkey="];
+			
 			NSString* encodedString = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
 																	   NULL,
 																	   (CFStringRef)key,
 																	   NULL,
 																	   (CFStringRef)@"!*'();:@&=+$,/?%#[]",
 																	   kCFStringEncodingUTF8));
-			urlParameters = [urlParameters stringByAppendingString:encodedString];
+			[urlParameters appendString:encodedString];
 		}
 
 		NSString* urlAsString = mInstance.mAugmentsUrl;
