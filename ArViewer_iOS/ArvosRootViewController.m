@@ -47,6 +47,8 @@ static const CLLocationDistance _reloadDistanceThreshold = 10.;
 - (void)onLocationServiceDisabled;
 - (void)onLocationServiceNeedsStart;
 - (void)loadAugmentsForLocation:(CLLocation*)location;
+- (void)httpResponseSuccess:(NSData*)data;
+- (void)httpResponseFalied:(NSError*)error;
 @end
 
 @implementation ArvosRootViewController
@@ -228,12 +230,12 @@ static const CLLocationDistance _reloadDistanceThreshold = 10.;
 								   NSData* data,
 								   NSError* error) {
 			 if ([data length] > 0  && error == nil) {
-				 [self onInternetResponse:data];
+				 [self httpResponseSuccess:data];
 			 } else if ([data length] == 0 && error == nil) {
-				 [self onInternetError:error];
+				 [self httpResponseFalied:error];
 				 return;
 			 } else if (error != nil) {
-				 [self onInternetError:error];
+				 [self httpResponseFalied:error];
 				 return;
 			 }
 		 }];
@@ -246,45 +248,6 @@ static const CLLocationDistance _reloadDistanceThreshold = 10.;
 }
 
 // End --- CLLocationManagerDelegate --- methods
-
-- (void)onInternetResponse:(NSData*)data {
-	dispatch_async(dispatch_get_main_queue(), ^(void) {
-					   NSString* html = [[NSString alloc] initWithData:data
-															  encoding:NSUTF8StringEncoding];
-					   NSLog(@"HTML = %@", html);
-
-	                   // Create the table view for the augments list
-	                   //
-					   self.augmentsTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-					   self.augmentsTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-					   self.augmentsTableView.dataSource = self;
-					   self.augmentsTableView.delegate = self;
-
-					   NSLog(@"add tableView");
-					   [self.view addSubview:self.augmentsTableView];
-				   });
-}
-
-- (void)onInternetError:(NSError*)error {
-	errorNumber = ERROR_INTERNET;
-
-	dispatch_async(dispatch_get_main_queue(), ^(void) {
-					   NSString* title = @"The Internet connection appears to be offline!";
-					   if (error != nil) {
-						   NSLog(@"Error happened = %@", error);
-						   title = error.localizedDescription;
-					   }
-
-					   NSString* message = @"Please enable the internet connection and try again.";
-					   UIAlertView* alertView = [[UIAlertView alloc]
-												 initWithTitle:title
-														   message:message
-														  delegate:nil
-												 cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
-												 otherButtonTitles:nil];
-					   [alertView show];
-				   });
-}
 
 - (void)onLocationServiceDisabled {
 	errorNumber = ERROR_NO_LOCATION_SERVICES;
@@ -393,6 +356,47 @@ static const CLLocationDistance _reloadDistanceThreshold = 10.;
 		[mAugments addObject:newAugment];
 	}
 	[self.augmentsTableView reloadData];
+}
+
+#pragma mark http response
+
+- (void)httpResponseSuccess:(NSData*)data {
+	dispatch_async(dispatch_get_main_queue(), ^(void) {
+		NSString* html = [[NSString alloc] initWithData:data
+											   encoding:NSUTF8StringEncoding];
+		NBLog(@"HTML = %@", html);
+
+		// Create the table view for the augments list
+		//
+		self.augmentsTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+		self.augmentsTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+		self.augmentsTableView.dataSource = self;
+		self.augmentsTableView.delegate = self;
+
+		NSLog(@"add tableView");
+		[self.view addSubview:self.augmentsTableView];
+	});
+}
+
+- (void)httpResponseFalied:(NSError*)error {
+	errorNumber = ERROR_INTERNET;
+
+	dispatch_async(dispatch_get_main_queue(), ^(void) {
+		NSString* title = @"The Internet connection appears to be offline!";
+		if (error != nil) {
+			NSLog(@"Error happened = %@", error);
+			title = error.localizedDescription;
+		}
+
+		NSString* message = @"Please enable the internet connection and try again.";
+		UIAlertView* alertView = [[UIAlertView alloc]
+								  initWithTitle:title
+								  message:message
+								  delegate:nil
+								  cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+								  otherButtonTitles:nil];
+		[alertView show];
+	});
 }
 
 @end
