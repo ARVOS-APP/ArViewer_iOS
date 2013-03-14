@@ -28,6 +28,8 @@
 
 @interface ArvosAugment : NSObject<NSCoding>
 
+- (id)initWithDictionary:(NSDictionary*)inDictionary;
+
 @property(strong) NSString* name;
 @property(strong) NSURL* url;
 @property(strong) NSString* author;

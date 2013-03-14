@@ -32,7 +32,7 @@
 #define ERROR_NO_LOCATION_SERVICES 1
 #define ERROR_INTERNET             2
 
-#define USE_EXAMPLE_AUGMENTS 1
+//#define USE_EXAMPLE_AUGMENTS 1
 
 static const CLLocationDistance _reloadDistanceThreshold = 10.;
 
@@ -176,21 +176,21 @@ static const CLLocationDistance _reloadDistanceThreshold = 10.;
 		//
 		NSMutableString* urlParameters = [NSMutableString stringWithString:@""];
 		[urlParameters appendString:@"id="];
-		[urlParameters appendString:((mInstance.mSessionId == nil ) ? @"" : mInstance.mSessionId)];
+		[urlParameters appendString:((mInstance.sessionId == nil ) ? @"" : mInstance.sessionId)];
 		[urlParameters appendString:@"&lat="];
 		[urlParameters appendString:([NSString stringWithFormat:@"%.6f", mInstance.location.coordinate.latitude])];
 		[urlParameters appendString:@"&lon="];
 		[urlParameters appendString:([NSString stringWithFormat:@"%.6f", mInstance.location.coordinate.longitude])];
 		[urlParameters appendString:@"&azi="];
-		[urlParameters appendString:([NSString stringWithFormat:@"%.6f", mInstance.mCorrectedAzimuth])];
+		[urlParameters appendString:([NSString stringWithFormat:@"%.6f", mInstance.correctedAzimuth])];
 		[urlParameters appendString:@"&aut="];
-		[urlParameters appendString:((mInstance.mIsAuthor) ? @"1" : @"0")];
+		[urlParameters appendString:((mInstance.isAuthor) ? @"1" : @"0")];
 		[urlParameters appendString:@"&ver="];
-		[urlParameters appendString:([NSString stringWithFormat:@"%d", mInstance.mVersion])];
+		[urlParameters appendString:([NSString stringWithFormat:@"%d", mInstance.version])];
 		[urlParameters appendString:@"&plat=iOS"];
 
-		NSString* key = mInstance.mAuthorKey;
-		if (mInstance.mIsAuthor && key.length >= 20) {
+		NSString* key = mInstance.authorKey;
+		if (mInstance.isAuthor && key.length >= 20) {
 			[urlParameters appendString:@"&akey="];
 
 			NSString* encodedString = [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -198,7 +198,7 @@ static const CLLocationDistance _reloadDistanceThreshold = 10.;
 			[urlParameters appendString:encodedString];
 		}
 
-		key = mInstance.mDeveloperKey;
+		key = mInstance.developerKey;
 		if (key.length > 0) {
 			[urlParameters appendString:@"&dkey="];
 
@@ -211,7 +211,7 @@ static const CLLocationDistance _reloadDistanceThreshold = 10.;
 			[urlParameters appendString:encodedString];
 		}
 
-		NSString* urlAsString = mInstance.mAugmentsUrl;
+		NSString* urlAsString = mInstance.augmentsUrl;
 		urlAsString = [urlAsString stringByAppendingString:@"?"];
 		urlAsString = [urlAsString stringByAppendingString:urlParameters];
 
@@ -367,6 +367,22 @@ static const CLLocationDistance _reloadDistanceThreshold = 10.;
 		NSString* html = [[NSString alloc] initWithData:data
 											   encoding:NSUTF8StringEncoding];
 		NBLog(@"HTML = %@", html);
+
+		// TODO: this is quite unsafe. NSJSONSerialization is iOS 5 and above.
+		NSDictionary* jsonObjects = [NSJSONSerialization JSONObjectWithData:data
+															   options:0
+																 error:nil];
+		NSAssert([jsonObjects isKindOfClass:NSDictionary.class], @"must decode NSArray from JSON");
+
+		for (NSDictionary* dictionary in jsonObjects[@"augments"]) {
+			ArvosAugment* newAugment = [[ArvosAugment alloc] initWithDictionary:dictionary];
+			if (newAugment != nil) {
+				[mAugments addObject:newAugment];
+			} else {
+				NBLog(@"failed to decode augment from dictionary: %@", dictionary.description);
+			}
+		}
+
 		[self.augmentsTableView reloadData];
 	});
 }

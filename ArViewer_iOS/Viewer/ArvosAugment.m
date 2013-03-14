@@ -53,6 +53,24 @@ static NSString*_keyDevKey	= @"devKey";
 	return self;
 }
 
+- (id)initWithDictionary:(NSDictionary*)inDictionary {
+	self = [super init];
+	if (self) {
+		self.name	= inDictionary[_keyName];
+		self.url	= inDictionary[_keyUrl];
+		self.author	= inDictionary[_keyAuthor];
+		self.description = inDictionary[_keyDesc];
+		self.developerKey = inDictionary[_keyDevKey];
+
+		CLLocationCoordinate2D c = {
+			.longitude = [inDictionary[_keyLon] doubleValue],
+			.latitude = [inDictionary[_keyLat] doubleValue]
+		};
+		self.coordinate = c;
+	}
+	return self;
+}
+
 - (void)encodeWithCoder:(NSCoder *)aCoder {
 	[aCoder encodeObject:self.name forKey:_keyName];
 	[aCoder encodeObject:self.url forKey:_keyUrl];
