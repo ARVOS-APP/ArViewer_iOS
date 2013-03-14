@@ -28,21 +28,21 @@
 
 @interface Arvos : NSObject
 
-@property(nonatomic) NSInteger mIsAuthor;
+@property BOOL isAuthor;
 @property CLLocation* location;
-@property(nonatomic) NSString* mAuthorKey;
-@property(nonatomic) NSString* mDeveloperKey;
-@property(nonatomic) NSString* mSessionId;
-@property(nonatomic) NSInteger mVersion;
+@property(nonatomic) NSString* authorKey;
+@property(nonatomic) NSString* developerKey;
+@property(nonatomic) NSString* sessionId;
+@property NSInteger version;
 
-@property(nonatomic)  float mAzimuth;
-@property(nonatomic)  float mCorrectedAzimuth;
-@property(nonatomic)  float mPitch;
-@property(nonatomic)  float mRoll;
+@property  CLLocationDegrees azimuth;
+@property  CLLocationDegrees correctedAzimuth;
+@property  CLLocationDegrees pitch;
+@property  CLLocationDegrees roll;
 
-@property(nonatomic)  NSInteger mUseCache;
+@property  BOOL useCache;
 
-@property(nonatomic) NSString* mAugmentsUrl;
+@property(nonatomic) NSString* augmentsUrl;
 
 + (Arvos*)sharedInstance;
 

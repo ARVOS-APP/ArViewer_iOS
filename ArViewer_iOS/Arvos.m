@@ -49,6 +49,11 @@ static Arvos* _sharedInstance = nil;
 		return _sharedInstance;
 	}
 	_sharedInstance = self = [super init];
+	if (self) {
+		self.augmentsUrl = @"http://www.mission-base.com/arvos/augments-iOS.json";
+		self.useCache = YES;
+		self.version = 1;
+	}
 	return self;
 }
 
