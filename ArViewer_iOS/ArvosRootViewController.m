@@ -166,14 +166,15 @@ static const CLLocationDistance _reloadDistanceThreshold = 10.;
 		   fromLocation:(CLLocation*)oldLocation {
 	/* We received the new location */
 
-	NSLog(@"Latitude = %f", newLocation.coordinate.latitude);
-	NSLog(@"Longitude = %f", newLocation.coordinate.longitude);
+	NBLog(@"Latitude = %f", newLocation.coordinate.latitude);
+	NBLog(@"Longitude = %f", newLocation.coordinate.longitude);
 
+	CLLocationDistance distance = [newLocation distanceFromLocation:oldLocation];
 	mInstance.location = newLocation;
 
-	if (nil == oldLocation) {
+	if (nil == oldLocation || fabs(distance) > _reloadDistanceThreshold) {
 		// Fetch the augments list
-		//
+		// TODO - move this code, as 'refresh' should do something similar
 		NSMutableString* urlParameters = [NSMutableString stringWithString:@""];
 		[urlParameters appendString:@"id="];
 		[urlParameters appendString:((mInstance.sessionId == nil ) ? @"" : mInstance.sessionId)];
