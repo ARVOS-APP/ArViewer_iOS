@@ -32,12 +32,15 @@
 #define ERROR_NO_LOCATION_SERVICES 1
 #define ERROR_INTERNET             2
 
+#define USE_EXAMPLE_AUGMENTS 1
+
 static const CLLocationDistance _reloadDistanceThreshold = 10.;
 
 @interface ArvosRootViewController () {
-	Arvos* mInstance;
+	Arvos*			mInstance;
 	NSMutableArray* mAugments;
-	int errorNumber;
+	int				errorNumber;
+	NSOperationQueue* mHTTPOpQueue;
 }
 
 @end
@@ -46,9 +49,9 @@ static const CLLocationDistance _reloadDistanceThreshold = 10.;
 
 - (void)onLocationServiceDisabled;
 - (void)onLocationServiceNeedsStart;
-- (void)loadAugmentsForLocation:(CLLocation*)location;
-- (void)httpResponseSuccess:(NSData*)data;
-- (void)httpResponseFalied:(NSError*)error;
+- (void)createExampleAugmentsForLocation:(CLLocation*)location;
+- (void)successHTTPResponse:(NSData*)data;
+- (void)failedHTTPResponse:(NSError*)error;
 @end
 
 @implementation ArvosRootViewController
@@ -60,6 +63,8 @@ static const CLLocationDistance _reloadDistanceThreshold = 10.;
 	if (self) {
 		mInstance = [Arvos sharedInstance];
 		mAugments = [NSMutableArray array];
+		mHTTPOpQueue = [NSOperationQueue new];
+		mHTTPOpQueue.maxConcurrentOperationCount = 1;
 	}
 	return self;
 }
@@ -194,9 +199,9 @@ static const CLLocationDistance _reloadDistanceThreshold = 10.;
 		}
 
 		key = mInstance.mDeveloperKey;
-		if (key != nil && key.length > 0) {
+		if (key.length > 0) {
 			[urlParameters appendString:@"&dkey="];
-			
+
 			NSString* encodedString = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
 																	   NULL,
 																	   (CFStringRef)key,
@@ -210,30 +215,30 @@ static const CLLocationDistance _reloadDistanceThreshold = 10.;
 		urlAsString = [urlAsString stringByAppendingString:@"?"];
 		urlAsString = [urlAsString stringByAppendingString:urlParameters];
 
-		NSLog(@"url = %@", urlAsString);
+		NBLog(@"url = %@", urlAsString);
 
 		NSURL* url = [NSURL URLWithString:urlAsString];
-
+		
 		NSMutableURLRequest* urlRequest = [NSMutableURLRequest requestWithURL:url];
 		[urlRequest setTimeoutInterval:30.0f];
 		[urlRequest setHTTPMethod:@"GET"];
 
-		NSOperationQueue* queue = [[NSOperationQueue alloc] init];
+#ifdef USE_EXAMPLE_AUGMENTS
+		[self createExampleAugmentsForLocation:newLocation];
+		return;
+#endif
 
-		[NSURLConnection
-		 sendAsynchronousRequest:urlRequest
-						   queue:queue
-			   completionHandler:^(NSURLResponse* response,
-								   NSData* data,
-								   NSError* error) {
+		[NSURLConnection sendAsynchronousRequest:urlRequest
+										   queue:mHTTPOpQueue
+							   completionHandler:^(NSURLResponse* response,
+												   NSData* data,
+												   NSError* error) {
 			 if ([data length] > 0  && error == nil) {
-				 [self httpResponseSuccess:data];
+				 [self successHTTPResponse:data];
 			 } else if ([data length] == 0 && error == nil) {
-				 [self httpResponseFalied:error];
-				 return;
+				 [self failedHTTPResponse:error];
 			 } else if (error != nil) {
-				 [self httpResponseFalied:error];
-				 return;
+				 [self failedHTTPResponse:error];
 			 }
 		 }];
 	}
@@ -339,7 +344,7 @@ static const CLLocationDistance _reloadDistanceThreshold = 10.;
 	}
 }
 
-- (void)loadAugmentsForLocation:(CLLocation*)location {
+- (void)createExampleAugmentsForLocation:(CLLocation*)location {
 	// Create some example augments
 
 	NSAssert(location != nil, @"location must not be nil");
@@ -357,25 +362,16 @@ static const CLLocationDistance _reloadDistanceThreshold = 10.;
 
 #pragma mark http response
 
-- (void)httpResponseSuccess:(NSData*)data {
+- (void)successHTTPResponse:(NSData*)data {
 	dispatch_async(dispatch_get_main_queue(), ^(void) {
 		NSString* html = [[NSString alloc] initWithData:data
 											   encoding:NSUTF8StringEncoding];
 		NBLog(@"HTML = %@", html);
-
-		// Create the table view for the augments list
-		//
-		self.augmentsTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-		self.augmentsTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-		self.augmentsTableView.dataSource = self;
-		self.augmentsTableView.delegate = self;
-
-		NSLog(@"add tableView");
-		[self.view addSubview:self.augmentsTableView];
+		[self.augmentsTableView reloadData];
 	});
 }
 
-- (void)httpResponseFalied:(NSError*)error {
+- (void)failedHTTPResponse:(NSError*)error {
 	errorNumber = ERROR_INTERNET;
 
 	dispatch_async(dispatch_get_main_queue(), ^(void) {
