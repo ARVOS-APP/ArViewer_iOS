@@ -31,7 +31,7 @@ static NSString* _keyAuthor	= @"author";
 static NSString* _keyDesc	= @"description";
 static NSString* _keyLon	= @"long";
 static NSString* _keyLat	= @"lat";
-static NSString*_keyDevKey	= @"devKey";
+static NSString* _keyDevKey	= @"devKey";
 
 @implementation ArvosAugment
 
