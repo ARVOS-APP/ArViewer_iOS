@@ -153,7 +153,7 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
     
 	NSString* augmentName = augment.name;
     
-    if( augment.url != nil)
+    if (augment.url != nil)
     {
         [self downloadFileFromUrl:augment.url];
     }
@@ -388,7 +388,7 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 	dispatch_async(dispatch_get_main_queue(), ^(void) {
 		NSString* html = [[NSString alloc] initWithData:data
 											   encoding:NSUTF8StringEncoding];
-		NBLog(@"HTML = %@", html);
+		NBLog(@"DATA = %@", html);
 
         if ([baseUrl isEqualToString:mInstance.augmentsUrl])
         {

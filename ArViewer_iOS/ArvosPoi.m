@@ -28,6 +28,10 @@
 #import "ArvosPoi.h"
 #import "ArvosPoiObject.h"
 
+static NSString* _keyLon	= @"long";
+static NSString* _keyLat	= @"lat";
+static NSString* _keyDevKey	= @"developerKey";
+
 @interface ArvosPoi () {
 	Arvos*			mInstance;
     ArvosAugment*   mParent;
@@ -50,9 +54,70 @@
 
 - (NSString*)parseFromDictionary:(NSDictionary*)inDictionary {
     
-    id animationDuration = inDictionary[@"animationDuration"];
+    if ([inDictionary objectForKey:@"animationDuration"])
+    {
+        self.animationDuration = (long)inDictionary[@"animationDuration"];
+    }
+    else
+    {
+        self.animationDuration = 0;
+    }
+    self.developerKey = inDictionary[_keyDevKey];
     
+    if ([inDictionary objectForKey:_keyLat] && [inDictionary objectForKey:_keyLon])
+    {
+        CLLocationCoordinate2D c = {
+            .longitude = [inDictionary[_keyLon] doubleValue],
+            .latitude = [inDictionary[_keyLat] doubleValue]
+        };
+        self.coordinate = c;
+    }
+    
+    NSArray* jsonPoiObjects = inDictionary[@"poiObjects"];
+    
+    if (jsonPoiObjects == nil || [jsonPoiObjects count] == 0)
+    {
+        return @"ERNo poiObjects found in poi.";
+    }
+    
+    for (NSDictionary* dictionary in jsonPoiObjects) {
+        
+        ArvosPoiObject* jsonPoiObject = [[ArvosPoiObject alloc] initWithPoi:self];
+        if (jsonPoiObject != nil) {
+            
+            NSString* result = [jsonPoiObject parseFromDictionary:dictionary];
+            if (![@"OK" isEqualToString:result]) {
+                
+                return result;
+            }
+            [mPoiObjects addObject:jsonPoiObject];
+            
+        } else {
+            NBLog(@"failed to init poi");
+        }
+    }
+
     return @"OK";
+}
+
+- (CLLocationDegrees)longitude {
+	return self.coordinate.longitude;
+}
+
+- (void)setLongitude:(CLLocationDegrees)longitude {
+	CLLocationCoordinate2D c = self.coordinate;
+	c.longitude = longitude;
+	self.coordinate = c;
+}
+
+- (CLLocationDegrees)latitude {
+	return self.coordinate.latitude;
+}
+
+- (void)setLatitude:(CLLocationDegrees)latitude {
+	CLLocationCoordinate2D c = self.coordinate;
+	c.latitude = latitude;
+	self.coordinate = c;
 }
 
 @end

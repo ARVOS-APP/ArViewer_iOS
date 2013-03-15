@@ -33,7 +33,7 @@ static NSString* _keyAuthor	= @"author";
 static NSString* _keyDesc	= @"description";
 static NSString* _keyLon	= @"long";
 static NSString* _keyLat	= @"lat";
-static NSString* _keyDevKey	= @"devKey";
+static NSString* _keyDevKey	= @"developerKey";
 
 @interface ArvosAugment () {
 	Arvos*			mInstance;
@@ -53,11 +53,14 @@ static NSString* _keyDevKey	= @"devKey";
 		self.description = inDictionary[_keyDesc];
 		self.developerKey = inDictionary[_keyDevKey];
 
-		CLLocationCoordinate2D c = {
-			.longitude = [inDictionary[_keyLon] doubleValue],
-			.latitude = [inDictionary[_keyLat] doubleValue]
-		};
-		self.coordinate = c;
+        if ([inDictionary objectForKey:_keyLat] && [inDictionary objectForKey:_keyLon])
+        {
+            CLLocationCoordinate2D c = {
+                .longitude = [inDictionary[_keyLon] doubleValue],
+                .latitude = [inDictionary[_keyLat] doubleValue]
+            };
+            self.coordinate = c;
+        }
 	}
 	return self;
 }
