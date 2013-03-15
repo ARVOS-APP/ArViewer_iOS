@@ -34,7 +34,7 @@
 
 //#define USE_EXAMPLE_AUGMENTS 1
 
-static const CLLocationDistance _reloadDistanceThreshold = 10.;
+static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 
 @interface ArvosRootViewController () {
 	Arvos*			mInstance;
@@ -50,8 +50,9 @@ static const CLLocationDistance _reloadDistanceThreshold = 10.;
 - (void)onLocationServiceDisabled;
 - (void)onLocationServiceNeedsStart;
 - (void)createExampleAugmentsForLocation:(CLLocation*)location;
-- (void)successHTTPResponse:(NSData*)data;
+- (void)successHTTPResponse:(NSString*)baseUrl responseData:(NSData*)data;
 - (void)failedHTTPResponse:(NSError*)error;
+- (void)downloadFileFromUrl:(NSString*)baseUrl;
 @end
 
 @implementation ArvosRootViewController
@@ -174,74 +175,7 @@ static const CLLocationDistance _reloadDistanceThreshold = 10.;
 
 	if (nil == oldLocation || fabs(distance) > _reloadDistanceThreshold) {
 		// Fetch the augments list
-		// TODO - move this code, as 'refresh' should do something similar
-		NSMutableString* urlParameters = [NSMutableString stringWithString:@""];
-		[urlParameters appendString:@"id="];
-		[urlParameters appendString:((mInstance.sessionId == nil ) ? @"" : mInstance.sessionId)];
-		[urlParameters appendString:@"&lat="];
-		[urlParameters appendString:([NSString stringWithFormat:@"%.6f", mInstance.location.coordinate.latitude])];
-		[urlParameters appendString:@"&lon="];
-		[urlParameters appendString:([NSString stringWithFormat:@"%.6f", mInstance.location.coordinate.longitude])];
-		[urlParameters appendString:@"&azi="];
-		[urlParameters appendString:([NSString stringWithFormat:@"%.6f", mInstance.correctedAzimuth])];
-		[urlParameters appendString:@"&aut="];
-		[urlParameters appendString:((mInstance.isAuthor) ? @"1" : @"0")];
-		[urlParameters appendString:@"&ver="];
-		[urlParameters appendString:([NSString stringWithFormat:@"%d", mInstance.version])];
-		[urlParameters appendString:@"&plat=iOS"];
-
-		NSString* key = mInstance.authorKey;
-		if (mInstance.isAuthor && key.length >= 20) {
-			[urlParameters appendString:@"&akey="];
-
-			NSString* encodedString = [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-			NSAssert(encodedString != nil, @"encoded string is nil");
-			[urlParameters appendString:encodedString];
-		}
-
-		key = mInstance.developerKey;
-		if (key.length > 0) {
-			[urlParameters appendString:@"&dkey="];
-
-			NSString* encodedString = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
-																	   NULL,
-																	   (CFStringRef)key,
-																	   NULL,
-																	   (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-																	   kCFStringEncodingUTF8));
-			[urlParameters appendString:encodedString];
-		}
-
-		NSString* urlAsString = mInstance.augmentsUrl;
-		urlAsString = [urlAsString stringByAppendingString:@"?"];
-		urlAsString = [urlAsString stringByAppendingString:urlParameters];
-
-		NBLog(@"url = %@", urlAsString);
-
-		NSURL* url = [NSURL URLWithString:urlAsString];
-		
-		NSMutableURLRequest* urlRequest = [NSMutableURLRequest requestWithURL:url];
-		[urlRequest setTimeoutInterval:30.0f];
-		[urlRequest setHTTPMethod:@"GET"];
-
-#ifdef USE_EXAMPLE_AUGMENTS
-		[self createExampleAugmentsForLocation:newLocation];
-		return;
-#endif
-
-		[NSURLConnection sendAsynchronousRequest:urlRequest
-										   queue:mHTTPOpQueue
-							   completionHandler:^(NSURLResponse* response,
-												   NSData* data,
-												   NSError* error) {
-			 if ([data length] > 0  && error == nil) {
-				 [self successHTTPResponse:data];
-			 } else if ([data length] == 0 && error == nil) {
-				 [self failedHTTPResponse:error];
-			 } else if (error != nil) {
-				 [self failedHTTPResponse:error];
-			 }
-		 }];
+        [self downloadFileFromUrl:mInstance.augmentsUrl];
 	}
 }
 
@@ -361,30 +295,117 @@ static const CLLocationDistance _reloadDistanceThreshold = 10.;
 	[self.augmentsTableView reloadData];
 }
 
+#pragma mark http request
+
+- (void)downloadFileFromUrl:(NSString*)baseUrl {
+   
+	NSMutableString* urlParameters = [NSMutableString stringWithString:@""];
+	[urlParameters appendString:@"id="];
+	[urlParameters appendString:((mInstance.sessionId == nil ) ? @"" : mInstance.sessionId)];
+	[urlParameters appendString:@"&lat="];
+	[urlParameters appendString:([NSString stringWithFormat:@"%.6f", mInstance.location.coordinate.latitude])];
+	[urlParameters appendString:@"&lon="];
+	[urlParameters appendString:([NSString stringWithFormat:@"%.6f", mInstance.location.coordinate.longitude])];
+	[urlParameters appendString:@"&azi="];
+	[urlParameters appendString:([NSString stringWithFormat:@"%.6f", mInstance.correctedAzimuth])];
+	[urlParameters appendString:@"&aut="];
+	[urlParameters appendString:((mInstance.isAuthor) ? @"1" : @"0")];
+	[urlParameters appendString:@"&ver="];
+	[urlParameters appendString:([NSString stringWithFormat:@"%d", mInstance.version])];
+	[urlParameters appendString:@"&plat=iOS"];
+    
+    if ([baseUrl isEqualToString:mInstance.augmentsUrl])
+    {
+        NSString* key = mInstance.authorKey;
+        if (mInstance.isAuthor && key.length >= 20) {
+            [urlParameters appendString:@"&akey="];
+        
+            NSString* encodedString = [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            NSAssert(encodedString != nil, @"encoded string is nil");
+            [urlParameters appendString:encodedString];
+        }
+        
+        key = mInstance.developerKey;
+        if (key.length > 0) {
+            [urlParameters appendString:@"&dkey="];
+        
+            NSString* encodedString = [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            NSAssert(encodedString != nil, @"encoded string is nil");
+            [urlParameters appendString:encodedString];
+        }
+    }
+    
+	NSString* urlAsString = baseUrl;
+	urlAsString = [urlAsString stringByAppendingString:@"?"];
+	urlAsString = [urlAsString stringByAppendingString:urlParameters];
+        
+	NBLog(@"url = %@", urlAsString);
+        
+	NSURL* url = [NSURL URLWithString:urlAsString];
+	
+	NSMutableURLRequest* urlRequest = [NSMutableURLRequest requestWithURL:url];
+	[urlRequest setTimeoutInterval:30.0f];
+	[urlRequest setHTTPMethod:@"GET"];
+  
+#ifdef USE_EXAMPLE_AUGMENTS
+    if ([baseUrl isEqualToString:mInstance.augmentsUrl])
+    {
+        // The augments list is requested
+        [self createExampleAugmentsForLocation:newLocation];
+        return;
+    }
+    else
+    {
+        // An indivual augment is requested
+    }
+#endif
+    
+	[NSURLConnection sendAsynchronousRequest:urlRequest
+									   queue:mHTTPOpQueue
+						   completionHandler:^(NSURLResponse* response,
+											   NSData* data,
+											   NSError* error) {
+                               if ([data length] > 0  && error == nil) {
+                                   [self successHTTPResponse:baseUrl responseData:data];
+                               } else if ([data length] == 0 && error == nil) {
+                                   [self failedHTTPResponse:error];
+                               } else if (error != nil) {
+                                   [self failedHTTPResponse:error];
+                               }
+                           }];
+}
+
+
 #pragma mark http response
 
-- (void)successHTTPResponse:(NSData*)data {
+- (void)successHTTPResponse:(NSString*)baseUrl
+               responseData:(NSData*)data {
 	dispatch_async(dispatch_get_main_queue(), ^(void) {
 		NSString* html = [[NSString alloc] initWithData:data
 											   encoding:NSUTF8StringEncoding];
 		NBLog(@"HTML = %@", html);
 
-		// TODO: this is quite unsafe. NSJSONSerialization is iOS 5 and above.
-		NSDictionary* jsonObjects = [NSJSONSerialization JSONObjectWithData:data
-															   options:0
-																 error:nil];
-		NSAssert([jsonObjects isKindOfClass:NSDictionary.class], @"must decode NSArray from JSON");
+        if ([baseUrl isEqualToString:mInstance.augmentsUrl])
+        {
+            // TODO: this is quite unsafe. NSJSONSerialization is iOS 5 and above.
+            NSDictionary* jsonObjects = [NSJSONSerialization JSONObjectWithData:data
+                                                                        options:0
+                                                                          error:nil];
+            NSAssert([jsonObjects isKindOfClass:NSDictionary.class], @"must decode NSArray from JSON");
 
-		for (NSDictionary* dictionary in jsonObjects[@"augments"]) {
-			ArvosAugment* newAugment = [[ArvosAugment alloc] initWithDictionary:dictionary];
-			if (newAugment != nil) {
-				[mAugments addObject:newAugment];
-			} else {
-				NBLog(@"failed to decode augment from dictionary: %@", dictionary.description);
-			}
-		}
+            [mAugments removeAllObjects];
+            
+            for (NSDictionary* dictionary in jsonObjects[@"augments"]) {
+                ArvosAugment* newAugment = [[ArvosAugment alloc] initWithDictionary:dictionary];
+                if (newAugment != nil) {
+                    [mAugments addObject:newAugment];
+                } else {
+                    NBLog(@"failed to decode augment from dictionary: %@", dictionary.description);
+                }
+            }
 
-		[self.augmentsTableView reloadData];
+            [self.augmentsTableView reloadData];
+        }
 	});
 }
 
