@@ -1,5 +1,5 @@
 /*
- ArvosAugment.h - ArViewer_iOS
+ ArvosPoi.m - ArViewer_iOS
  
  Copyright (C) 2013, Peter Graf
  
@@ -23,24 +23,36 @@
  please see: http://www.mission-base.com/.
  */
 
-#import <Foundation/Foundation.h>
-#import <CoreLocation/CoreLocation.h>
+#import "Arvos.h"
+#import "ArvosAugment.h"
+#import "ArvosPoi.h"
+#import "ArvosPoiObject.h"
 
-@class ArvosPoi;
+@interface ArvosPoi () {
+	Arvos*			mInstance;
+    ArvosAugment*   mParent;
+	NSMutableArray* mPoiObjects;
+}
 
-@interface ArvosAugment : NSObject
+@end
 
-- (id)init;
-- (id)initWithDictionary:(NSDictionary*)inDictionary;
-- (NSString*)parseFromData:(NSData*)data;
+@implementation ArvosPoi
 
-@property(strong) NSString* name;
-@property(strong) NSString* url;
-@property(strong) NSString* author;
-@property(strong) NSString* description;
-@property CLLocationDegrees longitude;
-@property CLLocationDegrees latitude;
-@property CLLocationCoordinate2D coordinate;
-@property(strong) NSString* developerKey;
+- (id)initWithAugment:(ArvosAugment*)augment {
+    self = [super init];
+	if (self) {
+        mParent = augment;
+        mPoiObjects = [NSMutableArray array];
+        mInstance = [Arvos sharedInstance];
+	}
+	return self;
+}
+
+- (NSString*)parseFromDictionary:(NSDictionary*)inDictionary {
+    
+    id animationDuration = inDictionary[@"animationDuration"];
+    
+    return @"OK";
+}
 
 @end

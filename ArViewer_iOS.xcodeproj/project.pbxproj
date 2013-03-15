@@ -40,6 +40,8 @@
 		D0424C6416E40E8A005A7815 /* ArvosAugment.m in Sources */ = {isa = PBXBuildFile; fileRef = D0424C6316E40E8A005A7815 /* ArvosAugment.m */; };
 		D051C7AD16E91D6F0006B8AF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D051C7AC16E91D6F0006B8AF /* CoreLocation.framework */; };
 		D051C7B016E932B10006B8AF /* Arvos.m in Sources */ = {isa = PBXBuildFile; fileRef = D051C7AF16E932B10006B8AF /* Arvos.m */; };
+		D056189016F37DD000C701F3 /* ArvosPoi.m in Sources */ = {isa = PBXBuildFile; fileRef = D056188F16F37DD000C701F3 /* ArvosPoi.m */; };
+		D056189316F3802300C701F3 /* ArvosPoiObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D056189216F3802300C701F3 /* ArvosPoiObject.m */; };
 		D0F50B0116E362BB00B0E66A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F50B0016E362BB00B0E66A /* UIKit.framework */; };
 		D0F50B0316E362BB00B0E66A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F50B0216E362BB00B0E66A /* Foundation.framework */; };
 		D0F50B0516E362BB00B0E66A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F50B0416E362BB00B0E66A /* CoreGraphics.framework */; };
@@ -95,6 +97,10 @@
 		D051C7AC16E91D6F0006B8AF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D051C7AE16E932B10006B8AF /* Arvos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Arvos.h; sourceTree = "<group>"; };
 		D051C7AF16E932B10006B8AF /* Arvos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Arvos.m; sourceTree = "<group>"; };
+		D056188E16F37DD000C701F3 /* ArvosPoi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArvosPoi.h; sourceTree = "<group>"; };
+		D056188F16F37DD000C701F3 /* ArvosPoi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArvosPoi.m; sourceTree = "<group>"; };
+		D056189116F3802300C701F3 /* ArvosPoiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArvosPoiObject.h; sourceTree = "<group>"; };
+		D056189216F3802300C701F3 /* ArvosPoiObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArvosPoiObject.m; sourceTree = "<group>"; };
 		D0F50AFD16E362BB00B0E66A /* ArViewer_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArViewer_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0F50B0016E362BB00B0E66A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D0F50B0216E362BB00B0E66A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -192,6 +198,10 @@
 			children = (
 				D0424C6216E40E8A005A7815 /* ArvosAugment.h */,
 				D0424C6316E40E8A005A7815 /* ArvosAugment.m */,
+				D056188E16F37DD000C701F3 /* ArvosPoi.h */,
+				D056188F16F37DD000C701F3 /* ArvosPoi.m */,
+				D056189116F3802300C701F3 /* ArvosPoiObject.h */,
+				D056189216F3802300C701F3 /* ArvosPoiObject.m */,
 			);
 			name = Viewer;
 			sourceTree = "<group>";
@@ -425,6 +435,8 @@
 				D0251A4016E3CE5600800246 /* character.fsh in Sources */,
 				D0424C6416E40E8A005A7815 /* ArvosAugment.m in Sources */,
 				D051C7B016E932B10006B8AF /* Arvos.m in Sources */,
+				D056189016F37DD000C701F3 /* ArvosPoi.m in Sources */,
+				D056189316F3802300C701F3 /* ArvosPoiObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,6 +584,7 @@
 				61CB8C1C16E9E98B002002A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D0F50AF816E362BB00B0E66A /* Build configuration list for PBXProject "ArViewer_iOS" */ = {
 			isa = XCConfigurationList;

@@ -149,9 +149,14 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 	accessoryButtonTappedForRowWithIndexPath:(NSIndexPath*)indexPath {
 	NBLog(@"Accessory button is tapped for cell at index path = %@", indexPath);
 
-	NSString* augmentName = [NSString stringWithFormat:@"Section %ld, Cell %ld",
-							 (long)indexPath.section,
-							 (long)indexPath.row];
+    ArvosAugment* augment = mAugments[indexPath.row];
+    
+	NSString* augmentName = augment.name;
+    
+    if( augment.url != nil)
+    {
+        [self downloadFileFromUrl:augment.url];
+    }
 
 	[self pushViewerController:augmentName];
 
@@ -387,24 +392,52 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 
         if ([baseUrl isEqualToString:mInstance.augmentsUrl])
         {
-            // TODO: this is quite unsafe. NSJSONSerialization is iOS 5 and above.
-            NSDictionary* jsonObjects = [NSJSONSerialization JSONObjectWithData:data
-                                                                        options:0
-                                                                          error:nil];
-            NSAssert([jsonObjects isKindOfClass:NSDictionary.class], @"must decode NSArray from JSON");
-
             [mAugments removeAllObjects];
             
-            for (NSDictionary* dictionary in jsonObjects[@"augments"]) {
+            // TODO: this is quite unsafe. NSJSONSerialization is iOS 5 and above.
+            NSDictionary* jsonAugmentsList = [NSJSONSerialization JSONObjectWithData:data
+                                                                             options:0
+                                                                               error:nil];
+            NSAssert([jsonAugmentsList isKindOfClass:NSDictionary.class], @"must decode NSArray from JSON");
+
+            NSString* redirect = jsonAugmentsList[@"redirect"];
+            if (redirect != nil)
+            {
+                [self downloadFileFromUrl:redirect];
+                return;
+            }
+            
+            mInstance.sessionId = jsonAugmentsList[@"sessionId"];
+            
+            for (NSDictionary* dictionary in jsonAugmentsList[@"augments"]) {
                 ArvosAugment* newAugment = [[ArvosAugment alloc] initWithDictionary:dictionary];
                 if (newAugment != nil) {
-                    [mAugments addObject:newAugment];
+                    if( newAugment.url != nil)
+                    {
+                        [mAugments addObject:newAugment];
+                    }
                 } else {
                     NBLog(@"failed to decode augment from dictionary: %@", dictionary.description);
+                    return;
                 }
             }
 
             [self.augmentsTableView reloadData];
+        }
+        else
+        {
+            // received the contents of an augment
+            //
+            ArvosAugment* newAugment = [[ArvosAugment alloc] init];
+            if(newAugment != nil)
+            {
+                NSString* result = [newAugment parseFromData:data];
+                if (![@"OK" isEqualToString:result]) {
+                    NBLog(@"failed to decode augment from data: %@", data.description);
+                    return;
+                }
+            }
+            
         }
 	});
 }

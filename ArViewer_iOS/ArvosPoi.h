@@ -1,5 +1,5 @@
 /*
- ArvosAugment.h - ArViewer_iOS
+ ArvosPoi.h - ArViewer_iOS
  
  Copyright (C) 2013, Peter Graf
  
@@ -24,20 +24,18 @@
  */
 
 #import <Foundation/Foundation.h>
-#import <CoreLocation/CoreLocation.h>
 
-@class ArvosPoi;
+@class ArvosAugment;
+@class ArvosPoiObject;
 
-@interface ArvosAugment : NSObject
+@interface ArvosPoi : NSObject
 
-- (id)init;
-- (id)initWithDictionary:(NSDictionary*)inDictionary;
-- (NSString*)parseFromData:(NSData*)data;
+- (id)initWithAugment:(ArvosAugment*)augment;
+- (NSString*)parseFromDictionary:(NSDictionary*)inDictionary;
 
-@property(strong) NSString* name;
-@property(strong) NSString* url;
-@property(strong) NSString* author;
-@property(strong) NSString* description;
+@property(strong) NSArray* poiObjects;
+
+@property long animationDuration;
 @property CLLocationDegrees longitude;
 @property CLLocationDegrees latitude;
 @property CLLocationCoordinate2D coordinate;

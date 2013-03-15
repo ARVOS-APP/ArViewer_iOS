@@ -23,7 +23,9 @@
  please see: http://www.mission-base.com/.
  */
 
+#import "Arvos.h"
 #import "ArvosAugment.h"
+#import "ArvosPoi.h"
 
 static NSString* _keyName	= @"name";
 static NSString* _keyUrl	= @"url";
@@ -33,28 +35,17 @@ static NSString* _keyLon	= @"long";
 static NSString* _keyLat	= @"lat";
 static NSString* _keyDevKey	= @"devKey";
 
-@implementation ArvosAugment
-
-- (id)initWithCoder:(NSCoder *)aDecoder {
-	self = [super init];
-	if (self) {
-		self.name	= [aDecoder decodeObjectForKey:_keyName];
-		self.url	= [aDecoder decodeObjectForKey:_keyUrl];
-		self.author	= [aDecoder decodeObjectForKey:_keyAuthor];
-		self.description = [aDecoder decodeObjectForKey:_keyDesc];
-		self.developerKey = [aDecoder decodeObjectForKey:_keyDevKey];
-
-		CLLocationCoordinate2D c = {
-			.longitude = [aDecoder decodeDoubleForKey:_keyLon],
-			.latitude = [aDecoder decodeDoubleForKey:_keyLat]
-		};
-		self.coordinate = c;
-	}
-	return self;
+@interface ArvosAugment () {
+	Arvos*			mInstance;
+	NSMutableArray* mPois;
 }
 
+@end
+
+@implementation ArvosAugment
+
 - (id)initWithDictionary:(NSDictionary*)inDictionary {
-	self = [super init];
+	self = [self init];
 	if (self) {
 		self.name	= inDictionary[_keyName];
 		self.url	= inDictionary[_keyUrl];
@@ -71,16 +62,61 @@ static NSString* _keyDevKey	= @"devKey";
 	return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-	[aCoder encodeObject:self.name forKey:_keyName];
-	[aCoder encodeObject:self.url forKey:_keyUrl];
-	[aCoder encodeObject:self.author forKey:_keyAuthor];
-	[aCoder encodeObject:self.description forKey:_keyDesc];
-	[aCoder encodeObject:self.developerKey forKey:_keyDevKey];
-	[aCoder encodeDouble:self.longitude forKey:_keyLon];
-	[aCoder encodeDouble:self.latitude forKey:_keyLat];
+- (id)init {
+	self = [super init];
+	if (self) {
+        mInstance = [Arvos sharedInstance];
+		mPois = [NSMutableArray array];
+	}
+	return self;
 }
 
+/**
+ * Fills the properties of one augment by parsing a description in JSON
+ * format downloaded from the web.
+ *
+ * @param data
+ *            The augment description in JSON format.
+ * @return "OK" or "ER" followed by the error message.
+ */
+
+- (NSString*) parseFromData:(NSData*)data {
+    // TODO: this is quite unsafe. NSJSONSerialization is iOS 5 and above.
+    NSDictionary* jsonAugment = [NSJSONSerialization JSONObjectWithData:data
+                                                                options:0
+                                                                  error:nil];
+    
+    NSAssert([jsonAugment isKindOfClass:NSDictionary.class], @"must decode NSArray from JSON");
+    
+    self.name	= jsonAugment[_keyName];
+    self.author	= jsonAugment[_keyAuthor];
+    self.description = jsonAugment[_keyDesc];
+    
+    NSArray* jsonPois = jsonAugment[@"pois"];
+    
+    if (jsonPois == nil || [jsonPois count] == 0)
+    {
+        return [@"ERNo pois found in augment " stringByAppendingString:self.name];
+    }
+    
+    for (NSDictionary* dictionary in jsonPois) {
+        
+        ArvosPoi* newPoi = [[ArvosPoi alloc] initWithAugment:self];
+        if (newPoi != nil) {
+            
+            NSString* result = [newPoi parseFromDictionary:dictionary];
+            if (![@"OK" isEqualToString:result]) {
+                
+                return result;
+            }
+            [mPois addObject:newPoi];
+            
+        } else {
+            NBLog(@"failed to init poi");
+        }
+    }
+    return @"OK";
+}
 
 - (CLLocationDegrees)longitude {
 	return self.coordinate.longitude;
