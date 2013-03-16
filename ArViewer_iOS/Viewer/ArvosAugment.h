@@ -28,19 +28,50 @@
 
 @class ArvosPoi;
 
+/**
+ * An augment as shown in the augment viewer.
+ * <p>
+ * Contains a list of pois.
+ *
+ * @author peter
+ */
 @interface ArvosAugment : NSObject
 
+/**
+ * Fills the properties of one augment by parsing a description in JSON
+ * format downloaded from the web.
+ *
+ * @param inDictionary
+ *            The augment description in JSON format.
+ */
 - (id)init;
+
+/**
+ * Fills the properties of one augment by parsing a description in JSON
+ * format downloaded from the web.
+ *
+ * @param inDictionary
+ *            The augment description in JSON format.
+ */
 - (id)initWithDictionary:(NSDictionary*)inDictionary;
+
+/**
+ * Fills the properties of one augment by parsing a description in JSON
+ * format downloaded from the web.
+ *
+ * @param data
+ *            The augment description in JSON format.
+ * @return nil or an error message.
+ */
 - (NSString*)parseFromData:(NSData*)data;
 
-@property(strong) NSString* name;
-@property(strong) NSString* url;
-@property(strong) NSString* author;
-@property(strong) NSString* description;
-@property CLLocationDegrees longitude;
-@property CLLocationDegrees latitude;
-@property CLLocationCoordinate2D coordinate;
-@property(strong) NSString* developerKey;
+@property(strong) NSString*           name;
+@property(strong) NSString*           url;
+@property(strong) NSString*           author;
+@property(strong) NSString*           description;
+@property CLLocationDegrees           longitude;
+@property CLLocationDegrees           latitude;
+@property CLLocationCoordinate2D      coordinate;
+@property(strong) NSString*           developerKey;
 
 @end

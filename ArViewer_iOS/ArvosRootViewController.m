@@ -53,9 +53,11 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 - (void)successHTTPResponse:(NSString*)baseUrl responseData:(NSData*)data;
 - (void)failedHTTPResponse:(NSError*)error;
 - (void)downloadFileFromUrl:(NSString*)baseUrl;
+
 @end
 
 @implementation ArvosRootViewController
+
 @synthesize myLocationManager;
 
 
@@ -432,12 +434,11 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
             if(newAugment != nil)
             {
                 NSString* result = [newAugment parseFromData:data];
-                if (![@"OK" isEqualToString:result]) {
+                if (nil != result) {
                     NBLog(@"failed to decode augment from data: %@", data.description);
                     return;
                 }
             }
-            
         }
 	});
 }

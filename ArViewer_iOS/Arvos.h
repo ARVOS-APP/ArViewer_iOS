@@ -26,24 +26,47 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
+#define ArvosKeyName	                  @"name"
+#define ArvosKeyUrl	                      @"url"
+#define ArvosKeyAuthor	                  @"author"
+#define ArvosKeyDescription               @"description"
+#define ArvosKeyLon	                      @"long"
+#define ArvosKeyLat	                      @"lat"
+#define ArvosKeyDeveloperKey	          @"developerKey"
+#define ArvosKeyPois                      @"pois"
+#define ArvosKeyAnimationDuration         @"animationDuration"
+#define ArvosKeyPoiObjects                @"poiObjects"
+
+
+#define ArvosBillboardHandlingNone        @"none"
+#define ArvosBillboardHandlingCylinder    @"cylinder"
+#define ArvosBillboardHandlingSphere      @"sphere"
+
+typedef double*                           ArvosPosition;
+typedef double*                           ArvosScale;
+typedef double*                           ArvosRotation;
+
 @interface Arvos : NSObject
 
-@property BOOL isAuthor;
-@property CLLocation* location;
-@property(nonatomic) NSString* authorKey;
-@property(nonatomic) NSString* developerKey;
-@property(nonatomic) NSString* sessionId;
-@property NSInteger version;
+@property BOOL                            isAuthor;
+@property CLLocation*                     location;
+@property(nonatomic) NSString*            authorKey;
+@property(nonatomic) NSString*            developerKey;
+@property(nonatomic) NSString*            sessionId;
+@property NSInteger                       version;
 
-@property  CLLocationDegrees azimuth;
-@property  CLLocationDegrees correctedAzimuth;
-@property  CLLocationDegrees pitch;
-@property  CLLocationDegrees roll;
+@property  CLLocationDegrees              azimuth;
+@property  CLLocationDegrees              correctedAzimuth;
+@property  CLLocationDegrees              pitch;
+@property  CLLocationDegrees              roll;
 
-@property  BOOL useCache;
+@property  BOOL                           useCache;
 
-@property(nonatomic) NSString* augmentsUrl;
+@property(nonatomic) NSString*            augmentsUrl;
 
+/**
+ * The singleton instance
+ */
 + (Arvos*)sharedInstance;
 
 @end

@@ -27,18 +27,12 @@
 #import "ArvosAugment.h"
 #import "ArvosPoi.h"
 
-static NSString* _keyName	= @"name";
-static NSString* _keyUrl	= @"url";
-static NSString* _keyAuthor	= @"author";
-static NSString* _keyDesc	= @"description";
-static NSString* _keyLon	= @"long";
-static NSString* _keyLat	= @"lat";
-static NSString* _keyDevKey	= @"developerKey";
-
 @interface ArvosAugment () {
 	Arvos*			mInstance;
 	NSMutableArray* mPois;
 }
+
+
 
 @end
 
@@ -47,17 +41,17 @@ static NSString* _keyDevKey	= @"developerKey";
 - (id)initWithDictionary:(NSDictionary*)inDictionary {
 	self = [self init];
 	if (self) {
-		self.name	= inDictionary[_keyName];
-		self.url	= inDictionary[_keyUrl];
-		self.author	= inDictionary[_keyAuthor];
-		self.description = inDictionary[_keyDesc];
-		self.developerKey = inDictionary[_keyDevKey];
+		self.name	= inDictionary[ArvosKeyName];
+		self.url	= inDictionary[ArvosKeyUrl];
+		self.author	= inDictionary[ArvosKeyAuthor];
+		self.description = inDictionary[ArvosKeyDescription];
+		self.developerKey = inDictionary[ArvosKeyDeveloperKey];
 
-        if ([inDictionary objectForKey:_keyLat] && [inDictionary objectForKey:_keyLon])
+        if ([inDictionary objectForKey:ArvosKeyLat] && [inDictionary objectForKey:ArvosKeyLon])
         {
             CLLocationCoordinate2D c = {
-                .longitude = [inDictionary[_keyLon] doubleValue],
-                .latitude = [inDictionary[_keyLat] doubleValue]
+                .longitude = [inDictionary[ArvosKeyLon] doubleValue],
+                .latitude = [inDictionary[ArvosKeyLat] doubleValue]
             };
             self.coordinate = c;
         }
@@ -74,32 +68,25 @@ static NSString* _keyDevKey	= @"developerKey";
 	return self;
 }
 
-/**
- * Fills the properties of one augment by parsing a description in JSON
- * format downloaded from the web.
- *
- * @param data
- *            The augment description in JSON format.
- * @return "OK" or "ER" followed by the error message.
- */
-
-- (NSString*) parseFromData:(NSData*)data {
-    // TODO: this is quite unsafe. NSJSONSerialization is iOS 5 and above.
+- (NSString*)parseFromData:(NSData*)data {
+    
+    NSError* error = nil;
     NSDictionary* jsonAugment = [NSJSONSerialization JSONObjectWithData:data
                                                                 options:0
-                                                                  error:nil];
+                                                                  error:&error];
+    if (error != nil) {
+        return @"Failed to parse JSON augment.";
+    }
+       
+    self.name	= jsonAugment[ArvosKeyName];
+    self.author	= jsonAugment[ArvosKeyAuthor];
+    self.description = jsonAugment[ArvosKeyDescription];
     
-    NSAssert([jsonAugment isKindOfClass:NSDictionary.class], @"must decode NSArray from JSON");
-    
-    self.name	= jsonAugment[_keyName];
-    self.author	= jsonAugment[_keyAuthor];
-    self.description = jsonAugment[_keyDesc];
-    
-    NSArray* jsonPois = jsonAugment[@"pois"];
+    NSArray* jsonPois = jsonAugment[ArvosKeyPois];
     
     if (jsonPois == nil || [jsonPois count] == 0)
     {
-        return [@"ERNo pois found in augment " stringByAppendingString:self.name];
+        return [@"No pois found in augment " stringByAppendingString:self.name];
     }
     
     for (NSDictionary* dictionary in jsonPois) {
@@ -108,17 +95,17 @@ static NSString* _keyDevKey	= @"developerKey";
         if (newPoi != nil) {
             
             NSString* result = [newPoi parseFromDictionary:dictionary];
-            if (![@"OK" isEqualToString:result]) {
+            if (nil != result) {
                 
                 return result;
             }
             [mPois addObject:newPoi];
             
         } else {
-            NBLog(@"failed to init poi");
+            return @"Failed to init poi.";
         }
     }
-    return @"OK";
+    return nil;
 }
 
 - (CLLocationDegrees)longitude {

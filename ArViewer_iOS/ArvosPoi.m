@@ -28,13 +28,8 @@
 #import "ArvosPoi.h"
 #import "ArvosPoiObject.h"
 
-static NSString* _keyLon	= @"long";
-static NSString* _keyLat	= @"lat";
-static NSString* _keyDevKey	= @"developerKey";
-
 @interface ArvosPoi () {
 	Arvos*			mInstance;
-    ArvosAugment*   mParent;
 	NSMutableArray* mPoiObjects;
 }
 
@@ -45,7 +40,7 @@ static NSString* _keyDevKey	= @"developerKey";
 - (id)initWithAugment:(ArvosAugment*)augment {
     self = [super init];
 	if (self) {
-        mParent = augment;
+        self.parent = augment;
         mPoiObjects = [NSMutableArray array];
         mInstance = [Arvos sharedInstance];
 	}
@@ -54,50 +49,49 @@ static NSString* _keyDevKey	= @"developerKey";
 
 - (NSString*)parseFromDictionary:(NSDictionary*)inDictionary {
     
-    if ([inDictionary objectForKey:@"animationDuration"])
+    if ([inDictionary objectForKey:ArvosKeyAnimationDuration])
     {
-        self.animationDuration = (long)inDictionary[@"animationDuration"];
+        self.animationDuration = (long)inDictionary[ArvosKeyAnimationDuration];
     }
     else
     {
         self.animationDuration = 0;
     }
-    self.developerKey = inDictionary[_keyDevKey];
+    self.developerKey = inDictionary[ArvosKeyDeveloperKey];
     
-    if ([inDictionary objectForKey:_keyLat] && [inDictionary objectForKey:_keyLon])
+    if ([inDictionary objectForKey:ArvosKeyLat] && [inDictionary objectForKey:ArvosKeyLon])
     {
         CLLocationCoordinate2D c = {
-            .longitude = [inDictionary[_keyLon] doubleValue],
-            .latitude = [inDictionary[_keyLat] doubleValue]
+            .longitude = [inDictionary[ArvosKeyLon] doubleValue],
+            .latitude = [inDictionary[ArvosKeyLat] doubleValue]
         };
         self.coordinate = c;
     }
     
-    NSArray* jsonPoiObjects = inDictionary[@"poiObjects"];
+    NSArray* jsonPoiObjects = inDictionary[ArvosKeyPoiObjects];
     
     if (jsonPoiObjects == nil || [jsonPoiObjects count] == 0)
     {
-        return @"ERNo poiObjects found in poi.";
+        return @"No poiObjects found in poi.";
     }
     
     for (NSDictionary* dictionary in jsonPoiObjects) {
         
-        ArvosPoiObject* jsonPoiObject = [[ArvosPoiObject alloc] initWithPoi:self];
-        if (jsonPoiObject != nil) {
+        ArvosPoiObject* newPoiObject = [[ArvosPoiObject alloc] initWithPoi:self];
+        if (newPoiObject != nil) {
             
-            NSString* result = [jsonPoiObject parseFromDictionary:dictionary];
-            if (![@"OK" isEqualToString:result]) {
-                
+            NSString* result = [newPoiObject parseFromDictionary:dictionary];
+            if (nil != result) {
                 return result;
             }
-            [mPoiObjects addObject:jsonPoiObject];
+            [mPoiObjects addObject:newPoiObject];
             
         } else {
-            NBLog(@"failed to init poi");
+            return @"Failed to init poiObject.";
         }
     }
 
-    return @"OK";
+    return nil;
 }
 
 - (CLLocationDegrees)longitude {

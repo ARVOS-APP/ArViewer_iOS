@@ -28,17 +28,39 @@
 @class ArvosAugment;
 @class ArvosPoiObject;
 
+/**
+ * A poi - point of interest.
+ * <p>
+ * Contains a list of poiObjects.
+ * @author peter
+ */
 @interface ArvosPoi : NSObject
 
+/**
+ * Create a poi.
+ *
+ * @param poi
+ *            The augment the poi belongs to.
+ */
 - (id)initWithAugment:(ArvosAugment*)augment;
+
+/**
+ * Fills the properties of one poi by parsing a description in JSON
+ * format downloaded from the web.
+ *
+ * @param inDictionary
+ *            The poi description in JSON format.
+ * @return nil or an error message.
+ */
 - (NSString*)parseFromDictionary:(NSDictionary*)inDictionary;
 
 @property(strong) NSArray* poiObjects;
 
-@property long animationDuration;
-@property CLLocationDegrees longitude;
-@property CLLocationDegrees latitude;
-@property CLLocationCoordinate2D coordinate;
-@property(strong) NSString* developerKey;
+@property long                      animationDuration;
+@property CLLocationDegrees         longitude;
+@property CLLocationDegrees         latitude;
+@property CLLocationCoordinate2D    coordinate;
+@property(strong) NSString*         developerKey;
+@property(strong) ArvosAugment*     parent;
 
 @end

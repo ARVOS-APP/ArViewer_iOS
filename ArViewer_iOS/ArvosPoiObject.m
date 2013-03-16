@@ -28,27 +28,49 @@
 #import "ArvosPoiObject.h"
 
 @interface ArvosPoiObject () {
-	Arvos*		mInstance;
-    ArvosPoi*   mParent;
 }
 
 @end
 
+static int mNextId = 0;
+
 @implementation ArvosPoiObject
+
++ (int) getNextId {
+    return ++mNextId;
+}
 
 - (id)initWithPoi:(ArvosPoi*)poi {
     self = [super init];
 	if (self) {
-        mParent = poi;
-        mInstance = [Arvos sharedInstance];
+        self.id = [ArvosPoiObject getNextId];
+        self.parent = poi;
+        self.animationDuration = poi.animationDuration;
+        self.isActive = YES;
 	}
 	return self;
-    
 }
 
 - (NSString*)parseFromDictionary:(NSDictionary*)inDictionary {
+    self.texture = inDictionary[@"texture"];
+    self.name = inDictionary[ArvosKeyName];
+    self.billboardHandling = inDictionary[@"billboardHandling"];
     
-    return @"OK";
+    if (self.billboardHandling != nil
+        && ![ArvosBillboardHandlingNone isEqualToString:self.billboardHandling]
+        && ![ArvosBillboardHandlingCylinder isEqualToString:self.billboardHandling]
+        && ![ArvosBillboardHandlingSphere isEqualToString:self.billboardHandling])
+    {
+        return [@"Illegal value for billboardHandling: " stringByAppendingString:self.billboardHandling];
+    }
+    
+    self.startTime = [inDictionary objectForKey:@"startTime"] ? (long)inDictionary[@"startTime"] : 0;
+    self.animationDuration = [inDictionary objectForKey:@"duration"] ? (long)inDictionary[@"duration"] : 0;
+    self.loop = [inDictionary objectForKey:@"loop"] ? (BOOL)inDictionary[@"loop"] : NO;
+    self.isActive = [inDictionary objectForKey:@"isActive"] ? (BOOL)inDictionary[@"isActive"] : NO;
+    
+    
+    return nil;
 }
 
 @end

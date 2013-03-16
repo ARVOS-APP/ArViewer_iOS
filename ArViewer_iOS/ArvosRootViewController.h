@@ -30,8 +30,8 @@
                                                        UITableViewDataSource,
                                                        CLLocationManagerDelegate>
 
-@property (strong, nonatomic) IBOutlet UITableView *augmentsTableView;
+@property(strong, nonatomic) IBOutlet UITableView *augmentsTableView;
 
-@property(nonatomic, strong) CLLocationManager *myLocationManager;
+@property(strong, nonatomic) CLLocationManager *myLocationManager;
 
 @end

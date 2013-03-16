@@ -27,9 +27,60 @@
 
 @class ArvosPoi;
 
+/**
+ * A poi object as shown in the opengl view.
+ *
+ * @author peter
+ */
 @interface ArvosPoiObject : NSObject
 
+/**
+ * Create a poi object.
+ *
+ * @param poi
+ *            The poi the poi object belongs to.
+ */
 - (id)initWithPoi:(ArvosPoi*)poi;
+
+/**
+ * Fills the properties of one poiObject by parsing a description in JSON
+ * format downloaded from the web.
+ *
+ * @param inDictionary
+ *            The poiObject description in JSON format.
+ * @return nil or an error message.
+ */
 - (NSString*)parseFromDictionary:(NSDictionary*)inDictionary;
+
+@property int                       id;
+@property(strong) NSString*         name;
+@property(strong) NSString*         texture;
+@property(strong) NSString*         billboardHandling;
+
+@property long                      startTime;
+@property long                      animationDuration;
+
+@property BOOL                      loop;
+@property BOOL                      isActive;
+
+@property(strong) NSMutableArray*   onClickUrls;
+@property(strong) NSMutableArray*   onClickActivates;
+@property(strong) NSMutableArray*   onClickDeactivates;
+
+@property(strong) NSMutableArray*   onDurationEndUrls;
+@property(strong) NSMutableArray*   onDurationEndActivates;
+@property(strong) NSMutableArray*   onDurationEndDeactivates;
+
+@property ArvosPosition             startPosition;
+@property ArvosPosition             endPosition;
+
+@property ArvosScale                startScale;
+@property ArvosScale                endScale;
+
+@property ArvosRotation             startRotation;
+@property ArvosRotation             endRotation;
+
+@property long                      timeStarted;
+@property(strong) ArvosPoi*         parent;
 
 @end
