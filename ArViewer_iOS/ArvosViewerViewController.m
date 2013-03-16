@@ -25,11 +25,16 @@
 
 #import "ArvosViewerViewController.h"
 #import "ArvosCameraController.h"
-#import "EAGLView.h"
+#import "ArvosGlView.h"
+
+// CONSTANTS
+#define kAccelerometerFrequency		100.0 // Hz
+#define kFilteringFactor			0.1
 
 @interface ArvosViewerViewController ()
 {
-	EAGLView* mGlView;
+	ArvosGlView* mGlView;
+    UIAccelerationValue accel[3];
 }
 
 @end
@@ -68,8 +73,14 @@
 	rect.origin.x = rect.size.width / 2.f;
 	rect.origin.y = rect.size.height / 2.f;
 
-	mGlView = [[EAGLView alloc] initWithFrame:rect];
+	mGlView = [[ArvosGlView alloc] initWithFrame:rect];
 	[self.view.layer addSublayer:mGlView.layer];
+    
+    [mGlView startAnimation];
+	
+	//Configure and start accelerometer
+	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / kAccelerometerFrequency)];
+	[[UIAccelerometer sharedAccelerometer] setDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -81,4 +92,14 @@
 	return YES;
 }
 
+- (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
+{
+	//Use a basic low-pass filter to only keep the gravity in the accelerometer values
+	accel[0] = acceleration.x * kFilteringFactor + accel[0] * (1.0 - kFilteringFactor);
+	accel[1] = acceleration.y * kFilteringFactor + accel[1] * (1.0 - kFilteringFactor);
+	accel[2] = acceleration.z * kFilteringFactor + accel[2] * (1.0 - kFilteringFactor);
+	
+	//Update the accelerometer values for the view
+	[mGlView setAccel:accel];
+}
 @end

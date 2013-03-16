@@ -26,6 +26,7 @@
 #import <Foundation/Foundation.h>
 
 @class ArvosPoi;
+@class UIImage;
 
 /**
  * A poi object as shown in the opengl view.
@@ -55,6 +56,7 @@
 @property int                       id;
 @property(strong) NSString*         name;
 @property(strong) NSString*         texture;
+@property(strong) UIImage*          image;
 @property(strong) NSString*         billboardHandling;
 
 @property long                      startTime;

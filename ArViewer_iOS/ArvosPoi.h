@@ -54,7 +54,7 @@
  */
 - (NSString*)parseFromDictionary:(NSDictionary*)inDictionary;
 
-@property(strong) NSArray* poiObjects;
+@property(strong) NSMutableArray*   poiObjects;
 
 @property long                      animationDuration;
 @property CLLocationDegrees         longitude;

@@ -26,13 +26,14 @@
 #import "Arvos.h"
 #import "ArvosAugment.h"
 #import "ArvosPoi.h"
+#import "ArvosPoiObject.h"
 
 @interface ArvosAugment () {
 	Arvos*			mInstance;
 	NSMutableArray* mPois;
 }
 
-
+- (UIImage*)downloadTextureFromUrl:(NSString*)baseUrl ;
 
 @end
 
@@ -106,6 +107,42 @@
         }
     }
     return nil;
+}
+
+- (NSString*)downloadTexturesSynchronously {
+
+    for (ArvosPoi* poi in mPois) {
+        for (ArvosPoiObject* poiObject in poi.poiObjects) {
+            if (poiObject.image == nil && poiObject.texture != nil) {
+                poiObject.image = [self downloadTextureFromUrl:poiObject.texture];
+                if (poiObject.image == nil)
+                {
+                    return @"Failed to download texture.";
+                }
+                for (ArvosPoi* otherPoi in mPois) {
+                    for (ArvosPoiObject* otherPoiObject in otherPoi.poiObjects) {
+                        if (otherPoiObject.image == nil && [poiObject.texture isEqualToString:otherPoiObject.texture]) {
+                            otherPoiObject.image = poiObject.image;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return nil;
+}
+
+- (UIImage*)downloadTextureFromUrl:(NSString*)baseUrl {
+           
+	NSURL* url = [NSURL URLWithString:baseUrl];
+    if (url != nil) {
+        NSData *data = [NSData dataWithContentsOfURL:url];
+        if (data != nil) {
+            NBLog(@"Downloaded = %@", baseUrl);
+            return [[UIImage alloc] initWithData:data];
+        }
+    }
+	return nil;
 }
 
 - (CLLocationDegrees)longitude {

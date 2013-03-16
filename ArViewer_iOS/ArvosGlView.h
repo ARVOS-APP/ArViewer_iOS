@@ -1,5 +1,5 @@
 /*
- ArvosViewerViewController.h - ArViewer_iOS
+ ArvosGlView.h - ArViewer_iOS
  
  Copyright (C) 2013, Peter Graf
  
@@ -24,12 +24,19 @@
  */
 
 #import <UIKit/UIKit.h>
+#import <OpenGLES/EAGL.h>
+#import <OpenGLES/ES1/gl.h>
+#import <OpenGLES/ES1/glext.h>
 
-@class ArvosCameraController;
+@interface ArvosGlView : UIView
 
-@interface ArvosViewerViewController : UIViewController <UIAccelerometerDelegate>
+@property (readonly, nonatomic, getter=isAnimating) BOOL animating;
+@property (nonatomic) NSInteger animationFrameInterval;
 
-@property (nonatomic, strong) ArvosCameraController* cameraController;
-@property(nonatomic, strong) NSString* augmentName;
+@property (nonatomic) UIAccelerationValue *accel;
+
+-(void)startAnimation;
+-(void)stopAnimation;
+-(void)drawView;
 
 @end

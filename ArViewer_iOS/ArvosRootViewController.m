@@ -50,6 +50,8 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 
 - (void)onAugmentParseError:(NSString*)error
                 augmentName:(NSString*)augmentName;
+- (void)onTextureDownloadError:(NSString*)error
+                   augmentName:(NSString*)augmentName;
 - (void)onLocationServiceDisabled;
 - (void)onLocationServiceNeedsStart;
 - (void)createExampleAugmentsForLocation:(CLLocation*)location;
@@ -57,6 +59,7 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 - (void)failedHTTPResponse:(NSError*)error;
 - (void)downloadFileFromUrl:(NSString*)baseUrl;
 - (void)pushViewerController:(NSString*)paramAugmentName;
+- (void)disableAugmentsWithUrl:(NSString*)url;
 
 @end
 
@@ -251,6 +254,22 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
     });
 }
 
+- (void)onTextureDownloadError:(NSString*)error
+                augmentName:(NSString*)augmentName {
+    
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+        
+        NSString* message = error;
+        UIAlertView* alertView = [[UIAlertView alloc]
+                                  initWithTitle:[@"The following augment will be disabled: " stringByAppendingString:augmentName]
+                                  message:message
+                                  delegate:nil
+                                  cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+                                  otherButtonTitles:nil];
+        [alertView show];
+    });
+}
+
 - (void)onLocationServiceDisabled {
     
     dispatch_async(dispatch_get_main_queue(), ^(void) {
@@ -438,23 +457,16 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
         ArvosAugment* newAugment = [[ArvosAugment alloc] init];
         if (newAugment != nil)
         {
-            NSString* result = [newAugment parseFromData:data];
+            NSString* result = [newAugment parseFromData:data];               
             if (nil != result) {
                 [self onAugmentParseError:result augmentName:mAugmentName];
-                
-                NSMutableArray* augmentsToRemove = [NSMutableArray array];
-                for (ArvosAugment* augment in mAugments) {
-                    if ([baseUrl isEqualToString:augment.url])
-                    {
-                        [augmentsToRemove addObject:augment];
-                    }
-                }
-                for (ArvosAugment* augment in augmentsToRemove) {
-                    [mAugments removeObject:augment];
-                }
-                dispatch_async(dispatch_get_main_queue(), ^(void) {
-                    [self.augmentsTableView reloadData];
-                });
+                [self disableAugmentsWithUrl:baseUrl];
+                return;
+            }
+            result = [newAugment downloadTexturesSynchronously];
+            if (nil != result) {
+                [self onTextureDownloadError:result augmentName:mAugmentName];
+                [self disableAugmentsWithUrl:baseUrl];
                 return;
             }
         }
@@ -485,4 +497,19 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 	});
 }
 
+- (void)disableAugmentsWithUrl:(NSString*)url {
+    NSMutableArray* augmentsToRemove = [NSMutableArray array];
+    for (ArvosAugment* augment in mAugments) {
+        if ([url isEqualToString:augment.url])
+        {
+            [augmentsToRemove addObject:augment];
+        }
+    }
+    for (ArvosAugment* augment in augmentsToRemove) {
+        [mAugments removeObject:augment];
+    }
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+        [self.augmentsTableView reloadData];
+    });
+}
 @end

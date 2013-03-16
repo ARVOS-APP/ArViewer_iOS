@@ -65,6 +65,13 @@
  */
 - (NSString*)parseFromData:(NSData*)data;
 
+/**
+ * Synchronously downloads all texture of an augment.
+ *
+ * @return NIL if all images could be downloaded, or an error message otherwise
+ */
+- (NSString*)downloadTexturesSynchronously;
+
 @property(strong) NSString*           name;
 @property(strong) NSString*           url;
 @property(strong) NSString*           author;

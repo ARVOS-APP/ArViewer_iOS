@@ -30,7 +30,6 @@
 
 @interface ArvosPoi () {
 	Arvos*			mInstance;
-	NSMutableArray* mPoiObjects;
 }
 
 @end
@@ -41,7 +40,7 @@
     self = [super init];
 	if (self) {
         self.parent = augment;
-        mPoiObjects = [NSMutableArray array];
+        self.poiObjects = [NSMutableArray array];
         mInstance = [Arvos sharedInstance];
 	}
 	return self;
@@ -84,7 +83,7 @@
             if (nil != result) {
                 return result;
             }
-            [mPoiObjects addObject:newPoiObject];
+            [self.poiObjects addObject:newPoiObject];
             
         } else {
             return @"Failed to init poiObject.";

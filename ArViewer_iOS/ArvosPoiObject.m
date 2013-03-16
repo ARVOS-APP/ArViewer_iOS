@@ -62,6 +62,7 @@ static int mNextId = 0;
 - (NSString*)parseFromDictionary:(NSDictionary*)inDictionary {
     
     self.texture = inDictionary[@"texture"];
+    self.image = nil;
     self.name = inDictionary[ArvosKeyName];
     self.billboardHandling = inDictionary[@"billboardHandling"];
     
