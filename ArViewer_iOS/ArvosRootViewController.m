@@ -37,29 +37,32 @@
 static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 
 @interface ArvosRootViewController () {
-	Arvos*			mInstance;
-	NSMutableArray* mAugments;
-	int				errorNumber;
+	Arvos*			  mInstance;
+	NSMutableArray*   mAugments;
+	int				  errorNumber;
 	NSOperationQueue* mHTTPOpQueue;
+    NSString*         mAugmentName;
 }
 
 @end
 
 @interface ArvosRootViewController (Private)
 
+- (void)onAugmentParseError:(NSString*)error
+                augmentName:(NSString*)augmentName;
 - (void)onLocationServiceDisabled;
 - (void)onLocationServiceNeedsStart;
 - (void)createExampleAugmentsForLocation:(CLLocation*)location;
 - (void)successHTTPResponse:(NSString*)baseUrl responseData:(NSData*)data;
 - (void)failedHTTPResponse:(NSError*)error;
 - (void)downloadFileFromUrl:(NSString*)baseUrl;
+- (void)pushViewerController:(NSString*)paramAugmentName;
 
 @end
 
 @implementation ArvosRootViewController
 
 @synthesize myLocationManager;
-
 
 - (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil {
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -70,17 +73,6 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 		mHTTPOpQueue.maxConcurrentOperationCount = 1;
 	}
 	return self;
-}
-
-- (void)pushViewerController:(NSString*)paramAugmentName {
-	ArvosViewerViewController* viewerController = [[ArvosViewerViewController alloc]
-												   initWithNibName:nil
-															bundle:NULL];
-
-	viewerController.augmentName = paramAugmentName;
-
-	[self.navigationController pushViewController:viewerController
-										 animated:YES];
 }
 
 - (void)performEdit:(id)paramSender {
@@ -153,18 +145,12 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 
     ArvosAugment* augment = mAugments[indexPath.row];
     
-	NSString* augmentName = augment.name;
+	mAugmentName = augment.name;
     
     if (augment.url != nil)
     {
         [self downloadFileFromUrl:augment.url];
     }
-
-	[self pushViewerController:augmentName];
-
-	UITableViewCell* ownerCell = [tableView cellForRowAtIndexPath:indexPath];
-
-	NBLog(@"Cell Title = %@", ownerCell.textLabel.text);
 }
 
 #pragma mark CLLocationManagerDelegate --- methods
@@ -193,19 +179,6 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 
 // End --- CLLocationManagerDelegate --- methods
 
-- (void)onLocationServiceDisabled {
-	errorNumber = ERROR_NO_LOCATION_SERVICES;
-
-	NSString* message = @"Please enable location services under 'Settings > Privacy > Location Services' and try again.";
-	UIAlertView* alertView = [[UIAlertView alloc]
-							  initWithTitle:@"Location services are disabled!"
-										message:message
-									   delegate:nil
-							  cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
-							  otherButtonTitles:nil];
-	[alertView show];
-}
-
 - (void)viewDidAppear:(BOOL)paramAnimated {
 	[super viewDidAppear:paramAnimated];
 }
@@ -233,7 +206,7 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 		[[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 100.0f, 40.0f)];
 	imageView.contentMode = UIViewContentModeScaleAspectFit;
 	[imageView setImage:[UIImage imageNamed:@"arvos_logo_rgb.png"]];
-	// self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageView];
+	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageView];
 
 	// Create and set the two right bar buttons
 	//
@@ -262,17 +235,36 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 
 @implementation ArvosRootViewController (Private)
 
-- (void)onLocationServiceDisabled {
-	errorNumber = ERROR_NO_LOCATION_SERVICES;
+- (void)onAugmentParseError:(NSString*)error
+                augmentName:(NSString*)augmentName {
+    
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+     
+        NSString* message = [@"Parsing of the augment failed:" stringByAppendingString:error];
+        UIAlertView* alertView = [[UIAlertView alloc]
+                                 initWithTitle:[@"The following augment will be disabled: " stringByAppendingString:augmentName]
+                                 message:message
+                                 delegate:nil
+							     cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+							     otherButtonTitles:nil];
+        [alertView show];
+    });
+}
 
-	NSString* message = @"Please enable location services under 'Settings > Privacy > Location Services' and try again.";
-	UIAlertView* alertView = [[UIAlertView alloc]
-							  initWithTitle:@"Location services are disabled!"
-										message:message
-									   delegate:nil
-							  cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
-							  otherButtonTitles:nil];
-	[alertView show];
+- (void)onLocationServiceDisabled {
+    
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+        
+        errorNumber = ERROR_NO_LOCATION_SERVICES;
+        NSString* message = @"Please enable location services under 'Settings > Privacy > Location Services' and try again.";
+        UIAlertView* alertView = [[UIAlertView alloc]
+                                  initWithTitle:@"Location services are disabled!"
+                                  message:message
+                                  delegate:nil
+                                  cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+                                  otherButtonTitles:nil];
+        [alertView show];
+    });
 }
 
 - (void)onLocationServiceNeedsStart {
@@ -284,6 +276,17 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 	} else {
 		[self onLocationServiceDisabled];
 	}
+}
+
+- (void)pushViewerController:(NSString*)paramAugmentName {
+	ArvosViewerViewController* viewerController = [[ArvosViewerViewController alloc]
+												   initWithNibName:nil
+                                                   bundle:NULL];
+    
+	viewerController.augmentName = paramAugmentName;
+    
+	[self.navigationController pushViewController:viewerController
+										 animated:YES];
 }
 
 - (void)createExampleAugmentsForLocation:(CLLocation*)location {
@@ -387,60 +390,78 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 
 - (void)successHTTPResponse:(NSString*)baseUrl
                responseData:(NSData*)data {
-	dispatch_async(dispatch_get_main_queue(), ^(void) {
-		NSString* html = [[NSString alloc] initWithData:data
-											   encoding:NSUTF8StringEncoding];
-		NBLog(@"DATA = %@", html);
-
-        if ([baseUrl isEqualToString:mInstance.augmentsUrl])
+    
+	NSString* html = [[NSString alloc] initWithData:data
+                                           encoding:NSUTF8StringEncoding];
+	NBLog(@"DATA = %@", html);
+    
+    if ([baseUrl isEqualToString:mInstance.augmentsUrl])
+    {
+        [mAugments removeAllObjects];
+        
+        // TODO: this is quite unsafe. NSJSONSerialization is iOS 5 and above.
+        NSDictionary* jsonAugmentsList = [NSJSONSerialization JSONObjectWithData:data
+                                                                         options:0
+                                                                           error:nil];
+        NSAssert([jsonAugmentsList isKindOfClass:NSDictionary.class], @"must decode NSArray from JSON");
+        
+        NSString* redirect = jsonAugmentsList[@"redirect"];
+        if (redirect != nil)
         {
-            [mAugments removeAllObjects];
-            
-            // TODO: this is quite unsafe. NSJSONSerialization is iOS 5 and above.
-            NSDictionary* jsonAugmentsList = [NSJSONSerialization JSONObjectWithData:data
-                                                                             options:0
-                                                                               error:nil];
-            NSAssert([jsonAugmentsList isKindOfClass:NSDictionary.class], @"must decode NSArray from JSON");
-
-            NSString* redirect = jsonAugmentsList[@"redirect"];
-            if (redirect != nil)
-            {
-                [self downloadFileFromUrl:redirect];
+            [self downloadFileFromUrl:redirect];
+            return;
+        }
+        
+        mInstance.sessionId = jsonAugmentsList[@"sessionId"];
+        
+        for (NSDictionary* dictionary in jsonAugmentsList[@"augments"]) {
+            ArvosAugment* newAugment = [[ArvosAugment alloc] initWithDictionary:dictionary];
+            if (newAugment != nil) {
+                if( newAugment.url != nil)
+                {
+                    [mAugments addObject:newAugment];
+                }
+            } else {
+                [self onAugmentParseError:@"JSON parse failed." augmentName:@"Augment list."];
                 return;
             }
-            
-            mInstance.sessionId = jsonAugmentsList[@"sessionId"];
-            
-            for (NSDictionary* dictionary in jsonAugmentsList[@"augments"]) {
-                ArvosAugment* newAugment = [[ArvosAugment alloc] initWithDictionary:dictionary];
-                if (newAugment != nil) {
-                    if( newAugment.url != nil)
-                    {
-                        [mAugments addObject:newAugment];
-                    }
-                } else {
-                    NBLog(@"failed to decode augment from dictionary: %@", dictionary.description);
-                    return;
-                }
-            }
-
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^(void) {
             [self.augmentsTableView reloadData];
-        }
-        else
+        });
+    }
+    else
+    {
+        // received the contents of an augment
+        //
+        ArvosAugment* newAugment = [[ArvosAugment alloc] init];
+        if (newAugment != nil)
         {
-            // received the contents of an augment
-            //
-            ArvosAugment* newAugment = [[ArvosAugment alloc] init];
-            if(newAugment != nil)
-            {
-                NSString* result = [newAugment parseFromData:data];
-                if (nil != result) {
-                    NBLog(@"failed to decode augment from data: %@", data.description);
-                    return;
+            NSString* result = [newAugment parseFromData:data];
+            if (nil != result) {
+                [self onAugmentParseError:result augmentName:mAugmentName];
+                
+                NSMutableArray* augmentsToRemove = [NSMutableArray array];
+                for (ArvosAugment* augment in mAugments) {
+                    if ([baseUrl isEqualToString:augment.url])
+                    {
+                        [augmentsToRemove addObject:augment];
+                    }
                 }
+                for (ArvosAugment* augment in augmentsToRemove) {
+                    [mAugments removeObject:augment];
+                }
+                dispatch_async(dispatch_get_main_queue(), ^(void) {
+                    [self.augmentsTableView reloadData];
+                });
+                return;
             }
         }
-	});
+        dispatch_async(dispatch_get_main_queue(), ^(void) {
+            [self pushViewerController:newAugment.name];
+        });
+    }
 }
 
 - (void)failedHTTPResponse:(NSError*)error {
