@@ -71,14 +71,31 @@
 @property(strong) NSMutableArray*   onDurationEndActivates;
 @property(strong) NSMutableArray*   onDurationEndDeactivates;
 
-@property ArvosPosition             startPosition;
-@property ArvosPosition             endPosition;
+@property ArvosFloat                startPositionX;
+@property ArvosFloat                startPositionY;
+@property ArvosFloat                startPositionZ;
 
-@property ArvosScale                startScale;
-@property ArvosScale                endScale;
+@property ArvosFloat                endPositionX;
+@property ArvosFloat                endPositionY;
+@property ArvosFloat                endPositionZ;
 
-@property ArvosRotation             startRotation;
-@property ArvosRotation             endRotation;
+@property ArvosFloat                startScaleX;
+@property ArvosFloat                startScaleY;
+@property ArvosFloat                startScaleZ;
+
+@property ArvosFloat                endScaleX;
+@property ArvosFloat                endScaleY;
+@property ArvosFloat                endScaleZ;
+
+@property ArvosFloat                startRotationX;
+@property ArvosFloat                startRotationY;
+@property ArvosFloat                startRotationZ;
+@property ArvosFloat                startRotationA;
+
+@property ArvosFloat                endRotationX;
+@property ArvosFloat                endRotationY;
+@property ArvosFloat                endRotationZ;
+@property ArvosFloat                endRotationA;
 
 @property long                      timeStarted;
 @property(strong) ArvosPoi*         parent;

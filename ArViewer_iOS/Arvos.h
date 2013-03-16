@@ -42,9 +42,7 @@
 #define ArvosBillboardHandlingCylinder    @"cylinder"
 #define ArvosBillboardHandlingSphere      @"sphere"
 
-typedef double*                           ArvosPosition;
-typedef double*                           ArvosScale;
-typedef double*                           ArvosRotation;
+typedef float ArvosFloat;
 
 @interface Arvos : NSObject
 
