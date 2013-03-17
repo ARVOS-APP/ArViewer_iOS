@@ -67,13 +67,7 @@
 	[[self.view layer] addSublayer:[self.cameraController previewLayer]];
 	[[self.cameraController captureSession] startRunning];
 
-	CGRect rect = self.view.bounds;
-	rect.size.width /= 2.f;
-	rect.size.height /= 2.f;
-	rect.origin.x = rect.size.width / 2.f;
-	rect.origin.y = rect.size.height / 2.f;
-
-	mGlView = [[ArvosGlView alloc] initWithFrame:rect];
+	mGlView = [[ArvosGlView alloc] initWithFrame:self.view.bounds];
 	[self.view.layer addSublayer:mGlView.layer];
     
     [mGlView startAnimation];

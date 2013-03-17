@@ -33,10 +33,9 @@
 @property (readonly, nonatomic, getter=isAnimating) BOOL animating;
 @property (nonatomic) NSInteger animationFrameInterval;
 
-@property (nonatomic) UIAccelerationValue *accel;
-
 -(void)startAnimation;
 -(void)stopAnimation;
 -(void)drawView;
+-(void)setAccel:(UIAccelerationValue*)newAccel;
 
 @end

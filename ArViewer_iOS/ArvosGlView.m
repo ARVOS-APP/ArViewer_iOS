@@ -59,7 +59,7 @@
 	id displayLink;
     NSTimer *animationTimer;
 	
-	UIAccelerationValue	*accel;
+	UIAccelerationValue	accel[3];
 }
 
 @end
@@ -77,7 +77,6 @@
 
 @synthesize animating;
 @dynamic animationFrameInterval;
-@synthesize accel;
 
 // Implement this to override the default layer class (which is [CALayer class]).
 // We do this so that our view will be backed by a layer that is capable of OpenGL ES rendering.
@@ -119,7 +118,7 @@
 		if ([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending)
 			displayLinkSupported = TRUE;
 		
-		accel = calloc(3, sizeof(UIAccelerationValue));
+        accel[0] = accel[1] = accel[2] = 0;
 		
 		[self setupView];
 	}
@@ -369,14 +368,10 @@
 	}
 }
 
-- (void)dealloc
-{
-	free(accel);
-	
-	if([EAGLContext currentContext] == context)
-	{
-		[EAGLContext setCurrentContext:nil];
-	}
+-(void)setAccel:(UIAccelerationValue*)newAccel {
+    accel[0] = newAccel[0];
+    accel[1] = newAccel[1];
+    accel[2] = newAccel[2];
 }
 
 @end
