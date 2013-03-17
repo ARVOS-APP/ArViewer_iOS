@@ -43,6 +43,13 @@
 
 @synthesize augmentName;
 
+- (void)dealloc {
+	mGlView = nil;
+	[self.cameraController.captureSession stopRunning];
+	[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
+}
+
+
 - (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil {
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 	if (self) {
