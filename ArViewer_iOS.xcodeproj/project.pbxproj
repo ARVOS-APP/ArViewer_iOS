@@ -17,18 +17,11 @@
 		61CB8C2316E9F905002002A9 /* ArvosRootViewController-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61CB8C2116E9F905002002A9 /* ArvosRootViewController-iPhone.xib */; };
 		D0251A1416E3BFDB00800246 /* ArvosCameraController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0251A1316E3BFDB00800246 /* ArvosCameraController.m */; };
 		D0251A1616E3C24800800246 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0251A1516E3C24800800246 /* AVFoundation.framework */; };
-		D0251A1916E3C51E00800246 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0251A1816E3C51E00800246 /* EAGLView.m */; };
-		D0251A1C16E3C54C00800246 /* ES2Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = D0251A1B16E3C54C00800246 /* ES2Renderer.m */; };
-		D0251A1F16E3C56A00800246 /* OpenGLRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = D0251A1E16E3C56A00800246 /* OpenGLRenderer.m */; };
-		D0251A2B16E3C59F00800246 /* sourceUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = D0251A2016E3C59E00800246 /* sourceUtil.c */; };
 		D0251A2C16E3C59F00800246 /* vectorUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = D0251A2216E3C59E00800246 /* vectorUtil.c */; };
-		D0251A2D16E3C59F00800246 /* modelUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = D0251A2416E3C59E00800246 /* modelUtil.c */; };
 		D0251A2E16E3C59F00800246 /* matrixUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = D0251A2616E3C59E00800246 /* matrixUtil.c */; };
 		D0251A2F16E3C59F00800246 /* imageUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D0251A2816E3C59E00800246 /* imageUtil.m */; };
 		D0251A3116E3C5D400800246 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0251A3016E3C5D400800246 /* OpenGLES.framework */; };
 		D0251A3316E3C61400800246 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0251A3216E3C61400800246 /* QuartzCore.framework */; };
-		D0251A3716E3CE1A00800246 /* demon.png in Resources */ = {isa = PBXBuildFile; fileRef = D0251A3516E3CE1A00800246 /* demon.png */; };
-		D0251A3816E3CE1A00800246 /* demon.model in Resources */ = {isa = PBXBuildFile; fileRef = D0251A3616E3CE1A00800246 /* demon.model */; };
 		D0251A3D16E3CE5600800246 /* reflect.vsh in Sources */ = {isa = PBXBuildFile; fileRef = D0251A3916E3CE5600800246 /* reflect.vsh */; };
 		D0251A3E16E3CE5600800246 /* reflect.fsh in Sources */ = {isa = PBXBuildFile; fileRef = D0251A3A16E3CE5600800246 /* reflect.fsh */; };
 		D0251A3F16E3CE5600800246 /* character.vsh in Sources */ = {isa = PBXBuildFile; fileRef = D0251A3B16E3CE5600800246 /* character.vsh */; };
@@ -70,18 +63,8 @@
 		D0251A1216E3BFDB00800246 /* ArvosCameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArvosCameraController.h; sourceTree = "<group>"; };
 		D0251A1316E3BFDB00800246 /* ArvosCameraController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArvosCameraController.m; sourceTree = "<group>"; };
 		D0251A1516E3C24800800246 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		D0251A1716E3C51E00800246 /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
-		D0251A1816E3C51E00800246 /* EAGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EAGLView.m; sourceTree = "<group>"; };
-		D0251A1A16E3C54C00800246 /* ES2Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ES2Renderer.h; sourceTree = "<group>"; };
-		D0251A1B16E3C54C00800246 /* ES2Renderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ES2Renderer.m; sourceTree = "<group>"; };
-		D0251A1D16E3C56A00800246 /* OpenGLRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLRenderer.h; sourceTree = "<group>"; };
-		D0251A1E16E3C56A00800246 /* OpenGLRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenGLRenderer.m; sourceTree = "<group>"; };
-		D0251A2016E3C59E00800246 /* sourceUtil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sourceUtil.c; sourceTree = "<group>"; };
-		D0251A2116E3C59E00800246 /* sourceUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sourceUtil.h; sourceTree = "<group>"; };
 		D0251A2216E3C59E00800246 /* vectorUtil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vectorUtil.c; sourceTree = "<group>"; };
 		D0251A2316E3C59E00800246 /* vectorUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vectorUtil.h; sourceTree = "<group>"; };
-		D0251A2416E3C59E00800246 /* modelUtil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = modelUtil.c; sourceTree = "<group>"; };
-		D0251A2516E3C59E00800246 /* modelUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modelUtil.h; sourceTree = "<group>"; };
 		D0251A2616E3C59E00800246 /* matrixUtil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = matrixUtil.c; sourceTree = "<group>"; };
 		D0251A2716E3C59E00800246 /* matrixUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrixUtil.h; sourceTree = "<group>"; };
 		D0251A2816E3C59E00800246 /* imageUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = imageUtil.m; sourceTree = "<group>"; };
@@ -89,15 +72,12 @@
 		D0251A2A16E3C59E00800246 /* glUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glUtil.h; sourceTree = "<group>"; };
 		D0251A3016E3C5D400800246 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		D0251A3216E3C61400800246 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		D0251A3516E3CE1A00800246 /* demon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = demon.png; sourceTree = "<group>"; };
-		D0251A3616E3CE1A00800246 /* demon.model */ = {isa = PBXFileReference; lastKnownFileType = file; path = demon.model; sourceTree = "<group>"; };
 		D0251A3916E3CE5600800246 /* reflect.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = reflect.vsh; sourceTree = "<group>"; };
 		D0251A3A16E3CE5600800246 /* reflect.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = reflect.fsh; sourceTree = "<group>"; };
 		D0251A3B16E3CE5600800246 /* character.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = character.vsh; sourceTree = "<group>"; };
 		D0251A3C16E3CE5600800246 /* character.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = character.fsh; sourceTree = "<group>"; };
 		D040EB5C16F4DFA5000DE34A /* ArvosGlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArvosGlView.h; sourceTree = "<group>"; };
 		D040EB5D16F4DFA5000DE34A /* ArvosGlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArvosGlView.m; sourceTree = "<group>"; };
-		D040EB5F16F4E10F000DE34A /* teapot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = teapot.h; sourceTree = "<group>"; };
 		D0424C6216E40E8A005A7815 /* ArvosAugment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArvosAugment.h; path = Viewer/ArvosAugment.h; sourceTree = "<group>"; };
 		D0424C6316E40E8A005A7815 /* ArvosAugment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArvosAugment.m; path = Viewer/ArvosAugment.m; sourceTree = "<group>"; };
 		D04E7FA416F6054E000ECF75 /* ArvosSquare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArvosSquare.h; sourceTree = "<group>"; };
@@ -164,8 +144,6 @@
 			children = (
 				D0F50B2116E366A200B0E66A /* ArvosRootViewController.h */,
 				D0F50B2216E366A200B0E66A /* ArvosRootViewController.m */,
-				D0F50B2416E3760F00B0E66A /* ArvosViewerViewController.h */,
-				D0F50B2516E3760F00B0E66A /* ArvosViewerViewController.m */,
 				61CB8C2116E9F905002002A9 /* ArvosRootViewController-iPhone.xib */,
 			);
 			name = ViewControllers;
@@ -197,8 +175,6 @@
 				D0251A3A16E3CE5600800246 /* reflect.fsh */,
 				D0251A3B16E3CE5600800246 /* character.vsh */,
 				D0251A3C16E3CE5600800246 /* character.fsh */,
-				D0251A3516E3CE1A00800246 /* demon.png */,
-				D0251A3616E3CE1A00800246 /* demon.model */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -208,11 +184,10 @@
 			children = (
 				D040EB5C16F4DFA5000DE34A /* ArvosGlView.h */,
 				D040EB5D16F4DFA5000DE34A /* ArvosGlView.m */,
-				D040EB5F16F4E10F000DE34A /* teapot.h */,
-				D04E7FA416F6054E000ECF75 /* ArvosSquare.h */,
-				D04E7FA516F6054E000ECF75 /* ArvosSquare.m */,
 				D04E7FA716F605F8000ECF75 /* ArvosObject.h */,
 				D04E7FA816F605F8000ECF75 /* ArvosObject.m */,
+				D04E7FA416F6054E000ECF75 /* ArvosSquare.h */,
+				D04E7FA516F6054E000ECF75 /* ArvosSquare.m */,
 			);
 			name = OpenGl;
 			sourceTree = "<group>";
@@ -221,6 +196,10 @@
 			isa = PBXGroup;
 			children = (
 				D040EB5B16F4DF11000DE34A /* OpenGl */,
+				D0251A1216E3BFDB00800246 /* ArvosCameraController.h */,
+				D0251A1316E3BFDB00800246 /* ArvosCameraController.m */,
+				D0F50B2416E3760F00B0E66A /* ArvosViewerViewController.h */,
+				D0F50B2516E3760F00B0E66A /* ArvosViewerViewController.m */,
 				D0424C6216E40E8A005A7815 /* ArvosAugment.h */,
 				D0424C6316E40E8A005A7815 /* ArvosAugment.m */,
 				D056188E16F37DD000C701F3 /* ArvosPoi.h */,
@@ -229,6 +208,20 @@
 				D056189216F3802300C701F3 /* ArvosPoiObject.m */,
 			);
 			name = Viewer;
+			sourceTree = "<group>";
+		};
+		D04E7FAA16F675EE000ECF75 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				D0251A2A16E3C59E00800246 /* glUtil.h */,
+				D0251A2616E3C59E00800246 /* matrixUtil.c */,
+				D0251A2716E3C59E00800246 /* matrixUtil.h */,
+				D0251A2816E3C59E00800246 /* imageUtil.m */,
+				D0251A2916E3C59E00800246 /* imageUtil.h */,
+				D0251A2216E3C59E00800246 /* vectorUtil.c */,
+				D0251A2316E3C59E00800246 /* vectorUtil.h */,
+			);
+			name = Util;
 			sourceTree = "<group>";
 		};
 		D0F50AF416E362BB00B0E66A = {
@@ -269,32 +262,14 @@
 			isa = PBXGroup;
 			children = (
 				D0424C5E16E40D25005A7815 /* Viewer */,
-				D0251A3416E3CDA700800246 /* Resources */,
-				D0F50B0F16E362BB00B0E66A /* ArvosAppDelegate.h */,
-				D0F50B1016E362BB00B0E66A /* ArvosAppDelegate.m */,
-				D0F50B0716E362BB00B0E66A /* Supporting Files */,
 				61CB8C0516E9E416002002A9 /* ViewControllers */,
-				D0251A1216E3BFDB00800246 /* ArvosCameraController.h */,
-				D0251A1316E3BFDB00800246 /* ArvosCameraController.m */,
-				D0251A1A16E3C54C00800246 /* ES2Renderer.h */,
-				D0251A1B16E3C54C00800246 /* ES2Renderer.m */,
-				D0251A1D16E3C56A00800246 /* OpenGLRenderer.h */,
-				D0251A1E16E3C56A00800246 /* OpenGLRenderer.m */,
-				D0251A1716E3C51E00800246 /* EAGLView.h */,
-				D0251A1816E3C51E00800246 /* EAGLView.m */,
-				D0251A2016E3C59E00800246 /* sourceUtil.c */,
-				D0251A2116E3C59E00800246 /* sourceUtil.h */,
-				D0251A2216E3C59E00800246 /* vectorUtil.c */,
-				D0251A2316E3C59E00800246 /* vectorUtil.h */,
-				D0251A2416E3C59E00800246 /* modelUtil.c */,
-				D0251A2516E3C59E00800246 /* modelUtil.h */,
-				D0251A2616E3C59E00800246 /* matrixUtil.c */,
-				D0251A2716E3C59E00800246 /* matrixUtil.h */,
-				D0251A2816E3C59E00800246 /* imageUtil.m */,
-				D0251A2916E3C59E00800246 /* imageUtil.h */,
-				D0251A2A16E3C59E00800246 /* glUtil.h */,
 				D051C7AE16E932B10006B8AF /* Arvos.h */,
 				D051C7AF16E932B10006B8AF /* Arvos.m */,
+				D0F50B0F16E362BB00B0E66A /* ArvosAppDelegate.h */,
+				D0F50B1016E362BB00B0E66A /* ArvosAppDelegate.m */,
+				D0251A3416E3CDA700800246 /* Resources */,
+				D0F50B0716E362BB00B0E66A /* Supporting Files */,
+				D04E7FAA16F675EE000ECF75 /* Util */,
 			);
 			path = ArViewer_iOS;
 			sourceTree = "<group>";
@@ -403,8 +378,6 @@
 				D0F50B1516E362BB00B0E66A /* Default@2x.png in Resources */,
 				D0F50B1716E362BB00B0E66A /* Default-568h@2x.png in Resources */,
 				D0F50B2816E37D2C00B0E66A /* arvos_logo_rgb.png in Resources */,
-				D0251A3716E3CE1A00800246 /* demon.png in Resources */,
-				D0251A3816E3CE1A00800246 /* demon.model in Resources */,
 				61CB8C2216E9F905002002A9 /* ArvosRootViewController-iPhone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -446,12 +419,7 @@
 				D0F50B2316E366A200B0E66A /* ArvosRootViewController.m in Sources */,
 				D0F50B2616E3760F00B0E66A /* ArvosViewerViewController.m in Sources */,
 				D0251A1416E3BFDB00800246 /* ArvosCameraController.m in Sources */,
-				D0251A1916E3C51E00800246 /* EAGLView.m in Sources */,
-				D0251A1C16E3C54C00800246 /* ES2Renderer.m in Sources */,
-				D0251A1F16E3C56A00800246 /* OpenGLRenderer.m in Sources */,
-				D0251A2B16E3C59F00800246 /* sourceUtil.c in Sources */,
 				D0251A2C16E3C59F00800246 /* vectorUtil.c in Sources */,
-				D0251A2D16E3C59F00800246 /* modelUtil.c in Sources */,
 				D0251A2E16E3C59F00800246 /* matrixUtil.c in Sources */,
 				D0251A2F16E3C59F00800246 /* imageUtil.m in Sources */,
 				D0251A3D16E3CE5600800246 /* reflect.vsh in Sources */,

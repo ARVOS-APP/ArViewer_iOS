@@ -241,7 +241,6 @@ static int mNextId = 0;
 - (ArvosObject*)findArvosObject:(NSMutableArray*)arvosObjects {
     for( ArvosObject* arvosObject in arvosObjects) {
         if (arvosObject.id == self.id) {
-            [arvosObjects removeObject:arvosObject];
             return arvosObject;
         }
     }
