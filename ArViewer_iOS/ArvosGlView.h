@@ -28,11 +28,15 @@
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 
+@class ArvosAugment;
+
 @interface ArvosGlView : UIView
 
 @property (readonly, nonatomic, getter=isAnimating) BOOL animating;
 @property (nonatomic) NSInteger animationFrameInterval;
 
+- (id) initWithFrame:(CGRect)frame
+          andAugment:(ArvosAugment*)augment;
 -(void)startAnimation;
 -(void)stopAnimation;
 -(void)drawView;

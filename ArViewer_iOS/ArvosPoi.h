@@ -54,6 +54,10 @@
  */
 - (NSString*)parseFromDictionary:(NSDictionary*)inDictionary;
 
+- (void)getObjectsAtCurrentTime:(long)time
+                    arrayToFill:(NSMutableArray*)resultObjects
+                existingObjects:(NSMutableArray*)arvosObjects;
+
 @property(strong) NSMutableArray*   poiObjects;
 
 @property long                      animationDuration;

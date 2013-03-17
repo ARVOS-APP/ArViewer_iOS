@@ -27,6 +27,7 @@
 #import "ArvosAugment.h"
 #import "ArvosPoi.h"
 #import "ArvosPoiObject.h"
+#import "ArvosObject.h"
 
 @interface ArvosPoi () {
 	Arvos*			mInstance;
@@ -111,6 +112,19 @@
 	CLLocationCoordinate2D c = self.coordinate;
 	c.latitude = latitude;
 	self.coordinate = c;
+}
+
+- (void)getObjectsAtCurrentTime:(long)time
+                    arrayToFill:(NSMutableArray*)resultObjects
+                existingObjects:(NSMutableArray*)arvosObjects {
+    
+    for (ArvosPoiObject* poiObject in self.poiObjects) {
+        
+        ArvosObject* arvosObject = [poiObject getObjectAtCurrentTime:time existingObjects:arvosObjects];
+        if (arvosObject != nil) {
+            [resultObjects addObject:arvosObject];
+        }
+    }
 }
 
 @end

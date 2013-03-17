@@ -1,5 +1,5 @@
 /*
- ArvosViewerViewController.h - ArViewer_iOS
+ ArvosObject.m - ArViewer_iOS
  
  Copyright (C) 2013, Peter Graf
  
@@ -23,16 +23,34 @@
  please see: http://www.mission-base.com/.
  */
 
-#import <UIKit/UIKit.h>
+#import "ArvosObject.h"
+#import "Arvos.h"
 
-@class ArvosCameraController;
-@class ArvosAugment;
+@interface ArvosObject () {
+    Arvos*	mInstance;
+    BOOL    mTextureLoaded;
+    
+    GLfloat mPosition[3];
+	GLfloat mScale[3];
+	GLfloat mRotation[4];
+}
+@end
 
-@interface ArvosViewerViewController : UIViewController <UIAccelerometerDelegate>
+@implementation ArvosObject
 
-- (id)initWithAugment:(ArvosAugment*)augment;
+-(id)initWithId:(int)idParameter {
+    self = [super init];
+	if (self) {
+        self.id = idParameter;
+        
+        mInstance = [Arvos sharedInstance];
+        mTextureLoaded = NO;
+	}
+	return self;
+}
 
-@property (nonatomic, strong) ArvosCameraController* cameraController;
-@property(nonatomic, strong) ArvosAugment* augment;
+- (GLfloat*)getPosition{ return mPosition; }
+- (GLfloat*)getScale{ return mScale; }
+- (GLfloat*)getRotation{ return mRotation; }
 
 @end

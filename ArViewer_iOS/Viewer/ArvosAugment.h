@@ -72,6 +72,10 @@
  */
 - (NSString*)downloadTexturesSynchronously;
 
+- (void)getObjectsAtCurrentTime:(long)time
+                    arrayToFill:(NSMutableArray*)resultObjects
+                existingObjects:(NSMutableArray*)arvosObjects;
+
 @property(strong) NSString*           name;
 @property(strong) NSString*           url;
 @property(strong) NSString*           author;

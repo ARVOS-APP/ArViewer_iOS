@@ -42,8 +42,6 @@
 #define ArvosBillboardHandlingCylinder    @"cylinder"
 #define ArvosBillboardHandlingSphere      @"sphere"
 
-typedef float ArvosFloat;
-
 @interface Arvos : NSObject
 
 @property BOOL                            isAuthor;

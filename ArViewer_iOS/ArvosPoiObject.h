@@ -26,6 +26,7 @@
 #import <Foundation/Foundation.h>
 
 @class ArvosPoi;
+@class ArvosObject;
 @class UIImage;
 
 /**
@@ -53,6 +54,16 @@
  */
 - (NSString*)parseFromDictionary:(NSDictionary*)inDictionary;
 
+- (GLfloat*)getStartPosition;
+- (GLfloat*)getEndPosition;
+- (GLfloat*)getStartScale;
+- (GLfloat*)getEndScale;
+- (GLfloat*)getStartRotation;
+- (GLfloat*)getEndRotation;
+
+- (ArvosObject*)getObjectAtCurrentTime:(long)time
+                existingObjects:(NSMutableArray*)arvosObjects;
+
 @property int                       id;
 @property(strong) NSString*         name;
 @property(strong) NSString*         texture;
@@ -72,32 +83,6 @@
 @property(strong) NSMutableArray*   onDurationEndUrls;
 @property(strong) NSMutableArray*   onDurationEndActivates;
 @property(strong) NSMutableArray*   onDurationEndDeactivates;
-
-@property ArvosFloat                startPositionX;
-@property ArvosFloat                startPositionY;
-@property ArvosFloat                startPositionZ;
-
-@property ArvosFloat                endPositionX;
-@property ArvosFloat                endPositionY;
-@property ArvosFloat                endPositionZ;
-
-@property ArvosFloat                startScaleX;
-@property ArvosFloat                startScaleY;
-@property ArvosFloat                startScaleZ;
-
-@property ArvosFloat                endScaleX;
-@property ArvosFloat                endScaleY;
-@property ArvosFloat                endScaleZ;
-
-@property ArvosFloat                startRotationX;
-@property ArvosFloat                startRotationY;
-@property ArvosFloat                startRotationZ;
-@property ArvosFloat                startRotationA;
-
-@property ArvosFloat                endRotationX;
-@property ArvosFloat                endRotationY;
-@property ArvosFloat                endRotationZ;
-@property ArvosFloat                endRotationA;
 
 @property long                      timeStarted;
 @property(strong) ArvosPoi*         parent;

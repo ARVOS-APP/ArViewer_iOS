@@ -26,17 +26,33 @@
 #import "Arvos.h"
 #import "ArvosPoi.h"
 #import "ArvosPoiObject.h"
+#import "ArvosObject.h"
 
 @interface ArvosPoiObject () {
+    
+    GLfloat mStartPosition[3];
+    GLfloat mEndPosition[3];
+    
+	GLfloat mStartScale[3];
+	GLfloat mEndScale[3];
+    
+	GLfloat mStartRotation[4];
+	GLfloat mEndRotation[4];
+    
+    long mWorldStartTime;
+	long mWorldIteration;
+
 }
 
 - (void)parseVec3f:(NSDictionary*)inDictionary
               name:(NSString*)name
-            buffer:(ArvosFloat*)buffer;
+            buffer:(GLfloat*)buffer;
 
 - (void)parseVec4f:(NSDictionary*)inDictionary
               name:(NSString*)name
-            buffer:(ArvosFloat*)buffer;
+            buffer:(GLfloat*)buffer;
+
+- (ArvosObject*)findArvosObject:(NSMutableArray*)arvosObjects;
 
 @end
 
@@ -55,6 +71,9 @@ static int mNextId = 0;
         self.parent = poi;
         self.animationDuration = poi.animationDuration;
         self.isActive = YES;
+        
+        mWorldIteration = (long)-1;
+        mWorldStartTime = (long)-1;
 	}
 	return self;
 }
@@ -79,50 +98,29 @@ static int mNextId = 0;
     self.loop = [inDictionary objectForKey:@"loop"] ? (BOOL)inDictionary[@"loop"] : NO;
     self.isActive = [inDictionary objectForKey:@"isActive"] ? (BOOL)inDictionary[@"isActive"] : NO;
     
-    ArvosFloat buffer[4];
     [self parseVec3f:inDictionary
                 name:@"startPosition"
-              buffer:buffer];
-    self.startPositionX = buffer[0];
-    self.startPositionY = buffer[1];
-    self.startPositionZ = buffer[2];
+              buffer:mStartPosition];
     
     [self parseVec3f:inDictionary
                 name:@"endPosition"
-              buffer:buffer];
-    self.endPositionX = buffer[0];
-    self.endPositionY = buffer[1];
-    self.endPositionZ = buffer[2];
+              buffer:mEndPosition];
     
     [self parseVec3f:inDictionary
                 name:@"startScale"
-              buffer:buffer];
-    self.startScaleX = buffer[0];
-    self.startScaleY = buffer[1];
-    self.startScaleZ = buffer[2];
+              buffer:mStartScale];
     
     [self parseVec3f:inDictionary
                 name:@"endScale"
-              buffer:buffer];
-    self.endScaleX = buffer[0];
-    self.endScaleY = buffer[1];
-    self.endScaleZ = buffer[2];
+              buffer:mEndScale];
     
     [self parseVec4f:inDictionary
                 name:@"startRotation"
-              buffer:buffer];
-    self.startRotationX = buffer[0];
-    self.startRotationY = buffer[1];
-    self.startRotationZ = buffer[2];
-    self.startRotationA = buffer[3];
+              buffer:mStartRotation];
     
     [self parseVec4f:inDictionary
                 name:@"endRotation"
-              buffer:buffer];
-    self.endRotationX = buffer[0];
-    self.endRotationY = buffer[1];
-    self.endRotationZ = buffer[2];
-    self.endRotationA = buffer[3];
+              buffer:mEndRotation];
 
     NSArray * jsonArray = [inDictionary objectForKey:@"onClick"];
     if (jsonArray != nil) {
@@ -184,7 +182,7 @@ static int mNextId = 0;
 
 - (void)parseVec3f:(NSDictionary*)inDictionary
               name:(NSString*)name
-            buffer:(ArvosFloat*)buffer {
+            buffer:(GLfloat*)buffer {
     
     buffer[0] = 0.;
     buffer[1] = 0.;
@@ -195,20 +193,20 @@ static int mNextId = 0;
         
         for (NSDictionary* dictionary in jsonArray) {
             id value = [dictionary objectForKey:@"x"];
-            buffer[0] = (ArvosFloat)((value != nil ) ? (ArvosFloat)[value doubleValue] : 0.);
+            buffer[0] = (GLfloat)((value != nil) ? (GLfloat)[value doubleValue] : 0.);
             
             value = [dictionary objectForKey:@"y"];
-            buffer[1] = (ArvosFloat)((value != nil ) ? (ArvosFloat)[value doubleValue] : 0.);
+            buffer[1] = (GLfloat)((value != nil) ? (GLfloat)[value doubleValue] : 0.);
             
             value = [dictionary objectForKey:@"z"];
-            buffer[2] = (ArvosFloat)((value != nil ) ? (ArvosFloat)[value doubleValue] : 0.);
+            buffer[2] = (GLfloat)((value != nil) ? (GLfloat)[value doubleValue] : 0.);
         }
     }
 }
 
 - (void)parseVec4f:(NSDictionary*)inDictionary
               name:(NSString*)name
-            buffer:(ArvosFloat*)buffer {
+            buffer:(GLfloat*)buffer {
     
     buffer[0] = 0.;
     buffer[1] = 0.;
@@ -220,18 +218,74 @@ static int mNextId = 0;
         
         for (NSDictionary* dictionary in jsonArray) {
             id value = [dictionary objectForKey:@"x"];
-            buffer[0] = (ArvosFloat)((value != nil ) ? (ArvosFloat)[value doubleValue] : 0.);
+            buffer[0] = (GLfloat)((value != nil) ? (GLfloat)[value doubleValue] : 0.);
             
             value = [dictionary objectForKey:@"y"];
-            buffer[1] = (ArvosFloat)((value != nil ) ? (ArvosFloat)[value doubleValue] : 0.);
+            buffer[1] = (GLfloat)((value != nil) ? (GLfloat)[value doubleValue] : 0.);
             
             value = [dictionary objectForKey:@"z"];
-            buffer[2] = (ArvosFloat)((value != nil ) ? (ArvosFloat)[value doubleValue] : 0.);
+            buffer[2] = (GLfloat)((value != nil) ? (GLfloat)[value doubleValue] : 0.);
             
             value = [dictionary objectForKey:@"a"];
-            buffer[3] = (ArvosFloat)((value != nil ) ? (ArvosFloat)[value doubleValue] : 0.);
+            buffer[3] = (GLfloat)((value != nil) ? (GLfloat)[value doubleValue] : 0.);
         }
     }
 }
+
+- (ArvosObject*)findArvosObject:(NSMutableArray*)arvosObjects {
+    for( ArvosObject* arvosObject in arvosObjects) {
+        if (arvosObject.id == self.id) {
+            [arvosObjects removeObject:arvosObject];
+            return arvosObject;
+        }
+    }
+    return [[ArvosObject alloc]initWithId:self.id];
+}
+
+- (ArvosObject*)getObjectAtCurrentTime:(long)time
+                       existingObjects:(NSMutableArray*)arvosObjects{
+    
+    if (self.image == nil) {
+        return nil;
+    }
+    
+    if(mWorldStartTime < 0)
+    {
+        mWorldStartTime = time;
+        mWorldIteration = 0;
+    }
+    
+    ArvosObject* result = [self findArvosObject:arvosObjects];
+    result.name = self.name;
+    result.texture = self.texture;
+    result.billboardHandling = self.billboardHandling;
+    
+    GLfloat* position = [result getPosition];
+    position[0] = mStartPosition[0];
+    position[1] = mStartPosition[1];
+    position[2] = mStartPosition[2];
+    
+    GLfloat* scale = [result getScale];
+    scale[0] = mStartScale[0];
+    scale[1] = mStartScale[1];
+    scale[2] = mStartScale[2];
+    
+    GLfloat* rotation = [result getRotation];
+    rotation[0] = mStartRotation[0];
+    rotation[1] = mStartRotation[1];
+    rotation[2] = mStartRotation[2];
+    rotation[3] = mStartRotation[3];
+    
+    result.image = self.image;
+
+    return result;
+}
+
+- (GLfloat*)getStartPosition{ return mStartPosition; }
+- (GLfloat*)getEndPosition{ return mEndPosition; }
+- (GLfloat*)getStartScale{ return mStartScale; }
+- (GLfloat*)getEndScale{ return mEndScale; }
+- (GLfloat*)getStartRotation{ return mStartRotation; }
+- (GLfloat*)getEndRotation{ return mEndRotation; }
 
 @end

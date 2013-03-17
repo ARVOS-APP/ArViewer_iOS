@@ -165,4 +165,13 @@
 	self.coordinate = c;
 }
 
+- (void)getObjectsAtCurrentTime:(long)time
+                    arrayToFill:(NSMutableArray*)resultObjects
+                existingObjects:(NSMutableArray*)arvosObjects {
+    for (ArvosPoi* poi in mPois) {
+        
+        [poi getObjectsAtCurrentTime:time arrayToFill:resultObjects existingObjects:arvosObjects];
+    }
+}
+
 @end

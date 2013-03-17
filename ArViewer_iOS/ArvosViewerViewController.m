@@ -25,6 +25,7 @@
 
 #import "ArvosViewerViewController.h"
 #import "ArvosCameraController.h"
+#import "ArvosAugment.h"
 #import "ArvosGlView.h"
 
 // CONSTANTS
@@ -41,19 +42,16 @@
 
 @implementation ArvosViewerViewController
 
-@synthesize augmentName;
-
 - (void)dealloc {
 	mGlView = nil;
 	[self.cameraController.captureSession stopRunning];
 	[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
 }
 
-
-- (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil {
-	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+- (id)initWithAugment:(ArvosAugment*)augment {
+	self = [super initWithNibName:nil bundle:nil];
 	if (self) {
-		// Custom initialization
+		self.augment = augment;
 	}
 	return self;
 }
@@ -66,7 +64,7 @@
 	[super viewDidLoad];
 
 	self.view.backgroundColor = [UIColor blueColor];
-	self.title = self.augmentName;
+	self.title = self.augment.name;
 	self.cameraController = [[ArvosCameraController alloc] init];
 	[self.cameraController addVideoInput];
 	[self.cameraController addVideoPreviewLayer];
@@ -74,7 +72,7 @@
 	[[self.view layer] addSublayer:[self.cameraController previewLayer]];
 	[[self.cameraController captureSession] startRunning];
 
-	mGlView = [[ArvosGlView alloc] initWithFrame:self.view.bounds];
+	mGlView = [[ArvosGlView alloc] initWithFrame:self.view.bounds andAugment:self.augment];
 	[self.view.layer addSublayer:mGlView.layer];
     
     [mGlView startAnimation];

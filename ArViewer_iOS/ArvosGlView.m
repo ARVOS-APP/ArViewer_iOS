@@ -23,10 +23,13 @@
  please see: http://www.mission-base.com/.
  */
 
+#include <sys/time.h>
 #import <QuartzCore/QuartzCore.h>
 #import <OpenGLES/EAGLDrawable.h>
 
 #import "ArvosGlView.h"
+#import "ArvosAugment.h"
+#import "ArvosObject.h"
 #import "teapot.h"
 
 // CONSTANTS
@@ -46,6 +49,8 @@
 	// OpenGL names for the renderbuffer and framebuffers used to render to this view
 	GLuint viewRenderbuffer, viewFramebuffer;
 	
+    GLuint texture[1];
+    
 	// OpenGL name for the depth buffer that is attached to viewFramebuffer, if it exists (0 if it does not exist)
 	GLuint depthRenderbuffer;
 	
@@ -60,7 +65,13 @@
     NSTimer *animationTimer;
 	
 	UIAccelerationValue	accel[3];
+    
+    ArvosAugment* mAugment;
+    
+    NSMutableArray* mArvosObjects;
 }
+
+- (void)drawObject:(ArvosObject*)arvosObject;
 
 @end
 
@@ -86,18 +97,22 @@
 }
 
 - (void)dealloc {
+    
+    [mArvosObjects removeAllObjects];
+    
 	if (self.animating) {
 		[self stopAnimation];
 	}
 }
 
-// The GL view is stored in the nib file. When it's unarchived it's sent -initWithCoder:
-//- (id)initWithCoder:(NSCoder*)coder {
-
-- (id) initWithFrame:(CGRect)frame {
+- (id) initWithFrame:(CGRect)frame
+          andAugment:(ArvosAugment*)augment{
     
     //if ((self = [super initWithCoder:coder])) {
     if ((self = [super initWithFrame:frame])) {
+        
+        mAugment = augment;
+        mArvosObjects = [NSMutableArray array];
         
 		CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
         
@@ -178,6 +193,32 @@
 }
 
 // Updates the OpenGL view
+- (void)drawView1 {
+    
+    struct timeval time;
+    gettimeofday(&time, NULL);
+    long millis = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+    
+    // Make sure that you are drawing to the current context
+	[EAGLContext setCurrentContext:context];
+    
+	glBindFramebufferOES(GL_FRAMEBUFFER_OES, viewFramebuffer);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    NSMutableArray * existingArvosObjects = [[NSMutableArray alloc] initWithArray:mArvosObjects];
+    [mArvosObjects removeAllObjects];
+    
+    [mAugment getObjectsAtCurrentTime:millis arrayToFill:mArvosObjects existingObjects:existingArvosObjects];
+    
+    for (ArvosObject* arvosObject in mArvosObjects) {
+        [self drawObject:arvosObject];
+    }
+    
+    glBindRenderbufferOES(GL_RENDERBUFFER_OES, viewRenderbuffer);
+	[context presentRenderbuffer:GL_RENDERBUFFER_OES];
+}
+
 - (void)drawView
 {
 	// Make sure that you are drawing to the current context
@@ -380,4 +421,95 @@
     accel[2] = newAccel[2];
 }
 
+- (void)drawObject:(ArvosObject*)arvosObject {
+    
+    // Load textures
+    glEnable(GL_TEXTURE_2D);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_ONE, GL_SRC_COLOR);
+    
+    glGenTextures(1, texture);
+    
+    UIImage *img = arvosObject.image;
+    
+    if (!img) {
+        NSLog(@"Image \"colour.png\" could not be loaded and was not bound");
+    }
+    
+    CGImageRef cgimage = img.CGImage;
+    
+    float width = CGImageGetWidth(cgimage);
+    float height = CGImageGetHeight(cgimage);
+    CGRect bounds = CGRectMake(0, 0, width, height);
+    CGColorSpaceRef colourSpace = CGColorSpaceCreateDeviceRGB();
+    
+    void *image = malloc(width * height * 4);
+    CGContextRef imgContext = CGBitmapContextCreate(image,
+                                                    width, height,
+                                                    8, 4 * width, colourSpace,
+                                                    kCGImageAlphaPremultipliedLast);
+    
+    CGColorSpaceRelease(colourSpace);
+    CGContextClearRect(imgContext, bounds);
+    CGContextTranslateCTM (imgContext, 0, height);
+    CGContextScaleCTM (imgContext, 1.0, -1.0);
+    CGContextDrawImage(imgContext, bounds, cgimage);
+    
+    CGContextRelease(imgContext);
+    
+    glBindTexture(GL_TEXTURE_2D, texture[0]);
+    
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+    
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+    
+    GLenum err = glGetError();
+    if (err != GL_NO_ERROR)
+        NSLog(@"Error. glError: 0x%04X\n", err);
+    
+    free(image);
+    
+    animating = FALSE;
+    displayLinkSupported = FALSE;
+    animationFrameInterval = 1;
+    displayLink = nil;
+    animationTimer = nil;
+    
+    // A system version of 3.1 or greater is required to use CADisplayLink. The NSTimer
+    // class is used as fallback when it isn't available.
+    NSString *reqSysVer = @"3.1";
+    NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+    if ([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending)
+        displayLinkSupported = TRUE;
+
+    static const float textureVertices[] = {
+        -0.5f, -0.33f,
+        0.5f, -0.33f,
+        -0.5f,  0.33f,
+        0.5f,  0.33f,
+    };
+    
+    static const float textureCoords[] = {
+        0.0f, 0.0f,
+        0.0f, 0.515625f,
+        0.12890625f, 0.0f,
+        0.12890625f, 0.515625f,
+    };
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    
+    glBindTexture(GL_TEXTURE_2D, texture[0]);
+    
+    //glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
+    
+    glVertexPointer(2, GL_FLOAT, 0, textureVertices);
+    glTexCoordPointer(2, GL_FLOAT, 0, textureCoords);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+}
 @end

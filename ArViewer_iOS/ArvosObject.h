@@ -1,5 +1,5 @@
 /*
- ArvosViewerViewController.h - ArViewer_iOS
+ ArvosObject.h - ArViewer_iOS
  
  Copyright (C) 2013, Peter Graf
  
@@ -23,16 +23,21 @@
  please see: http://www.mission-base.com/.
  */
 
-#import <UIKit/UIKit.h>
+#import "ArvosSquare.h"
 
-@class ArvosCameraController;
-@class ArvosAugment;
 
-@interface ArvosViewerViewController : UIViewController <UIAccelerometerDelegate>
+@interface ArvosObject : ArvosSquare
 
-- (id)initWithAugment:(ArvosAugment*)augment;
+@property int                       id;
+@property(strong) NSString*         name;
+@property(strong) NSString*         texture;
+@property(strong) UIImage*          image;
+@property(strong) NSString*         billboardHandling;
 
-@property (nonatomic, strong) ArvosCameraController* cameraController;
-@property(nonatomic, strong) ArvosAugment* augment;
+- (id)initWithId:(int)idParameter;
+
+- (GLfloat*)getPosition;
+- (GLfloat*)getScale;
+- (GLfloat*)getRotation;
 
 @end

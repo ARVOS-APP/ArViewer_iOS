@@ -58,7 +58,7 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 - (void)successHTTPResponse:(NSString*)baseUrl responseData:(NSData*)data;
 - (void)failedHTTPResponse:(NSError*)error;
 - (void)downloadFileFromUrl:(NSString*)baseUrl;
-- (void)pushViewerController:(NSString*)paramAugmentName;
+- (void)pushViewerController:(ArvosAugment*)paramAugment;
 - (void)disableAugmentsWithUrl:(NSString*)url;
 
 @end
@@ -297,12 +297,9 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 	}
 }
 
-- (void)pushViewerController:(NSString*)paramAugmentName {
+- (void)pushViewerController:(ArvosAugment*)paramAugment {
 	ArvosViewerViewController* viewerController = [[ArvosViewerViewController alloc]
-												   initWithNibName:nil
-                                                   bundle:NULL];
-    
-	viewerController.augmentName = paramAugmentName;
+												   initWithAugment:paramAugment];
     
 	[self.navigationController pushViewController:viewerController
 										 animated:YES];
@@ -471,7 +468,7 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
             }
         }
         dispatch_async(dispatch_get_main_queue(), ^(void) {
-            [self pushViewerController:newAugment.name];
+            [self pushViewerController:newAugment];
         });
     }
 }
