@@ -113,15 +113,15 @@
 
     for (ArvosPoi* poi in mPois) {
         for (ArvosPoiObject* poiObject in poi.poiObjects) {
-            if (poiObject.image == nil && poiObject.texture != nil) {
-                poiObject.image = [self downloadTextureFromUrl:poiObject.texture];
+            if (poiObject.image == nil && poiObject.textureUrl != nil) {
+                poiObject.image = [self downloadTextureFromUrl:poiObject.textureUrl];
                 if (poiObject.image == nil)
                 {
                     return @"Failed to download texture.";
                 }
                 for (ArvosPoi* otherPoi in mPois) {
                     for (ArvosPoiObject* otherPoiObject in otherPoi.poiObjects) {
-                        if (otherPoiObject.image == nil && [poiObject.texture isEqualToString:otherPoiObject.texture]) {
+                        if (otherPoiObject.image == nil && [poiObject.textureUrl isEqualToString:otherPoiObject.textureUrl]) {
                             otherPoiObject.image = poiObject.image;
                         }
                     }

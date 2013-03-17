@@ -72,6 +72,7 @@
 }
 
 - (void)drawObject:(ArvosObject*)arvosObject;
+- (void)placeObject:(ArvosObject*)arvosObject;
 
 @end
 
@@ -193,7 +194,7 @@
 }
 
 // Updates the OpenGL view
-- (void)drawView1 {
+- (void)drawView {
     
     struct timeval time;
     gettimeofday(&time, NULL);
@@ -212,14 +213,15 @@
     [mAugment getObjectsAtCurrentTime:millis arrayToFill:mArvosObjects existingObjects:existingArvosObjects];
     
     for (ArvosObject* arvosObject in mArvosObjects) {
-        [self drawObject:arvosObject];
+        glLoadIdentity();
+        [self placeObject:arvosObject];
     }
     
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, viewRenderbuffer);
 	[context presentRenderbuffer:GL_RENDERBUFFER_OES];
 }
 
-- (void)drawView
+- (void)drawView2
 {
 	// Make sure that you are drawing to the current context
 	[EAGLContext setCurrentContext:context];
@@ -350,13 +352,11 @@
 	}
 }
 
-- (NSInteger) animationFrameInterval
-{
+- (NSInteger) animationFrameInterval {
 	return animationFrameInterval;
 }
 
-- (void) setAnimationFrameInterval:(NSInteger)frameInterval
-{
+- (void)setAnimationFrameInterval:(NSInteger)frameInterval {
 	// Frame interval defines how many display frames must pass between each time the
 	// display link fires. The display link will only fire 30 times a second when the
 	// frame internal is two on a display that refreshes 60 times a second. The default
@@ -375,8 +375,7 @@
 	}
 }
 
-- (void) startAnimation
-{
+- (void)startAnimation {
 	if (!animating)
 	{
 		if (displayLinkSupported)
@@ -396,8 +395,7 @@
 	}
 }
 
-- (void)stopAnimation
-{
+- (void)stopAnimation {
 	if (animating)
 	{
 		if (displayLinkSupported)
@@ -415,23 +413,20 @@
 	}
 }
 
--(void)setAccel:(UIAccelerationValue*)newAccel {
+- (void)setAccel:(UIAccelerationValue*)newAccel {
     accel[0] = newAccel[0];
     accel[1] = newAccel[1];
     accel[2] = newAccel[2];
 }
 
-- (void)drawObject:(ArvosObject*)arvosObject {
+- (void)loadGlTexture:(ArvosObject*)arvosObject {
     
-    // Load textures
-    glEnable(GL_TEXTURE_2D);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_ONE, GL_SRC_COLOR);
-    
-    glGenTextures(1, texture);
+    if (arvosObject.textureLoaded || arvosObject.image == nil) {
+        return;
+    }
+    glGenTextures(1, [arvosObject getTextures]);
     
     UIImage *img = arvosObject.image;
-    
     if (!img) {
         NSLog(@"Image \"colour.png\" could not be loaded and was not bound");
     }
@@ -465,51 +460,55 @@
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
     
     GLenum err = glGetError();
-    if (err != GL_NO_ERROR)
+    if (err != GL_NO_ERROR) {
         NSLog(@"Error. glError: 0x%04X\n", err);
+    }
     
     free(image);
-    
-    animating = FALSE;
-    displayLinkSupported = FALSE;
-    animationFrameInterval = 1;
-    displayLink = nil;
-    animationTimer = nil;
-    
-    // A system version of 3.1 or greater is required to use CADisplayLink. The NSTimer
-    // class is used as fallback when it isn't available.
-    NSString *reqSysVer = @"3.1";
-    NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
-    if ([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending)
-        displayLinkSupported = TRUE;
+    arvosObject.textureLoaded = YES;
+}
 
+- (void)drawObject:(ArvosObject*)arvosObject {
+    
+    if (arvosObject.image == nil) {
+        return;
+    }
+    if (arvosObject.textureLoaded == NO) {
+        [self loadGlTexture:arvosObject];
+    }
+    
     static const float textureVertices[] = {
-        -0.5f, -0.33f,
-        0.5f, -0.33f,
-        -0.5f,  0.33f,
-        0.5f,  0.33f,
+        -0.5f, -0.5f,
+        -0.5f,  0.5f,
+        0.5f, -0.5f,
+        0.5f,  0.5f,
     };
     
     static const float textureCoords[] = {
+        0.0f, 1.0f,
         0.0f, 0.0f,
-        0.0f, 0.515625f,
-        0.12890625f, 0.0f,
-        0.12890625f, 0.515625f,
+        1.0f, 1.0f,
+        1.0f, 0.0f,
     };
-
+    
+    glBindTexture(GL_TEXTURE_2D, [arvosObject getTextures][0]);
+    
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     
-    glBindTexture(GL_TEXTURE_2D, texture[0]);
-    
-    //glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
+    glFrontFace(GL_CW);
     
     glVertexPointer(2, GL_FLOAT, 0, textureVertices);
     glTexCoordPointer(2, GL_FLOAT, 0, textureCoords);
+    
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
 
+- (void)placeObject:(ArvosObject*)arvosObject {
+    glTranslatef(0.0, 0, -5.0);
+    [self drawObject:arvosObject];
 }
 @end

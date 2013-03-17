@@ -28,11 +28,12 @@
 
 @interface ArvosObject () {
     Arvos*	mInstance;
-    BOOL    mTextureLoaded;
     
     GLfloat mPosition[3];
 	GLfloat mScale[3];
 	GLfloat mRotation[4];
+    
+    GLuint mTextures[1];
 }
 @end
 
@@ -42,9 +43,10 @@
     self = [super init];
 	if (self) {
         self.id = idParameter;
+        self.textureLoaded = NO;
         
         mInstance = [Arvos sharedInstance];
-        mTextureLoaded = NO;
+        mTextures[0] = 0;
 	}
 	return self;
 }
@@ -52,5 +54,6 @@
 - (GLfloat*)getPosition{ return mPosition; }
 - (GLfloat*)getScale{ return mScale; }
 - (GLfloat*)getRotation{ return mRotation; }
+- (GLuint*)getTextures{ return mTextures; }
 
 @end

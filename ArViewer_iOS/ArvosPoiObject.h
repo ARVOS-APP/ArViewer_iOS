@@ -54,19 +54,12 @@
  */
 - (NSString*)parseFromDictionary:(NSDictionary*)inDictionary;
 
-- (GLfloat*)getStartPosition;
-- (GLfloat*)getEndPosition;
-- (GLfloat*)getStartScale;
-- (GLfloat*)getEndScale;
-- (GLfloat*)getStartRotation;
-- (GLfloat*)getEndRotation;
-
 - (ArvosObject*)getObjectAtCurrentTime:(long)time
                 existingObjects:(NSMutableArray*)arvosObjects;
 
 @property int                       id;
 @property(strong) NSString*         name;
-@property(strong) NSString*         texture;
+@property(strong) NSString*         textureUrl;
 @property(strong) UIImage*          image;
 @property(strong) NSString*         billboardHandling;
 

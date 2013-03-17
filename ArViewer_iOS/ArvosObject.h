@@ -30,14 +30,16 @@
 
 @property int                       id;
 @property(strong) NSString*         name;
-@property(strong) NSString*         texture;
+@property(strong) NSString*         textureUrl;
 @property(strong) UIImage*          image;
 @property(strong) NSString*         billboardHandling;
+@property BOOL                      textureLoaded;
 
 - (id)initWithId:(int)idParameter;
 
 - (GLfloat*)getPosition;
 - (GLfloat*)getScale;
 - (GLfloat*)getRotation;
+- (GLuint*)getTextures;
 
 @end

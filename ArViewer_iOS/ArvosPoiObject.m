@@ -46,7 +46,8 @@
 
 - (void)parseVec3f:(NSDictionary*)inDictionary
               name:(NSString*)name
-            buffer:(GLfloat*)buffer;
+            buffer:(GLfloat*)buffer
+       withDefault:(GLfloat)defaultValue;
 
 - (void)parseVec4f:(NSDictionary*)inDictionary
               name:(NSString*)name
@@ -80,7 +81,7 @@ static int mNextId = 0;
 
 - (NSString*)parseFromDictionary:(NSDictionary*)inDictionary {
     
-    self.texture = inDictionary[@"texture"];
+    self.textureUrl = inDictionary[@"texture"];
     self.image = nil;
     self.name = inDictionary[ArvosKeyName];
     self.billboardHandling = inDictionary[@"billboardHandling"];
@@ -100,19 +101,23 @@ static int mNextId = 0;
     
     [self parseVec3f:inDictionary
                 name:@"startPosition"
-              buffer:mStartPosition];
+              buffer:mStartPosition
+         withDefault:0.];
     
     [self parseVec3f:inDictionary
                 name:@"endPosition"
-              buffer:mEndPosition];
+              buffer:mEndPosition
+         withDefault:0.];
     
     [self parseVec3f:inDictionary
                 name:@"startScale"
-              buffer:mStartScale];
+              buffer:mStartScale
+         withDefault:1.];
     
     [self parseVec3f:inDictionary
                 name:@"endScale"
-              buffer:mEndScale];
+              buffer:mEndScale
+         withDefault:1.];
     
     [self parseVec4f:inDictionary
                 name:@"startRotation"
@@ -182,11 +187,12 @@ static int mNextId = 0;
 
 - (void)parseVec3f:(NSDictionary*)inDictionary
               name:(NSString*)name
-            buffer:(GLfloat*)buffer {
+            buffer:(GLfloat*)buffer
+       withDefault:(GLfloat)defaultValue {
     
-    buffer[0] = 0.;
-    buffer[1] = 0.;
-    buffer[2] = 0.;
+    buffer[0] = defaultValue;
+    buffer[1] = defaultValue;
+    buffer[2] = defaultValue;
     
     NSArray * jsonArray = [inDictionary objectForKey:name];
     if (jsonArray != nil) {
@@ -209,7 +215,7 @@ static int mNextId = 0;
             buffer:(GLfloat*)buffer {
     
     buffer[0] = 0.;
-    buffer[1] = 0.;
+    buffer[1] = 1.;
     buffer[2] = 0.;
     buffer[3] = 0.;
     
@@ -245,10 +251,6 @@ static int mNextId = 0;
 - (ArvosObject*)getObjectAtCurrentTime:(long)time
                        existingObjects:(NSMutableArray*)arvosObjects{
     
-    if (self.image == nil) {
-        return nil;
-    }
-    
     if(mWorldStartTime < 0)
     {
         mWorldStartTime = time;
@@ -257,35 +259,28 @@ static int mNextId = 0;
     
     ArvosObject* result = [self findArvosObject:arvosObjects];
     result.name = self.name;
-    result.texture = self.texture;
+    result.textureUrl = self.textureUrl;
     result.billboardHandling = self.billboardHandling;
     
     GLfloat* position = [result getPosition];
-    position[0] = mStartPosition[0];
-    position[1] = mStartPosition[1];
-    position[2] = mStartPosition[2];
+    position[0] = 0.; // mStartPosition[0];
+    position[1] = 0.; // mStartPosition[1];
+    position[2] = -5.; //mStartPosition[2];
     
     GLfloat* scale = [result getScale];
-    scale[0] = mStartScale[0];
-    scale[1] = mStartScale[1];
-    scale[2] = mStartScale[2];
+    scale[0] = 1; // mStartScale[0];
+    scale[1] = 1; // mStartScale[1];
+    scale[2] = 1; //mStartScale[2];
     
     GLfloat* rotation = [result getRotation];
-    rotation[0] = mStartRotation[0];
-    rotation[1] = mStartRotation[1];
-    rotation[2] = mStartRotation[2];
-    rotation[3] = mStartRotation[3];
+    rotation[0] = 0; //mStartRotation[0];
+    rotation[1] = 1; //mStartRotation[1];
+    rotation[2] = 0; //mStartRotation[2];
+    rotation[3] = .7; //mStartRotation[3];
     
     result.image = self.image;
 
     return result;
 }
-
-- (GLfloat*)getStartPosition{ return mStartPosition; }
-- (GLfloat*)getEndPosition{ return mEndPosition; }
-- (GLfloat*)getStartScale{ return mStartScale; }
-- (GLfloat*)getEndScale{ return mEndScale; }
-- (GLfloat*)getStartRotation{ return mStartRotation; }
-- (GLfloat*)getEndRotation{ return mEndRotation; }
 
 @end
