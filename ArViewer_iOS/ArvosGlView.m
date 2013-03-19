@@ -129,8 +129,9 @@
 		// class is used as fallback when it isn't available.
 		NSString *reqSysVer = @"3.1";
 		NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
-		if ([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending)
+		if ([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending) {
 			displayLinkSupported = TRUE;
+        }
 		
         accel[0] = accel[1] = accel[2] = 0;
 		
@@ -334,14 +335,13 @@
     if (arvosObject.textureLoaded || arvosObject.image == nil) {
         return;
     }
+    
+    // generate one texture pointer bind it to the array of the arvos object
     glGenTextures(1, [arvosObject getTextures]);
+    glBindTexture(GL_TEXTURE_2D, [arvosObject getTextures][0]);
     
-    UIImage *img = arvosObject.image;
-    if (!img) {
-        NSLog(@"Image \"colour.png\" could not be loaded and was not bound");
-    }
-    
-    CGImageRef cgimage = img.CGImage;
+    // copy UIImage to local buffer
+    CGImageRef cgimage = arvosObject.image.CGImage;
     
     float width = CGImageGetWidth(cgimage);
     float height = CGImageGetHeight(cgimage);
@@ -358,13 +358,17 @@
     CGContextClearRect(imgContext, bounds);
     CGContextTranslateCTM (imgContext, 0, height);
     CGContextScaleCTM (imgContext, 1.0, -1.0);
+    
+    CGAffineTransform flip = CGAffineTransformMake(1, 0, 0, -1, 0, height);
+    CGContextConcatCTM(imgContext, flip);
+    
     CGContextDrawImage(imgContext, bounds, cgimage);
     
-    glBindTexture(GL_TEXTURE_2D, [arvosObject getTextures][0]);
-    
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    // create nearest filtered texture
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
     
+    // create a two-dimensional texture image
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
     
     GLenum err = glGetError();
@@ -394,10 +398,10 @@
     };
     
     static const float textureCoords[] = {
-        0.0f, 1.0f,
+        -1.0f, 0.0f,
+        -1.0f, -1.0f,
         0.0f, 0.0f,
-        1.0f, 1.0f,
-        1.0f, 0.0f,
+        0.0f, -1.0f,
     };
     
     glBindTexture(GL_TEXTURE_2D, [arvosObject getTextures][0]);

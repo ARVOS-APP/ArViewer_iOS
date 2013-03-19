@@ -23,10 +23,7 @@
  please see: http://www.mission-base.com/.
  */
 
-#import "ArvosSquare.h"
-
-
-@interface ArvosObject : ArvosSquare
+@interface ArvosObject : NSObject
 
 @property int                       id;
 @property(strong) NSString*         name;

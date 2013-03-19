@@ -262,20 +262,20 @@ static int mNextId = 0;
     result.billboardHandling = self.billboardHandling;
     
     GLfloat* position = [result getPosition];
-    position[0] = 0.; // mStartPosition[0];
-    position[1] = 0.; // mStartPosition[1];
-    position[2] = -5.; //mStartPosition[2];
+    position[0] = mStartPosition[0];
+    position[1] = mStartPosition[1];
+    position[2] = mStartPosition[2];
     
     GLfloat* scale = [result getScale];
-    scale[0] = 1; // mStartScale[0];
-    scale[1] = 1; // mStartScale[1];
-    scale[2] = 1; //mStartScale[2];
+    scale[0] = mStartScale[0];
+    scale[1] = mStartScale[1];
+    scale[2] = mStartScale[2];
     
     GLfloat* rotation = [result getRotation];
-    rotation[0] = 0; //mStartRotation[0];
-    rotation[1] = 1; //mStartRotation[1];
-    rotation[2] = 0; //mStartRotation[2];
-    rotation[3] = .7; //mStartRotation[3];
+    rotation[0] = mStartRotation[0];
+    rotation[1] = mStartRotation[1];
+    rotation[2] = mStartRotation[2];
+    rotation[3] = mStartRotation[3];
     
     result.image = self.image;
 
