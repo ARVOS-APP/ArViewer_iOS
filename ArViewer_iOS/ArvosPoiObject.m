@@ -41,17 +41,22 @@
     
     long mWorldStartTime;
 	long mWorldIteration;
-
 }
 
 - (void)parseVec3f:(NSDictionary*)inDictionary
               name:(NSString*)name
             buffer:(GLfloat*)buffer
-       withDefault:(GLfloat)defaultValue;
+      withDefaultX:(GLfloat)defaultValueX
+      withDefaultY:(GLfloat)defaultValueY
+      withDefaultZ:(GLfloat)defaultValueZ;
 
 - (void)parseVec4f:(NSDictionary*)inDictionary
               name:(NSString*)name
-            buffer:(GLfloat*)buffer;
+            buffer:(GLfloat*)buffer
+      withDefaultX:(GLfloat)defaultValueX
+      withDefaultY:(GLfloat)defaultValueY
+      withDefaultZ:(GLfloat)defaultValueZ
+      withDefaultA:(GLfloat)defaultValueA;
 
 - (ArvosObject*)findArvosObject:(NSMutableArray*)arvosObjects;
 
@@ -97,35 +102,51 @@ static int mNextId = 0;
     self.startTime = [inDictionary objectForKey:@"startTime"] ? (long)inDictionary[@"startTime"] : 0;
     self.animationDuration = [inDictionary objectForKey:@"duration"] ? (long)inDictionary[@"duration"] : 0;
     self.loop = [inDictionary objectForKey:@"loop"] ? (BOOL)inDictionary[@"loop"] : NO;
-    self.isActive = [inDictionary objectForKey:@"isActive"] ? (BOOL)inDictionary[@"isActive"] : NO;
+    self.isActive = [inDictionary objectForKey:@"isActive"] ? (BOOL)inDictionary[@"isActive"] : YES;
     
     [self parseVec3f:inDictionary
                 name:@"startPosition"
               buffer:mStartPosition
-         withDefault:0.];
+         withDefaultX:0.
+         withDefaultY:0.
+         withDefaultZ:0.];
     
     [self parseVec3f:inDictionary
                 name:@"endPosition"
               buffer:mEndPosition
-         withDefault:0.];
+        withDefaultX:mStartPosition[0]
+        withDefaultY:mStartPosition[1]
+        withDefaultZ:mStartPosition[2]];
     
     [self parseVec3f:inDictionary
                 name:@"startScale"
               buffer:mStartScale
-         withDefault:1.];
+        withDefaultX:1.
+        withDefaultY:1.
+        withDefaultZ:1.];
     
     [self parseVec3f:inDictionary
                 name:@"endScale"
               buffer:mEndScale
-         withDefault:1.];
+        withDefaultX:mStartScale[0]
+        withDefaultY:mStartScale[1]
+        withDefaultZ:mStartScale[2]];
     
     [self parseVec4f:inDictionary
                 name:@"startRotation"
-              buffer:mStartRotation];
+              buffer:mStartRotation
+        withDefaultX:0.
+        withDefaultY:1.
+        withDefaultZ:0.
+        withDefaultA:0.];
     
     [self parseVec4f:inDictionary
                 name:@"endRotation"
-              buffer:mEndRotation];
+              buffer:mEndRotation
+        withDefaultX:mStartRotation[0]
+        withDefaultY:mStartRotation[1]
+        withDefaultZ:mStartRotation[2]
+        withDefaultA:mStartRotation[3]];
 
     NSArray * jsonArray = [inDictionary objectForKey:@"onClick"];
     if (jsonArray != nil) {
@@ -188,52 +209,58 @@ static int mNextId = 0;
 - (void)parseVec3f:(NSDictionary*)inDictionary
               name:(NSString*)name
             buffer:(GLfloat*)buffer
-       withDefault:(GLfloat)defaultValue {
+      withDefaultX:(GLfloat)defaultValueX
+      withDefaultY:(GLfloat)defaultValueY
+      withDefaultZ:(GLfloat)defaultValueZ {
     
-    buffer[0] = defaultValue;
-    buffer[1] = defaultValue;
-    buffer[2] = defaultValue;
+    buffer[0] = defaultValueX;
+    buffer[1] = defaultValueY;
+    buffer[2] = defaultValueZ;
     
     NSArray * jsonArray = [inDictionary objectForKey:name];
     if (jsonArray != nil) {
         
         for (NSDictionary* dictionary in jsonArray) {
             id value = [dictionary objectForKey:@"x"];
-            buffer[0] = (GLfloat)((value != nil) ? (GLfloat)[value doubleValue] : 0.);
+            buffer[0] = (GLfloat)((value != nil) ? (GLfloat)[value doubleValue] : buffer[0]);
             
             value = [dictionary objectForKey:@"y"];
-            buffer[1] = (GLfloat)((value != nil) ? (GLfloat)[value doubleValue] : 0.);
+            buffer[1] = (GLfloat)((value != nil) ? (GLfloat)[value doubleValue] : buffer[1]);
             
             value = [dictionary objectForKey:@"z"];
-            buffer[2] = (GLfloat)((value != nil) ? (GLfloat)[value doubleValue] : 0.);
+            buffer[2] = (GLfloat)((value != nil) ? (GLfloat)[value doubleValue] : buffer[2]);
         }
     }
 }
 
 - (void)parseVec4f:(NSDictionary*)inDictionary
               name:(NSString*)name
-            buffer:(GLfloat*)buffer {
+            buffer:(GLfloat*)buffer
+      withDefaultX:(GLfloat)defaultValueX
+      withDefaultY:(GLfloat)defaultValueY
+      withDefaultZ:(GLfloat)defaultValueZ
+      withDefaultA:(GLfloat)defaultValueA {
     
-    buffer[0] = 0.;
-    buffer[1] = 1.;
-    buffer[2] = 0.;
-    buffer[3] = 0.;
+    buffer[0] = defaultValueX;
+    buffer[1] = defaultValueY;
+    buffer[2] = defaultValueZ;
+    buffer[3] = defaultValueA;
     
     NSArray * jsonArray = [inDictionary objectForKey:name];
     if (jsonArray != nil) {
         
         for (NSDictionary* dictionary in jsonArray) {
             id value = [dictionary objectForKey:@"x"];
-            buffer[0] = (GLfloat)((value != nil) ? (GLfloat)[value doubleValue] : 0.);
+            buffer[0] = (GLfloat)((value != nil) ? (GLfloat)[value doubleValue] : buffer[0]);
             
             value = [dictionary objectForKey:@"y"];
-            buffer[1] = (GLfloat)((value != nil) ? (GLfloat)[value doubleValue] : 0.);
+            buffer[1] = (GLfloat)((value != nil) ? (GLfloat)[value doubleValue] : buffer[1]);
             
             value = [dictionary objectForKey:@"z"];
-            buffer[2] = (GLfloat)((value != nil) ? (GLfloat)[value doubleValue] : 0.);
+            buffer[2] = (GLfloat)((value != nil) ? (GLfloat)[value doubleValue] : buffer[2]);
             
             value = [dictionary objectForKey:@"a"];
-            buffer[3] = (GLfloat)((value != nil) ? (GLfloat)[value doubleValue] : 0.);
+            buffer[3] = (GLfloat)((value != nil) ? (GLfloat)[value doubleValue] : buffer[3]);
         }
     }
 }
@@ -250,13 +277,71 @@ static int mNextId = 0;
 - (ArvosObject*)getObjectAtCurrentTime:(long)time
                        existingObjects:(NSMutableArray*)arvosObjects{
     
+    ArvosObject* result = nil;
+    
     if(mWorldStartTime < 0)
     {
         mWorldStartTime = time;
         mWorldIteration = 0;
     }
     
-    ArvosObject* result = [self findArvosObject:arvosObjects];
+    if (self.isActive == NO) {
+        return result;
+    }
+    
+    long duration = (self.animationDuration > 0) ? self.animationDuration : self.parent.animationDuration;
+    if (self.parent.animationDuration <= 0 || duration <= 0)
+    {
+        result = [self findArvosObject:arvosObjects];
+        result.name = self.name;
+        result.textureUrl = self.textureUrl;
+        result.billboardHandling = self.billboardHandling;
+        
+        GLfloat* position = [result getPosition];
+        position[0] = mStartPosition[0];
+        position[1] = mStartPosition[1];
+        position[2] = mStartPosition[2];
+        
+        GLfloat* scale = [result getScale];
+        scale[0] = mStartScale[0];
+        scale[1] = mStartScale[1];
+        scale[2] = mStartScale[2];
+        
+        GLfloat* rotation = [result getRotation];
+        rotation[0] = mStartRotation[0];
+        rotation[1] = mStartRotation[1];
+        rotation[2] = mStartRotation[2];
+        rotation[3] = mStartRotation[3];
+        
+        result.image = self.image;
+        
+        return result;
+    }
+
+    long worldTime = time - mWorldStartTime;
+    long iteration = worldTime / self.parent.animationDuration;
+    if (iteration > mWorldIteration)
+    {
+        mWorldIteration = iteration;
+        [self.parent requestStop:self];
+        return nil;
+    }
+    
+    if (self.textureUrl == nil)
+    {
+        return nil;
+    }
+    
+    long loopTime = worldTime % self.parent.animationDuration;
+    if (loopTime < self.startTime || loopTime >= self.startTime + duration)
+    {
+        return nil;
+    }
+    
+    float factor = loopTime - self.startTime;
+    factor /= duration;
+    
+    result = [self findArvosObject:arvosObjects];
     result.name = self.name;
     result.textureUrl = self.textureUrl;
     result.billboardHandling = self.billboardHandling;
@@ -278,7 +363,28 @@ static int mNextId = 0;
     rotation[3] = mStartRotation[3];
     
     result.image = self.image;
-
+    
+    if (factor > 0)
+    {
+        position[0] = mStartPosition[0] + factor * (mEndPosition[0] - mStartPosition[0]);
+        position[1] = mStartPosition[1] + factor * (mEndPosition[1] - mStartPosition[1]);
+        position[2] = mStartPosition[2] + factor * (mEndPosition[2] - mStartPosition[2]);
+    }
+    
+    if (factor > 0)
+    {
+        scale[0] = mStartScale[0] + factor * (mEndScale[0] - mStartScale[0]);
+        scale[1] = mStartScale[1] + factor * (mEndScale[1] - mStartScale[1]);
+        scale[2] = mStartScale[2] + factor * (mEndScale[2] - mStartScale[2]);
+    }
+    
+    if (factor > 0)
+    {
+        rotation[0] = mStartRotation[0] + factor * (mEndRotation[0] - mStartRotation[0]);
+        rotation[1] = mStartRotation[1] + factor * (mEndRotation[1] - mStartRotation[1]);
+        rotation[2] = mStartRotation[2] + factor * (mEndRotation[2] - mStartRotation[2]);
+        rotation[3] = mStartRotation[3] + factor * (mEndRotation[3] - mStartRotation[3]);
+    }
     return result;
 }
 

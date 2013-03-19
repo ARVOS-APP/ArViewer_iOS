@@ -24,6 +24,7 @@
  */
 
 #import "ArvosViewerViewController.h"
+#import "Arvos.h"
 #import "ArvosCameraController.h"
 #import "ArvosAugment.h"
 #import "ArvosGlView.h"
@@ -34,8 +35,9 @@
 
 @interface ArvosViewerViewController ()
 {
-	ArvosGlView* mGlView;
-    UIAccelerationValue accel[3];
+    Arvos*                  mInstance;
+	ArvosGlView*            mGlView;
+    UIAccelerationValue     accel[3];
 }
 
 @end
@@ -51,6 +53,7 @@
 - (id)initWithAugment:(ArvosAugment*)augment {
 	self = [super initWithNibName:nil bundle:nil];
 	if (self) {
+        mInstance = [Arvos sharedInstance];
 		self.augment = augment;
 	}
 	return self;
@@ -98,7 +101,7 @@
 	accel[1] = acceleration.y * kFilteringFactor + accel[1] * (1.0 - kFilteringFactor);
 	accel[2] = acceleration.z * kFilteringFactor + accel[2] * (1.0 - kFilteringFactor);
 	
-	//Update the accelerometer values for the view
-	[mGlView setAccel:accel];
+	//Update the accelerometer values
+	[mInstance setAccel:accel];
 }
 @end

@@ -58,6 +58,12 @@
                     arrayToFill:(NSMutableArray*)resultObjects
                 existingObjects:(NSMutableArray*)arvosObjects;
 
+- (void)requestActivate:(ArvosPoiObject*)poiObject;
+- (void)requestStart:(ArvosPoiObject*)poiObject;
+- (void)requestStop:(ArvosPoiObject*)poiObject;
+- (void)requestDeactivate:(ArvosPoiObject*)poiObject;
+- (void)addClick:(ArvosPoiObject*)poiObject;
+
 @property(strong) NSMutableArray*   poiObjects;
 
 @property long                      animationDuration;

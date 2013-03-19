@@ -40,6 +40,5 @@
 -(void)startAnimation;
 -(void)stopAnimation;
 -(void)drawView;
--(void)setAccel:(UIAccelerationValue*)newAccel;
 
 @end

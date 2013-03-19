@@ -127,4 +127,20 @@
     }
 }
 
+- (void)requestActivate:(ArvosPoiObject*)poiObject {
+    
+}
+
+- (void)requestStart:(ArvosPoiObject*)poiObject {
+    
+}
+- (void)requestStop:(ArvosPoiObject*)poiObject {
+    
+}
+- (void)requestDeactivate:(ArvosPoiObject*)poiObject {
+    
+}
+- (void)addClick:(ArvosPoiObject*)poiObject {
+    
+}
 @end

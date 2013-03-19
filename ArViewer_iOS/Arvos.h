@@ -23,6 +23,7 @@
  please see: http://www.mission-base.com/.
  */
 
+#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
@@ -64,5 +65,7 @@
  * The singleton instance
  */
 + (Arvos*)sharedInstance;
+
+- (void)setAccel:(UIAccelerationValue*)newAccel;
 
 @end
