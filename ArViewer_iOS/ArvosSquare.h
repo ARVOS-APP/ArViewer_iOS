@@ -1,5 +1,5 @@
 /*
- ArvosObject.m - ArViewer_iOS
+ ArvosSquare.h - ArViewer_iOS
  
  Copyright (C) 2013, Peter Graf
  
@@ -23,51 +23,15 @@
  please see: http://www.mission-base.com/.
  */
 
-#import "ArvosObject.h"
-#import "Arvos.h"
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import <OpenGLES/EAGL.h>
+#import <OpenGLES/ES1/gl.h>
+#import <OpenGLES/ES1/glext.h>
 
-@interface ArvosObject () {
-    Arvos*	mInstance;
-    
-    GLfloat mPosition[3];
-	GLfloat mScale[3];
-	GLfloat mRotation[4];
-}
-@end
+@interface ArvosSquare : NSObject
 
-@implementation ArvosObject
-
--(id)initWithId:(int)idParameter {
-    self = [super init];
-	if (self) {
-        self.id = idParameter;
-        self.textureLoaded = NO;
-        
-        mInstance = [Arvos sharedInstance];
-	}
-	return self;
-}
-
-- (GLfloat*)getPosition{ return mPosition; }
-- (GLfloat*)getScale{ return mScale; }
-- (GLfloat*)getRotation{ return mRotation; }
-
-- (void)draw {
-    
-    if (self.image == nil) {
-        return;
-    }
-    if (self.textureLoaded == NO) {
-        if ( self.image != nil)
-        {
-            [super loadGlTexture:self.image];
-        }
-        self.textureLoaded = YES;
-    }
-
-    glTranslatef(0.0, 0, -5.0);
-    
-    [super draw];
-}
+- (void)loadGlTexture:(UIImage*)image;
+- (void)draw;
 
 @end

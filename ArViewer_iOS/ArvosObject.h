@@ -23,7 +23,9 @@
  please see: http://www.mission-base.com/.
  */
 
-@interface ArvosObject : NSObject
+#import "ArvosSquare.h"
+
+@interface ArvosObject : ArvosSquare
 
 @property int                       id;
 @property(strong) NSString*         name;
@@ -33,10 +35,10 @@
 @property BOOL                      textureLoaded;
 
 - (id)initWithId:(int)idParameter;
+- (void)draw;
 
 - (GLfloat*)getPosition;
 - (GLfloat*)getScale;
 - (GLfloat*)getRotation;
-- (GLuint*)getTextures;
 
 @end

@@ -65,9 +65,6 @@
     NSMutableArray* mArvosObjects;
 }
 
-- (void)drawObject:(ArvosObject*)arvosObject;
-- (void)placeObject:(ArvosObject*)arvosObject;
-
 @end
 
 // A class extension to declare private methods
@@ -195,10 +192,7 @@
     
     for (ArvosObject* arvosObject in mArvosObjects) {
         glLoadIdentity();
-        //texture[0] = [arvosObject getTextures][0];
-        //[self render];
-        [self placeObject:arvosObject];
-        //return;
+        [arvosObject draw];
     }
     
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, viewRenderbuffer);
@@ -330,99 +324,4 @@
     accel[2] = newAccel[2];
 }
 
-- (void)loadGlTexture:(ArvosObject*)arvosObject {
-    
-    if (arvosObject.textureLoaded || arvosObject.image == nil) {
-        return;
-    }
-    
-    // generate one texture pointer bind it to the array of the arvos object
-    glGenTextures(1, [arvosObject getTextures]);
-    glBindTexture(GL_TEXTURE_2D, [arvosObject getTextures][0]);
-    
-    // copy UIImage to local buffer
-    CGImageRef cgimage = arvosObject.image.CGImage;
-    
-    float width = CGImageGetWidth(cgimage);
-    float height = CGImageGetHeight(cgimage);
-    CGRect bounds = CGRectMake(0, 0, width, height);
-    CGColorSpaceRef colourSpace = CGColorSpaceCreateDeviceRGB();
-    
-    void *image = malloc(width * height * 4);
-    CGContextRef imgContext = CGBitmapContextCreate(image,
-                                                    width, height,
-                                                    8, 4 * width, colourSpace,
-                                                    kCGImageAlphaPremultipliedLast);
-    
-    CGColorSpaceRelease(colourSpace);
-    CGContextClearRect(imgContext, bounds);
-    CGContextTranslateCTM (imgContext, 0, height);
-    CGContextScaleCTM (imgContext, 1.0, -1.0);
-    
-    CGAffineTransform flip = CGAffineTransformMake(1, 0, 0, -1, 0, height);
-    CGContextConcatCTM(imgContext, flip);
-    
-    CGContextDrawImage(imgContext, bounds, cgimage);
-    
-    // create nearest filtered texture
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-    
-    // create a two-dimensional texture image
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
-    
-    GLenum err = glGetError();
-    if (err != GL_NO_ERROR) {
-        NSLog(@"Error. glError: 0x%04X\n", err);
-    }
-    
-    CGContextRelease(imgContext);
-    free(image);
-    arvosObject.textureLoaded = YES;
-}
-
-- (void)drawObject:(ArvosObject*)arvosObject {
-    
-    if (arvosObject.image == nil) {
-        return;
-    }
-    if (arvosObject.textureLoaded == NO) {
-        [self loadGlTexture:arvosObject];
-    }
-    
-    static const float textureVertices[] = {
-        -0.5f, -0.5f,
-        -0.5f,  0.5f,
-        0.5f, -0.5f,
-        0.5f,  0.5f,
-    };
-    
-    static const float textureCoords[] = {
-        -1.0f, 0.0f,
-        -1.0f, -1.0f,
-        0.0f, 0.0f,
-        0.0f, -1.0f,
-    };
-    
-    glBindTexture(GL_TEXTURE_2D, [arvosObject getTextures][0]);
-    
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    
-    glFrontFace(GL_CW);
-    
-    glVertexPointer(2, GL_FLOAT, 0, textureVertices);
-    glTexCoordPointer(2, GL_FLOAT, 0, textureCoords);
-    
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-}
-
-- (void)placeObject:(ArvosObject*)arvosObject {
-    
-    glTranslatef(0.0, 0, -5.0);
-    [self drawObject:arvosObject];
-}
 @end

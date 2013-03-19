@@ -32,6 +32,7 @@
 		D0251A4416E3CE8300800246 /* character.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D0251A3C16E3CE5600800246 /* character.fsh */; };
 		D040EB5E16F4DFA5000DE34A /* ArvosGlView.m in Sources */ = {isa = PBXBuildFile; fileRef = D040EB5D16F4DFA5000DE34A /* ArvosGlView.m */; };
 		D0424C6416E40E8A005A7815 /* ArvosAugment.m in Sources */ = {isa = PBXBuildFile; fileRef = D0424C6316E40E8A005A7815 /* ArvosAugment.m */; };
+		D04567C516F90E26006F75ED /* ArvosSquare.m in Sources */ = {isa = PBXBuildFile; fileRef = D04567C416F90E26006F75ED /* ArvosSquare.m */; };
 		D04E7FA916F605F9000ECF75 /* ArvosObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D04E7FA816F605F8000ECF75 /* ArvosObject.m */; };
 		D051C7AD16E91D6F0006B8AF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D051C7AC16E91D6F0006B8AF /* CoreLocation.framework */; };
 		D051C7B016E932B10006B8AF /* Arvos.m in Sources */ = {isa = PBXBuildFile; fileRef = D051C7AF16E932B10006B8AF /* Arvos.m */; };
@@ -79,6 +80,8 @@
 		D040EB5D16F4DFA5000DE34A /* ArvosGlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArvosGlView.m; sourceTree = "<group>"; };
 		D0424C6216E40E8A005A7815 /* ArvosAugment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArvosAugment.h; path = Viewer/ArvosAugment.h; sourceTree = "<group>"; };
 		D0424C6316E40E8A005A7815 /* ArvosAugment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArvosAugment.m; path = Viewer/ArvosAugment.m; sourceTree = "<group>"; };
+		D04567C316F90E26006F75ED /* ArvosSquare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArvosSquare.h; sourceTree = "<group>"; };
+		D04567C416F90E26006F75ED /* ArvosSquare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArvosSquare.m; sourceTree = "<group>"; };
 		D04E7FA716F605F8000ECF75 /* ArvosObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArvosObject.h; sourceTree = "<group>"; };
 		D04E7FA816F605F8000ECF75 /* ArvosObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArvosObject.m; sourceTree = "<group>"; };
 		D051C7AC16E91D6F0006B8AF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -183,6 +186,8 @@
 				D040EB5D16F4DFA5000DE34A /* ArvosGlView.m */,
 				D04E7FA716F605F8000ECF75 /* ArvosObject.h */,
 				D04E7FA816F605F8000ECF75 /* ArvosObject.m */,
+				D04567C316F90E26006F75ED /* ArvosSquare.h */,
+				D04567C416F90E26006F75ED /* ArvosSquare.m */,
 			);
 			name = OpenGl;
 			sourceTree = "<group>";
@@ -427,6 +432,7 @@
 				D056189316F3802300C701F3 /* ArvosPoiObject.m in Sources */,
 				D040EB5E16F4DFA5000DE34A /* ArvosGlView.m in Sources */,
 				D04E7FA916F605F9000ECF75 /* ArvosObject.m in Sources */,
+				D04567C516F90E26006F75ED /* ArvosSquare.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
