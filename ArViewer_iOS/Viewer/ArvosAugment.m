@@ -76,7 +76,7 @@
                                                                 options:0
                                                                   error:&error];
     if (error != nil) {
-        return @"Failed to parse JSON augment.";
+        return [NSString stringWithFormat:@"Failed to parse JSON augment. %@", error.localizedDescription];
     }
        
     self.name	= jsonAugment[ArvosKeyName];
