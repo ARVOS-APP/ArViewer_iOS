@@ -58,7 +58,7 @@
       withDefaultZ:(GLfloat)defaultValueZ
       withDefaultA:(GLfloat)defaultValueA;
 
-- (ArvosObject*)findArvosObject:(NSMutableArray*)arvosObjects;
+- (ArvosObject*)findArvosObject:(NSArray*)arvosObjects;
 
 @end
 
@@ -265,13 +265,12 @@ static int mNextId = 0;
     }
 }
 
-- (ArvosObject*)findArvosObject:(NSMutableArray*)arvosObjects {
-    for( ArvosObject* arvosObject in arvosObjects) {
-        if (arvosObject.id == self.id) {
-            return arvosObject;
-        }
-    }
-    return [[ArvosObject alloc]initWithId:self.id];
+- (ArvosObject*)findArvosObject:(NSArray*)arvosObjects {
+    NSInteger myId = self.id;
+    NSInteger index = [arvosObjects indexOfObjectPassingTest:^BOOL(ArvosObject* obj, NSUInteger idx, BOOL *stop) {
+        return obj.id == myId;
+    }];
+    return NSNotFound == index ? [[ArvosObject alloc]initWithId:self.id] : arvosObjects[index];
 }
 
 - (ArvosObject*)getObjectAtCurrentTime:(long)time
