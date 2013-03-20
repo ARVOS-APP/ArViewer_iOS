@@ -28,16 +28,18 @@
 #import "ArvosCameraController.h"
 #import "ArvosAugment.h"
 #import "ArvosGlView.h"
+#import "ArvosRadarView.h"
 
 // CONSTANTS
 #define kAccelerometerFrequency		100.0 // Hz
 #define kFilteringFactor			0.1
 
-@interface ArvosViewerViewController ()
-{
+@interface ArvosViewerViewController () {
     Arvos*                  mInstance;
 	ArvosGlView*            mGlView;
     UIAccelerationValue     accel[3];
+	ArvosRadarView*			mRadarView;
+	CLLocationManager*		mLocationManager;
 }
 
 @end
@@ -83,6 +85,15 @@
 	//Configure and start accelerometer
 	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / kAccelerometerFrequency)];
 	[[UIAccelerometer sharedAccelerometer] setDelegate:self];
+
+
+	// radar view
+	mLocationManager = [CLLocationManager new];
+	mLocationManager.delegate = self;
+	[mLocationManager startUpdatingHeading];
+	
+	mRadarView = [[ArvosRadarView alloc] initWithFrame:CGRectMake(10., 30., 80., 80.)];
+	[self.view.layer addSublayer:mRadarView.layer];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -104,4 +115,10 @@
 	//Update the accelerometer values
 	[mInstance setAccel:accel];
 }
+
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading {
+	mRadarView.rotation = newHeading.trueHeading;
+}
+
 @end

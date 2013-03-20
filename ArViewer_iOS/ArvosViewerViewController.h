@@ -24,11 +24,12 @@
  */
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
 @class ArvosCameraController;
 @class ArvosAugment;
 
-@interface ArvosViewerViewController : UIViewController <UIAccelerometerDelegate>
+@interface ArvosViewerViewController : UIViewController <UIAccelerometerDelegate, CLLocationManagerDelegate>
 
 - (id)initWithAugment:(ArvosAugment*)augment;
 
