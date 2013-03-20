@@ -50,8 +50,7 @@
  * Fills the properties of one augment by parsing a description in JSON
  * format downloaded from the web.
  *
- * @param inDictionary
- *            The augment description in JSON format.
+ * @param inDictionary The augment description in JSON format.
  */
 - (id)initWithDictionary:(NSDictionary*)inDictionary;
 
@@ -59,8 +58,7 @@
  * Fills the properties of one augment by parsing a description in JSON
  * format downloaded from the web.
  *
- * @param data
- *            The augment description in JSON format.
+ * @param data The augment description in JSON format.
  * @return nil or an error message.
  */
 - (NSString*)parseFromData:(NSData*)data;
@@ -68,7 +66,7 @@
 /**
  * Synchronously downloads all texture of an augment.
  *
- * @return NIL if all images could be downloaded, or an error message otherwise
+ * @return nil if all images could be downloaded, or an error message otherwise
  */
 - (NSString*)downloadTexturesSynchronously;
 

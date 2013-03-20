@@ -39,8 +39,7 @@
 /**
  * Create a poi object.
  *
- * @param poi
- *            The poi the poi object belongs to.
+ * @param poi The poi the poi object belongs to.
  */
 - (id)initWithPoi:(ArvosPoi*)poi;
 
@@ -48,8 +47,7 @@
  * Fills the properties of one poiObject by parsing a description in JSON
  * format downloaded from the web.
  *
- * @param inDictionary
- *            The poiObject description in JSON format.
+ * @param inDictionary The poiObject description in JSON format.
  * @return nil or an error message.
  */
 - (NSString*)parseFromDictionary:(NSDictionary*)inDictionary;

@@ -39,8 +39,7 @@
 /**
  * Create a poi.
  *
- * @param poi
- *            The augment the poi belongs to.
+ * @param augment The augment the poi belongs to.
  */
 - (id)initWithAugment:(ArvosAugment*)augment;
 
@@ -48,8 +47,7 @@
  * Fills the properties of one poi by parsing a description in JSON
  * format downloaded from the web.
  *
- * @param inDictionary
- *            The poi description in JSON format.
+ * @param inDictionary The poi description in JSON format.
  * @return nil or an error message.
  */
 - (NSString*)parseFromDictionary:(NSDictionary*)inDictionary;

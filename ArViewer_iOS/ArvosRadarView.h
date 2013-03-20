@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ Radar View
+ */
+
 @interface ArvosRadarView : UIView
 
 /**
