@@ -41,7 +41,6 @@
     self = [super init];
 	if (self) {
         self.id = idParameter;
-        self.textureLoaded = NO;
         
         mInstance = [Arvos sharedInstance];
 	}
@@ -53,16 +52,8 @@
 - (GLfloat*)getRotation{ return mRotation; }
 
 - (void)draw {
-    
-    if (self.image == nil) {
-        return;
-    }
-    if (self.textureLoaded == NO) {
-        if ( self.image != nil)
-        {
-            [super loadGlTexture:self.image];
-        }
-        self.textureLoaded = YES;
+    if (!self.textureLoaded) {
+        [self loadGlTexture:self.image];
     }
 
     glTranslatef(0.0, 0, -5.0);

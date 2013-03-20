@@ -32,7 +32,6 @@
 @property(strong) NSString*         textureUrl;
 @property(strong) UIImage*          image;
 @property(strong) NSString*         billboardHandling;
-@property BOOL                      textureLoaded;
 
 - (id)initWithId:(int)idParameter;
 - (void)draw;

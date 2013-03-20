@@ -42,6 +42,10 @@
 }
 
 - (void)loadGlTexture:(UIImage*)image {
+    if (nil == image) {
+        _textureLoaded = NO;
+        return;
+    }
        
     // generate one texture pointer and bind it to the array of the arvos square
     glGenTextures(1, mTextures);
@@ -79,12 +83,13 @@
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageBuffer);
     
     GLenum err = glGetError();
-    if (err != GL_NO_ERROR) {
-        NSLog(@"Error. glError: 0x%04X\n", err);
-    }
-    
     CGContextRelease(imgContext);
     free(imageBuffer);
+    if (err != GL_NO_ERROR) {
+        NSLog(@"Error. glError: 0x%04X\n", err);
+        _textureLoaded = NO;
+    }
+    _textureLoaded = YES;
 }
 
 - (void)draw {

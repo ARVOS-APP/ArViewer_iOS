@@ -31,6 +31,12 @@
 
 @interface ArvosSquare : NSObject
 
+@property(readonly)  BOOL textureLoaded;
+
+/**
+ Load texture from image
+ @param image a UIImage to load the texture from
+ */
 - (void)loadGlTexture:(UIImage*)image;
 - (void)draw;
 
