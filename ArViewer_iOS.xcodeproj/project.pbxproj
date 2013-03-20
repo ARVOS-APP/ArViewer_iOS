@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		61BF6F6316FA2CA00009A538 /* ArvosRadarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BF6F6216FA2CA00009A538 /* ArvosRadarView.m */; };
+		61BF6F6416FA2CA00009A538 /* ArvosRadarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BF6F6216FA2CA00009A538 /* ArvosRadarView.m */; };
 		61CB8C0D16E9E98B002002A9 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61CB8C0C16E9E98B002002A9 /* SenTestingKit.framework */; };
 		61CB8C0E16E9E98B002002A9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F50B0016E362BB00B0E66A /* UIKit.framework */; };
 		61CB8C0F16E9E98B002002A9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F50B0216E362BB00B0E66A /* Foundation.framework */; };
@@ -53,6 +55,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		61BF6F6116FA2CA00009A538 /* ArvosRadarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArvosRadarView.h; sourceTree = "<group>"; };
+		61BF6F6216FA2CA00009A538 /* ArvosRadarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArvosRadarView.m; sourceTree = "<group>"; };
 		61CB8C0B16E9E98B002002A9 /* ArViewer_iOS-Test.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ArViewer_iOS-Test.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		61CB8C0C16E9E98B002002A9 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = SDKROOT; };
 		61CB8C1216E9E98B002002A9 /* ArViewer_iOS-Test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ArViewer_iOS-Test-Info.plist"; sourceTree = "<group>"; };
@@ -206,6 +210,8 @@
 				D056188F16F37DD000C701F3 /* ArvosPoi.m */,
 				D056189116F3802300C701F3 /* ArvosPoiObject.h */,
 				D056189216F3802300C701F3 /* ArvosPoiObject.m */,
+				61BF6F6116FA2CA00009A538 /* ArvosRadarView.h */,
+				61BF6F6216FA2CA00009A538 /* ArvosRadarView.m */,
 			);
 			name = Viewer;
 			sourceTree = "<group>";
@@ -407,6 +413,7 @@
 			files = (
 				61CB8C1D16E9EA31002002A9 /* ArvosAugment.m in Sources */,
 				61CB8C2016E9EA4A002002A9 /* ArvosAugment_Test.m in Sources */,
+				61BF6F6416FA2CA00009A538 /* ArvosRadarView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,6 +440,7 @@
 				D040EB5E16F4DFA5000DE34A /* ArvosGlView.m in Sources */,
 				D04E7FA916F605F9000ECF75 /* ArvosObject.m in Sources */,
 				D04567C516F90E26006F75ED /* ArvosSquare.m in Sources */,
+				61BF6F6316FA2CA00009A538 /* ArvosRadarView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
