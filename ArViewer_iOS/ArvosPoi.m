@@ -29,12 +29,6 @@
 #import "ArvosPoiObject.h"
 #import "ArvosObject.h"
 
-@interface ArvosPoi () {
-	Arvos*			mInstance;
-}
-
-@end
-
 @implementation ArvosPoi
 
 - (id)initWithAugment:(ArvosAugment*)augment {
@@ -42,7 +36,6 @@
 	if (self) {
         self.parent = augment;
         self.poiObjects = [NSMutableArray array];
-        mInstance = [Arvos sharedInstance];
 	}
 	return self;
 }
@@ -124,12 +117,15 @@
 - (void)requestStart:(ArvosPoiObject*)poiObject {
     
 }
+
 - (void)requestStop:(ArvosPoiObject*)poiObject {
     
 }
+
 - (void)requestDeactivate:(ArvosPoiObject*)poiObject {
     
 }
+
 - (void)addClick:(ArvosPoiObject*)poiObject {
     
 }
