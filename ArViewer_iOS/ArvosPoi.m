@@ -73,19 +73,12 @@
     }
     
     for (NSDictionary* dictionary in jsonPoiObjects) {
-        
         ArvosPoiObject* newPoiObject = [[ArvosPoiObject alloc] initWithPoi:self];
-        if (newPoiObject != nil) {
-            
-            NSString* result = [newPoiObject parseFromDictionary:dictionary];
-            if (nil != result) {
-                return result;
-            }
-            [self.poiObjects addObject:newPoiObject];
-            
-        } else {
-            return @"Failed to init poiObject.";
+        NSString* result = [newPoiObject parseFromDictionary:dictionary];
+        if (nil != result) {
+            return result;
         }
+        [self.poiObjects addObject:newPoiObject];
     }
 
     return nil;
