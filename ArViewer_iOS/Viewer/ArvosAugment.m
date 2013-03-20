@@ -29,7 +29,6 @@
 #import "ArvosPoiObject.h"
 
 @interface ArvosAugment () {
-	Arvos*			mInstance;
 	NSMutableArray* mPois;
 }
 
@@ -63,7 +62,6 @@
 - (id)init {
 	self = [super init];
 	if (self) {
-        mInstance = [Arvos sharedInstance];
 		mPois = [NSMutableArray array];
 	}
 	return self;
