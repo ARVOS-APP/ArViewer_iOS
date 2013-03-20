@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6128F1C816FA6C3B005857BB /* NSDictionary+ArvosVecParsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 6128F1C716FA6C3B005857BB /* NSDictionary+ArvosVecParsing.m */; };
+		6128F1C916FA6C3B005857BB /* NSDictionary+ArvosVecParsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 6128F1C716FA6C3B005857BB /* NSDictionary+ArvosVecParsing.m */; };
+		6128F1CC16FA6ED0005857BB /* ArvosNSDictionary_VecParsing_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 6128F1CB16FA6ED0005857BB /* ArvosNSDictionary_VecParsing_Test.m */; };
+		6128F1CD16FA6FD7005857BB /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0251A3016E3C5D400800246 /* OpenGLES.framework */; };
+		6128F1CE16FA72EC005857BB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F50B0416E362BB00B0E66A /* CoreGraphics.framework */; };
+		6128F1CF16FA72FE005857BB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0251A3216E3C61400800246 /* QuartzCore.framework */; };
+		6128F1D016FA732A005857BB /* ArvosPoi.m in Sources */ = {isa = PBXBuildFile; fileRef = D056188F16F37DD000C701F3 /* ArvosPoi.m */; };
+		6128F1D116FA7339005857BB /* ArvosPoiObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D056189216F3802300C701F3 /* ArvosPoiObject.m */; };
+		6128F1D216FA737B005857BB /* ArvosObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D04E7FA816F605F8000ECF75 /* ArvosObject.m */; };
+		6128F1D316FA7383005857BB /* ArvosSquare.m in Sources */ = {isa = PBXBuildFile; fileRef = D04567C416F90E26006F75ED /* ArvosSquare.m */; };
 		61BF6F6316FA2CA00009A538 /* ArvosRadarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BF6F6216FA2CA00009A538 /* ArvosRadarView.m */; };
 		61BF6F6416FA2CA00009A538 /* ArvosRadarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BF6F6216FA2CA00009A538 /* ArvosRadarView.m */; };
 		61CB8C0D16E9E98B002002A9 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61CB8C0C16E9E98B002002A9 /* SenTestingKit.framework */; };
@@ -55,6 +65,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6128F1C616FA6C3B005857BB /* NSDictionary+ArvosVecParsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+ArvosVecParsing.h"; sourceTree = "<group>"; };
+		6128F1C716FA6C3B005857BB /* NSDictionary+ArvosVecParsing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+ArvosVecParsing.m"; sourceTree = "<group>"; };
+		6128F1CB16FA6ED0005857BB /* ArvosNSDictionary_VecParsing_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArvosNSDictionary_VecParsing_Test.m; sourceTree = "<group>"; };
 		61BF6F6116FA2CA00009A538 /* ArvosRadarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArvosRadarView.h; sourceTree = "<group>"; };
 		61BF6F6216FA2CA00009A538 /* ArvosRadarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArvosRadarView.m; sourceTree = "<group>"; };
 		61CB8C0B16E9E98B002002A9 /* ArViewer_iOS-Test.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ArViewer_iOS-Test.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,6 +133,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6128F1CF16FA72FE005857BB /* QuartzCore.framework in Frameworks */,
+				6128F1CE16FA72EC005857BB /* CoreGraphics.framework in Frameworks */,
+				6128F1CD16FA6FD7005857BB /* OpenGLES.framework in Frameworks */,
 				61CB8C0D16E9E98B002002A9 /* SenTestingKit.framework in Frameworks */,
 				61CB8C0E16E9E98B002002A9 /* UIKit.framework in Frameworks */,
 				61CB8C0F16E9E98B002002A9 /* Foundation.framework in Frameworks */,
@@ -158,6 +174,7 @@
 			children = (
 				61CB8C1116E9E98B002002A9 /* Supporting Files */,
 				61CB8C1F16E9EA4A002002A9 /* ArvosAugment_Test.m */,
+				6128F1CB16FA6ED0005857BB /* ArvosNSDictionary_VecParsing_Test.m */,
 			);
 			path = "ArViewer_iOS-Test";
 			sourceTree = "<group>";
@@ -273,6 +290,8 @@
 				D051C7AF16E932B10006B8AF /* Arvos.m */,
 				D0F50B0F16E362BB00B0E66A /* ArvosAppDelegate.h */,
 				D0F50B1016E362BB00B0E66A /* ArvosAppDelegate.m */,
+				6128F1C616FA6C3B005857BB /* NSDictionary+ArvosVecParsing.h */,
+				6128F1C716FA6C3B005857BB /* NSDictionary+ArvosVecParsing.m */,
 				D0251A3416E3CDA700800246 /* Resources */,
 				D0F50B0716E362BB00B0E66A /* Supporting Files */,
 				D04E7FAA16F675EE000ECF75 /* Util */,
@@ -431,6 +450,12 @@
 				61CB8C1D16E9EA31002002A9 /* ArvosAugment.m in Sources */,
 				61CB8C2016E9EA4A002002A9 /* ArvosAugment_Test.m in Sources */,
 				61BF6F6416FA2CA00009A538 /* ArvosRadarView.m in Sources */,
+				6128F1C916FA6C3B005857BB /* NSDictionary+ArvosVecParsing.m in Sources */,
+				6128F1CC16FA6ED0005857BB /* ArvosNSDictionary_VecParsing_Test.m in Sources */,
+				6128F1D016FA732A005857BB /* ArvosPoi.m in Sources */,
+				6128F1D116FA7339005857BB /* ArvosPoiObject.m in Sources */,
+				6128F1D216FA737B005857BB /* ArvosObject.m in Sources */,
+				6128F1D316FA7383005857BB /* ArvosSquare.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,6 +483,7 @@
 				D04E7FA916F605F9000ECF75 /* ArvosObject.m in Sources */,
 				D04567C516F90E26006F75ED /* ArvosSquare.m in Sources */,
 				61BF6F6316FA2CA00009A538 /* ArvosRadarView.m in Sources */,
+				6128F1C816FA6C3B005857BB /* NSDictionary+ArvosVecParsing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -523,7 +549,7 @@
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ArViewer_iOS-Test/ArViewer_iOS-Test-Prefix.pch";
+				GCC_PREFIX_HEADER = "ArViewer_iOS/ArViewer_iOS-Prefix.pch";
 				INFOPLIST_FILE = "ArViewer_iOS-Test/ArViewer_iOS-Test-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
@@ -538,7 +564,7 @@
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ArViewer_iOS-Test/ArViewer_iOS-Test-Prefix.pch";
+				GCC_PREFIX_HEADER = "ArViewer_iOS/ArViewer_iOS-Prefix.pch";
 				INFOPLIST_FILE = "ArViewer_iOS-Test/ArViewer_iOS-Test-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
@@ -570,7 +596,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -595,7 +621,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

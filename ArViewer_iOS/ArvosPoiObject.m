@@ -27,6 +27,7 @@
 #import "ArvosPoi.h"
 #import "ArvosPoiObject.h"
 #import "ArvosObject.h"
+#import "NSDictionary+ArvosVecParsing.h"
 
 @interface ArvosPoiObject () {
     
@@ -50,7 +51,7 @@
             buffer:(GLfloat*)buffer
       withDefaultX:(GLfloat)defaultValueX
       withDefaultY:(GLfloat)defaultValueY
-      withDefaultZ:(GLfloat)defaultValueZ;
+      withDefaultZ:(GLfloat)defaultValueZ DEPRECATED_ATTRIBUTE;
 
 - (void)parseVec4f:(NSDictionary*)inDictionary
               name:(NSString*)name
@@ -58,7 +59,7 @@
       withDefaultX:(GLfloat)defaultValueX
       withDefaultY:(GLfloat)defaultValueY
       withDefaultZ:(GLfloat)defaultValueZ
-      withDefaultA:(GLfloat)defaultValueA;
+      withDefaultA:(GLfloat)defaultValueA DEPRECATED_ATTRIBUTE;
 
 - (ArvosObject*)findArvosObject:(NSArray*)arvosObjects;
 
@@ -105,6 +106,19 @@ static int mNextId = 0;
     self.animationDuration = [inDictionary objectForKey:@"duration"] ? (long)inDictionary[@"duration"] : 0;
     self.loop = [inDictionary objectForKey:@"loop"] ? (BOOL)inDictionary[@"loop"] : NO;
     self.isActive = [inDictionary objectForKey:@"isActive"] ? (BOOL)inDictionary[@"isActive"] : YES;
+    
+    /*
+     mStartPosition[0] = mStartPosition[1] = mStartPosition[2] = .0;
+     [inDictionary[@"startPosition"] parseVec3f:mStartPosition];
+     
+     mEndPosition[0] = mStartPosition[0];
+     mEndPosition[1] = mStartPosition[1];
+     mEndPosition[2] = mStartPosition[1];
+     [inDictionary[@"endPosition"] parseVec3f:mEndPosition];
+     
+     mStartScale[0] = mStartScale[1] = mStartScale[2] = .0;
+     [inDictionary[@"startScale"] parseVec3f:mStartScale];
+     */
     
     [self parseVec3f:inDictionary
                 name:@"startPosition"
