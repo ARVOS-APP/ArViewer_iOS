@@ -82,5 +82,6 @@
 @property CLLocationDegrees           latitude;
 @property CLLocationCoordinate2D      coordinate;
 @property(strong) NSString*           developerKey;
+@property(readonly) NSArray*          pois;
 
 @end

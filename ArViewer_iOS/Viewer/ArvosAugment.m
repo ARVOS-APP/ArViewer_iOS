@@ -164,4 +164,8 @@
     }
 }
 
+- (NSArray*)pois {
+    return mPois;
+}
+
 @end

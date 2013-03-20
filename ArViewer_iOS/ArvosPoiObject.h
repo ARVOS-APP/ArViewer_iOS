@@ -76,6 +76,6 @@
 @property(strong) NSMutableArray*   onDurationEndDeactivates;
 
 @property long                      timeStarted;
-@property(strong) ArvosPoi*         parent;
+@property(readonly) ArvosPoi*       parent;
 
 @end

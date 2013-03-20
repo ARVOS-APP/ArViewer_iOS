@@ -41,6 +41,8 @@
     
     long mWorldStartTime;
 	long mWorldIteration;
+    
+    __weak ArvosPoi* _parent;
 }
 
 - (void)parseVec3f:(NSDictionary*)inDictionary
@@ -74,7 +76,7 @@ static int mNextId = 0;
     self = [super init];
 	if (self) {
         self.id = [ArvosPoiObject getNextId];
-        self.parent = poi;
+        _parent = poi;
         self.animationDuration = poi.animationDuration;
         self.isActive = YES;
         
