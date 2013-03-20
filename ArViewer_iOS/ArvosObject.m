@@ -26,9 +26,7 @@
 #import "ArvosObject.h"
 #import "Arvos.h"
 
-@interface ArvosObject () {
-    Arvos*	mInstance;
-    
+@interface ArvosObject () {    
     GLfloat mPosition[3];
 	GLfloat mScale[3];
 	GLfloat mRotation[4];
@@ -37,12 +35,15 @@
 
 @implementation ArvosObject
 
+- (id)init {
+    NSAssert(NO, @"ArvosObject must not be initialzed without id");
+    return nil;
+}
+
 -(id)initWithId:(int)idParameter {
     self = [super init];
 	if (self) {
         self.id = idParameter;
-        
-        mInstance = [Arvos sharedInstance];
 	}
 	return self;
 }
