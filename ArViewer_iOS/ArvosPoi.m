@@ -48,13 +48,10 @@
 }
 
 - (NSString*)parseFromDictionary:(NSDictionary*)inDictionary {
-    
-    if ([inDictionary objectForKey:ArvosKeyAnimationDuration])
-    {
-        self.animationDuration = (long)inDictionary[ArvosKeyAnimationDuration];
+    if ([inDictionary objectForKey:ArvosKeyAnimationDuration]) {
+        self.animationDuration = [inDictionary[ArvosKeyAnimationDuration] longValue];
     }
-    else
-    {
+    else {
         self.animationDuration = 0;
     }
     self.developerKey = inDictionary[ArvosKeyDeveloperKey];
