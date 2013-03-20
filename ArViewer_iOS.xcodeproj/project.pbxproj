@@ -297,6 +297,22 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXLegacyTarget section */
+		6128F1C216FA5367005857BB /* Documentation */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 6128F1C316FA5367005857BB /* Build configuration list for PBXLegacyTarget "Documentation" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			dependencies = (
+			);
+			name = Documentation;
+			passBuildSettingsInEnvironment = 1;
+			productName = Documentation;
+		};
+/* End PBXLegacyTarget section */
+
 /* Begin PBXNativeTarget section */
 		61CB8C0A16E9E98B002002A9 /* ArViewer_iOS-Test */ = {
 			isa = PBXNativeTarget;
@@ -357,6 +373,7 @@
 			targets = (
 				D0F50AFC16E362BB00B0E66A /* ArViewer_iOS */,
 				61CB8C0A16E9E98B002002A9 /* ArViewer_iOS-Test */,
+				6128F1C216FA5367005857BB /* Documentation */,
 			);
 		};
 /* End PBXProject section */
@@ -466,6 +483,38 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		6128F1C416FA5367005857BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				DEBUGGING_SYMBOLS = YES;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		6128F1C516FA5367005857BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 		61CB8C1B16E9E98B002002A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -583,6 +632,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		6128F1C316FA5367005857BB /* Build configuration list for PBXLegacyTarget "Documentation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6128F1C416FA5367005857BB /* Debug */,
+				6128F1C516FA5367005857BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		61CB8C1A16E9E98B002002A9 /* Build configuration list for PBXNativeTarget "ArViewer_iOS-Test" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
