@@ -7,6 +7,7 @@
 //
 
 #import "ArvosRadarView.h"
+#import "Arvos.h"
 
 #define CIRCLE_WIDTH 4.
 #define ANNOTATION_SIZE 6.
@@ -14,8 +15,8 @@
 #define MAX_NUM_ANNOTATIONS 32
 
 @interface ArvosRadarView () {
+    Arvos*              mInstance;
 	UIColor*            _frontColor;
-	CGFloat             _rotation;
     CGPoint*            _annotationCoordinates;
     NSUInteger          _numAnnotationCoordinates;
 }
@@ -33,6 +34,7 @@
 - (id)initWithFrame:(CGRect)frame {
 	self = [super initWithFrame:frame];
 	if (self) {
+        mInstance = [Arvos sharedInstance];
         /* avoid overhead and store coordinates in a plain C-Array */
         _annotationCoordinates = calloc(sizeof(CGPoint), MAX_NUM_ANNOTATIONS);
         _numAnnotationCoordinates = 0;
@@ -68,8 +70,8 @@
      the middle of the rect.
      */
 	CGContextTranslateCTM(context, halfWidth, halfHeight);
-    /* Rotate the view. Things are upside down, so turn sign of rotation */
-	CGContextRotateCTM(context, -_rotation);
+    /* Rotate the view. */
+	CGContextRotateCTM(context, self.rotation);
 
     /* Create objects to be drawn */
     
@@ -104,15 +106,7 @@
 }
 
 - (CGFloat)rotation {
-	return _rotation;
-}
-
-- (void)setRotation:(CGFloat)rotation {
-    /* we get angles in degrees, we need them later to translate the 
-     affine transformation matrix of a CGContext which takes radians.
-     */
-	_rotation = rotation * M_PI / 180.;
-	[self setNeedsDisplay];
+    return ([mInstance azimuth] + 180) * M_PI / 180.;
 }
 
 - (void)addAnnotationAt:(CGFloat)distanceFromCenter angle:(CGFloat)phi {

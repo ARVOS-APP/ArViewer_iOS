@@ -37,7 +37,6 @@
 @interface ArvosViewerViewController () {
     Arvos*                  mInstance;
 	ArvosGlView*            mGlView;
-    UIAccelerationValue     accel[3];
 	ArvosRadarView*			mRadarView;
 	CLLocationManager*		mLocationManager;
 }
@@ -105,20 +104,14 @@
 	return YES;
 }
 
-- (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
-{
-	//Use a basic low-pass filter to only keep the gravity in the accelerometer values
-	accel[0] = acceleration.x * kFilteringFactor + accel[0] * (1.0 - kFilteringFactor);
-	accel[1] = acceleration.y * kFilteringFactor + accel[1] * (1.0 - kFilteringFactor);
-	accel[2] = acceleration.z * kFilteringFactor + accel[2] * (1.0 - kFilteringFactor);
-	
-	//Update the accelerometer values
-	[mInstance setAccel:accel];
+- (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration {
+	[mInstance setAccel:acceleration];
 }
 
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading {
-	mRadarView.rotation = newHeading.trueHeading;
+    [mInstance setHeading:newHeading.trueHeading];
+	[mRadarView setNeedsDisplay];
 }
 
 @end

@@ -38,7 +38,6 @@
 #define ArvosKeyAnimationDuration         @"animationDuration"
 #define ArvosKeyPoiObjects                @"poiObjects"
 
-
 #define ArvosBillboardHandlingNone        @"none"
 #define ArvosBillboardHandlingCylinder    @"cylinder"
 #define ArvosBillboardHandlingSphere      @"sphere"
@@ -66,6 +65,7 @@
  */
 + (Arvos*)sharedInstance;
 
-- (void)setAccel:(UIAccelerationValue*)newAccel;
+- (void)setAccel:(UIAcceleration*)newAccel;
+- (void)setHeading:(CLLocationDirection)heading;
 
 @end

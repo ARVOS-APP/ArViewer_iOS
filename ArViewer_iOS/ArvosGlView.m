@@ -318,10 +318,4 @@
 	}
 }
 
-- (void)setAccel:(UIAccelerationValue*)newAccel {
-    accel[0] = newAccel[0];
-    accel[1] = newAccel[1];
-    accel[2] = newAccel[2];
-}
-
 @end

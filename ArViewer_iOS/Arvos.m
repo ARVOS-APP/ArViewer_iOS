@@ -64,10 +64,32 @@ static Arvos* _sharedInstance = nil;
 }
 
 
-- (void)setAccel:(UIAccelerationValue*)newAccel {
-    accel[0] = newAccel[0];
-    accel[1] = newAccel[1];
-    accel[2] = newAccel[2];
+- (void)setAccel:(UIAcceleration*)newAccel {
+     
+    accel[0] = newAccel.x;
+    accel[1] = newAccel.y;
+    accel[2] = newAccel.z;
+    
+    CLLocationDegrees newestPitch = atanf((accel[0]) / ((accel[1]*accel[1]) + (accel[2]*accel[2]))) * (180/M_PI);
+    CLLocationDegrees newestRoll = atanf((accel[1]) / ((accel[0]*accel[0]) + (accel[2]*accel[2]))) * (180/M_PI);
+    //CLLocationDegrees newestAzimuth = atanf((accel[2]) / ((accel[1]*accel[1]) + (accel[0]*accel[0]))) * (180/M_PI);
+    
+    static const CLLocationDegrees alpha = 0.3;
+    
+    self.pitch = self.pitch * (1-alpha) + newestPitch * alpha;
+    self.roll = self.roll * (1-alpha) + newestRoll * alpha;
+    //self.azimuth = self.azimuth * (1-alpha) + newestAzimuth * alpha;
+    //NBLog(@"accel azimuth = %f, roll %f, pitch %f", self.azimuth * (1-alpha) + newestAzimuth * alpha, self.roll, self.pitch);
+}
+
+- (void)setHeading:(CLLocationDirection)heading {
+    
+    CLLocationDegrees newestAzimuth = heading - 180;
+    
+    static const CLLocationDegrees alpha = 0.3;
+    self.azimuth = self.azimuth * (1-alpha) + newestAzimuth * alpha;
+    
+    //NBLog(@"heading azimuth = %f", self.azimuth);
 }
 
 @end
