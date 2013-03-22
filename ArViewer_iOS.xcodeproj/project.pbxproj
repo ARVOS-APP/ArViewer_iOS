@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6112F4FA16FCA90500BD4989 /* ArvosDebugView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6112F4F916FCA90500BD4989 /* ArvosDebugView.m */; };
+		6112F4FB16FCA90500BD4989 /* ArvosDebugView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6112F4F916FCA90500BD4989 /* ArvosDebugView.m */; };
 		6128F1C816FA6C3B005857BB /* NSDictionary+ArvosVecParsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 6128F1C716FA6C3B005857BB /* NSDictionary+ArvosVecParsing.m */; };
 		6128F1C916FA6C3B005857BB /* NSDictionary+ArvosVecParsing.m in Sources */ = {isa = PBXBuildFile; fileRef = 6128F1C716FA6C3B005857BB /* NSDictionary+ArvosVecParsing.m */; };
 		6128F1CC16FA6ED0005857BB /* ArvosNSDictionary_VecParsing_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 6128F1CB16FA6ED0005857BB /* ArvosNSDictionary_VecParsing_Test.m */; };
@@ -65,6 +67,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6112F4F816FCA90500BD4989 /* ArvosDebugView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArvosDebugView.h; sourceTree = "<group>"; };
+		6112F4F916FCA90500BD4989 /* ArvosDebugView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArvosDebugView.m; sourceTree = "<group>"; };
 		6128F1C616FA6C3B005857BB /* NSDictionary+ArvosVecParsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+ArvosVecParsing.h"; sourceTree = "<group>"; };
 		6128F1C716FA6C3B005857BB /* NSDictionary+ArvosVecParsing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+ArvosVecParsing.m"; sourceTree = "<group>"; };
 		6128F1CB16FA6ED0005857BB /* ArvosNSDictionary_VecParsing_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArvosNSDictionary_VecParsing_Test.m; sourceTree = "<group>"; };
@@ -159,6 +163,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6112F4F716FCA87C00BD4989 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				61BF6F6116FA2CA00009A538 /* ArvosRadarView.h */,
+				61BF6F6216FA2CA00009A538 /* ArvosRadarView.m */,
+				6112F4F816FCA90500BD4989 /* ArvosDebugView.h */,
+				6112F4F916FCA90500BD4989 /* ArvosDebugView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		61CB8C0516E9E416002002A9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -227,8 +242,7 @@
 				D056188F16F37DD000C701F3 /* ArvosPoi.m */,
 				D056189116F3802300C701F3 /* ArvosPoiObject.h */,
 				D056189216F3802300C701F3 /* ArvosPoiObject.m */,
-				61BF6F6116FA2CA00009A538 /* ArvosRadarView.h */,
-				61BF6F6216FA2CA00009A538 /* ArvosRadarView.m */,
+				6112F4F716FCA87C00BD4989 /* Views */,
 			);
 			name = Viewer;
 			sourceTree = "<group>";
@@ -456,6 +470,7 @@
 				6128F1D116FA7339005857BB /* ArvosPoiObject.m in Sources */,
 				6128F1D216FA737B005857BB /* ArvosObject.m in Sources */,
 				6128F1D316FA7383005857BB /* ArvosSquare.m in Sources */,
+				6112F4FB16FCA90500BD4989 /* ArvosDebugView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,6 +499,7 @@
 				D04567C516F90E26006F75ED /* ArvosSquare.m in Sources */,
 				61BF6F6316FA2CA00009A538 /* ArvosRadarView.m in Sources */,
 				6128F1C816FA6C3B005857BB /* NSDictionary+ArvosVecParsing.m in Sources */,
+				6112F4FA16FCA90500BD4989 /* ArvosDebugView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -665,6 +681,7 @@
 				6128F1C516FA5367005857BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		61CB8C1A16E9E98B002002A9 /* Build configuration list for PBXNativeTarget "ArViewer_iOS-Test" */ = {
 			isa = XCConfigurationList;

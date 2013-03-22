@@ -29,6 +29,7 @@
 #import "ArvosAugment.h"
 #import "ArvosGlView.h"
 #import "ArvosRadarView.h"
+#import "ArvosDebugView.h"
 
 // CONSTANTS
 #define kAccelerometerFrequency		100.0 // Hz
@@ -38,6 +39,7 @@
     Arvos*                  mInstance;
 	ArvosGlView*            mGlView;
 	ArvosRadarView*			mRadarView;
+	ArvosDebugView*			mDebugView;
 	CLLocationManager*		mLocationManager;
 }
 
@@ -93,6 +95,9 @@
 	
 	mRadarView = [[ArvosRadarView alloc] initWithFrame:CGRectMake(10., 30., 80., 80.)];
 	[self.view.layer addSublayer:mRadarView.layer];
+
+	mDebugView = [[ArvosDebugView alloc] initWithFrame:CGRectMake(100., 30., 280., 80.) fontSize:15.];
+	[self.view.layer addSublayer:mDebugView.layer];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -108,10 +113,11 @@
 	[mInstance setAccel:acceleration];
 }
 
-
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading {
     [mInstance setHeading:newHeading.trueHeading];
 	[mRadarView setNeedsDisplay];
+	[mDebugView setDebugStringWithKey:@"heading"
+						 formatString:@"Heading: %g", newHeading.trueHeading];
 }
 
 @end
