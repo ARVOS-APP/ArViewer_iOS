@@ -123,7 +123,7 @@
 }
 
 - (CGFloat)rotation {
-    return ([mInstance azimuth] + 180) * M_PI / 180.;
+    return [mInstance heading] * M_PI / 180.;
 }
 
 - (void)addAnnotationAt:(CGFloat)distanceFromCenter angle:(CGFloat)phi {

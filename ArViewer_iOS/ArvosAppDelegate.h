@@ -1,6 +1,6 @@
 /*
  * ArvosAppDelegate.h - ArViewer_iOS
- *
+ *H
  * Copyright (C) 2013, Peter Graf, Ulrich Zurucker
  *
  * This file is part of Arvos - AR Viewer Open Source for iOS.

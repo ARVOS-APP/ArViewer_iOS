@@ -27,6 +27,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
+@class ArvosDebugView;
+
 #define ArvosKeyName	                  @"name"
 #define ArvosKeyUrl	                      @"url"
 #define ArvosKeyAuthor	                  @"author"
@@ -55,10 +57,12 @@
 @property  CLLocationDegrees              correctedAzimuth;
 @property  CLLocationDegrees              pitch;
 @property  CLLocationDegrees              roll;
+@property  CLLocationDegrees              yaw;
 
 @property  BOOL                           useCache;
 
 @property(nonatomic) NSString*            augmentsUrl;
+@property ArvosDebugView*                 debugView;
 
 /**
  * The singleton instance
@@ -66,6 +70,7 @@
 + (Arvos*)sharedInstance;
 
 - (void)setAccel:(UIAcceleration*)newAccel;
+- (CLLocationDirection)heading;
 - (void)setHeading:(CLLocationDirection)heading;
 
 @end

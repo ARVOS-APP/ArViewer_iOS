@@ -24,10 +24,11 @@
  */
 
 #import "Arvos.h"
+#import "ArvosDebugView.h"
 
 	
 @interface Arvos () {
-    UIAccelerationValue	accel[3];
+    CLLocationDegrees _heading;
 }
 @end
 
@@ -38,6 +39,7 @@ static Arvos* _sharedInstance = nil;
 + (Arvos*)sharedInstance {
     if (nil == _sharedInstance) {
         _sharedInstance = [[super allocWithZone:NULL] init];
+        _sharedInstance->_heading = 0.;
     }
 	return _sharedInstance;
 }
@@ -65,31 +67,51 @@ static Arvos* _sharedInstance = nil;
 
 
 - (void)setAccel:(UIAcceleration*)newAccel {
-     
+    
+    UIAccelerationValue	accel[3];
     accel[0] = newAccel.x;
     accel[1] = newAccel.y;
     accel[2] = newAccel.z;
     
-    CLLocationDegrees newestPitch = atanf((accel[0]) / ((accel[1]*accel[1]) + (accel[2]*accel[2]))) * (180/M_PI);
-    CLLocationDegrees newestRoll = atanf((accel[1]) / ((accel[0]*accel[0]) + (accel[2]*accel[2]))) * (180/M_PI);
-    //CLLocationDegrees newestAzimuth = atanf((accel[2]) / ((accel[1]*accel[1]) + (accel[0]*accel[0]))) * (180/M_PI);
+    CLLocationDegrees newestRoll = -1 * atanf((accel[0]) / ((accel[1]*accel[1]) + (accel[2]*accel[2]))) * (180/M_PI);
+    CLLocationDegrees newestPitch = atanf((accel[1]) / ((accel[0]*accel[0]) + (accel[2]*accel[2]))) * (180/M_PI);
+    CLLocationDegrees newestYaw = atanf((accel[2]) / ((accel[1]*accel[1]) + (accel[0]*accel[0]))) * (180/M_PI);
     
     static const CLLocationDegrees alpha = 0.3;
     
     self.pitch = self.pitch * (1-alpha) + newestPitch * alpha;
+    
+    [self.debugView setDebugStringWithKey:@"pitch"
+                             formatString:@"Pitch: %g", self.pitch];
+    
     self.roll = self.roll * (1-alpha) + newestRoll * alpha;
-    //self.azimuth = self.azimuth * (1-alpha) + newestAzimuth * alpha;
-    //NBLog(@"accel azimuth = %f, roll %f, pitch %f", self.azimuth * (1-alpha) + newestAzimuth * alpha, self.roll, self.pitch);
+    
+    [self.debugView setDebugStringWithKey:@"roll"
+                             formatString:@"Roll: %g", self.roll];
+    
+    self.yaw = self.yaw * (1-alpha) + newestYaw * alpha;
+    
+    //[self.debugView setDebugStringWithKey:@"yaw" formatString:@"Yaw: %g", self.yaw];
+}
+- (CLLocationDirection)heading {
+    return _heading;
 }
 
 - (void)setHeading:(CLLocationDirection)heading {
     
-    CLLocationDegrees newestAzimuth = heading - 180;
-    
-    static const CLLocationDegrees alpha = 0.3;
-    self.azimuth = self.azimuth * (1-alpha) + newestAzimuth * alpha;
-    
-    //NBLog(@"heading azimuth = %f", self.azimuth);
+    _heading = heading;
+    [self.debugView setDebugStringWithKey:@"heading"
+                                  formatString:@"Heading: %g", _heading];
+
+    if (_heading > 180.) {
+        self.azimuth = _heading - 360.;
+    }
+    else {
+        self.azimuth = _heading;
+    }
+       
+    [self.debugView setDebugStringWithKey:@"azimuth"
+                             formatString:@"Azimuth: %g", self.azimuth];
 }
 
 @end
