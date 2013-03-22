@@ -1,7 +1,7 @@
 /*
  * ArvosViewerViewController.m - ArViewer_iOS
  *
- * Copyright (C) 2013, Peter Graf
+ * Copyright (C) 2013, Peter Graf, Ulrich Zurucker
  *
  * This file is part of Arvos - AR Viewer Open Source for iOS.
  * Arvos is free software.
@@ -19,8 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * For more information on the AR Viewer Open Source or Peter Graf,
- * please see: http://www.mission-base.com/.
+ * For more information on the AR Viewer Open Source
+ * please see: http://www.arvos-app.com/.
  */
 
 #import "ArvosViewerViewController.h"
