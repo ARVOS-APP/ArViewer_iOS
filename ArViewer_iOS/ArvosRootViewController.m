@@ -52,7 +52,7 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
                 augmentName:(NSString*)augmentName;
 - (void)onTextureDownloadError:(NSString*)error
                    augmentName:(NSString*)augmentName;
-- (void)onLocationServiceDisabled;
+- (void)alertEnableLocationServices;
 - (void)onLocationServiceNeedsStart;
 - (void)createExampleAugmentsForLocation:(CLLocation*)location;
 - (void)successHTTPResponse:(NSString*)baseUrl responseData:(NSData*)data;
@@ -177,7 +177,22 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 
 - (void)locationManager:(CLLocationManager*)manager
 	   didFailWithError:(NSError*)error {
-	[self onLocationServiceDisabled];
+	if ([error.domain isEqualToString:kCLErrorDomain]) {
+		switch (error.code) {
+			case kCLErrorDeferredAccuracyTooLow:
+				return;
+
+			case kCLAuthorizationStatusNotDetermined:
+			case kCLAuthorizationStatusDenied: {
+				[self alertEnableLocationServices];
+				return;
+			}
+				break;
+			default:
+				break;
+		}
+	}
+	NBLog(@"%@", error.localizedDescription);
 }
 
 // End --- CLLocationManagerDelegate --- methods
@@ -200,7 +215,7 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 
 		[self.myLocationManager startUpdatingLocation];
 	} else {
-		[self onLocationServiceDisabled];
+		[self alertEnableLocationServices];
 	}
 
 	// Create an Image View to be used as left bar button
@@ -270,18 +285,21 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
     });
 }
 
-- (void)onLocationServiceDisabled {
-    
+- (void)alertEnableLocationServices {
     dispatch_async(dispatch_get_main_queue(), ^(void) {
-        
         errorNumber = ERROR_NO_LOCATION_SERVICES;
         NSString* message = @"Please enable location services under 'Settings > Privacy > Location Services' and try again.";
-        UIAlertView* alertView = [[UIAlertView alloc]
-                                  initWithTitle:@"Location services are disabled!"
-                                  message:message
-                                  delegate:nil
-                                  cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
-                                  otherButtonTitles:nil];
+		/* make the alert view static to avoid displaying the alert multipe times */
+        static UIAlertView* alertView = nil;
+		if (alertView) {
+			return;
+		}
+		alertView =  [[UIAlertView alloc]
+					  initWithTitle:@"Location services are disabled!"
+					  message:message
+					  delegate:nil
+					  cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+					  otherButtonTitles:nil];
         [alertView show];
     });
 }
@@ -293,7 +311,7 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 		self.myLocationManager.purpose = @"To provide functionality based on user's current location.";
 		[self.myLocationManager startUpdatingLocation];
 	} else {
-		[self onLocationServiceDisabled];
+		[self alertEnableLocationServices];
 	}
 }
 
