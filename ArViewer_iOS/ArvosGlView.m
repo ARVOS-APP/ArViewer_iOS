@@ -34,9 +34,6 @@
 #import "ArvosRadarView.h"
 
 
-// MACROS
-#define DEGREES_TO_RADIANS(__ANGLE__) ((__ANGLE__) / 180.0 * M_PI)
-
 @interface ArvosGlView () {
 
 	// The pixel dimensions of the backbuffer

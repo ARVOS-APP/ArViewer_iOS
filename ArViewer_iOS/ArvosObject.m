@@ -70,10 +70,10 @@
  */
 void l3dBillboardSphericalBegin(GLfloat camX, GLfloat camY, GLfloat camZ, GLfloat posX, GLfloat posY, GLfloat posZ)
 {
-    GLfloat lookAt[] = { 0., 0., 1.};
+    static GLfloat lookAt[] = { 0., 0., 1. };
     GLfloat objToCamProj[3];
-    GLfloat objToCam [3];
-    GLfloat upAux [3];
+    GLfloat objToCam[3];
+    GLfloat upAux[3];
     GLfloat angleCosine;
     
     // objToCamProj is the vector in world coordinates from the local origin
@@ -101,7 +101,7 @@ void l3dBillboardSphericalBegin(GLfloat camX, GLfloat camY, GLfloat camZ, GLfloa
     // be bigger than 1 due to lack of precision
     if ((angleCosine < 0.99990) && (angleCosine > -0.9999))
     {
-        GLfloat f = 180 / M_1_PI * ((GLfloat) (acosf(angleCosine)));
+        GLfloat f = RADIANS_TO_DEGREES(acosf(angleCosine));
         vec3Normalize(upAux, upAux);
         glRotatef(f, upAux[0], upAux[1], upAux[2]);
     }
@@ -126,12 +126,12 @@ void l3dBillboardSphericalBegin(GLfloat camX, GLfloat camY, GLfloat camZ, GLfloa
     {
         if (objToCam[1] < 0)
         {
-            GLfloat f = 180 / M_1_PI * ((GLfloat) (acosf(angleCosine)));
+            GLfloat f = RADIANS_TO_DEGREES(acosf(angleCosine));
             glRotatef(f, 1, 0, 0);
         }
         else
         {
-            GLfloat f = 180 / M_1_PI * ((GLfloat) (acosf(angleCosine)));
+            GLfloat f = RADIANS_TO_DEGREES(acosf(angleCosine));
             glRotatef(f, -1, 0, 0);
         }
     }
@@ -153,9 +153,9 @@ void l3dBillboardSphericalBegin(GLfloat camX, GLfloat camY, GLfloat camZ, GLfloa
  */
 float l3dBillboardCylindricalDegrees(GLfloat camX, GLfloat camY, GLfloat camZ, GLfloat posX, GLfloat posY, GLfloat posZ, GLfloat* pUpAux)
 {
-    GLfloat lookAt [] = { 0, 0, 1 };
-    GLfloat objToCamProj [3];
-    GLfloat tmp [3];
+    static GLfloat lookAt[] = { 0, 0, 1 };
+    GLfloat objToCamProj[3];
+    GLfloat tmp[3];
     GLfloat* upAux = pUpAux;
     if (upAux == NULL)
     {
@@ -188,7 +188,7 @@ float l3dBillboardCylindricalDegrees(GLfloat camX, GLfloat camY, GLfloat camZ, G
     // be bigger than 1 due to lack of precision
     if ((angleCosine < 0.99990) && (angleCosine > -0.9999))
     {
-        return 180 / M_1_PI * ((GLfloat) (acosf(angleCosine)));
+        return RADIANS_TO_DEGREES(acosf(angleCosine));
     }
     return 0.;
 }

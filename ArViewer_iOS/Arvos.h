@@ -30,6 +30,10 @@
 @class ArvosDebugView;
 @class ArvosRadarView;
 
+// MACROS
+#define DEGREES_TO_RADIANS(__ANGLE__) ((__ANGLE__) / 180.0 * M_PI)
+#define RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) * 180.0 / M_PI)
+
 #define ArvosKeyName	                  @"name"
 #define ArvosKeyUrl	                      @"url"
 #define ArvosKeyAuthor	                  @"author"
