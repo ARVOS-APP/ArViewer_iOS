@@ -42,6 +42,12 @@
 - (void)addAnnotationAt:(CGFloat)distanceFromCenter angle:(CGFloat)phi;
 
 /**
+ Adds annotations in the view. Takes the list of arvos objects shown in the 3D view as input
+ @param arvosObjects the list of objects shown in the 3D view.
+ */
+- (void)addAnnotationsForObjects:(NSArray*)arvosObjects;
+
+/**
  Removes all Annotations from the view
  */
 - (void)removeAllAnnotations;

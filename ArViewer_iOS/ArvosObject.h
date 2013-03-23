@@ -24,6 +24,7 @@
  */
 
 #import "ArvosSquare.h"
+#include "vectorUtil.h"
 
 @interface ArvosObject : ArvosSquare
 

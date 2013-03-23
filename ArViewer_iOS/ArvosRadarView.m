@@ -25,6 +25,8 @@
 
 #import "ArvosRadarView.h"
 #import "Arvos.h"
+#import "ArvosObject.h"
+#import "ArvosDebugView.h"
 
 #define CIRCLE_WIDTH 4.
 #define ANNOTATION_SIZE 6.
@@ -58,7 +60,7 @@
         NSAssert(_annotationCoordinates != NULL,
                  @"failed to allocate memory for annotation coordinates");
 
-		_frontColor = [UIColor redColor];
+		_frontColor = [UIColor blueColor];
 		self.opaque = NO;       /* we would get a black background if not */
 	}
 	return self;
@@ -112,11 +114,14 @@
     [circlePath setClip];
      */
     
+    _frontColor = [UIColor redColor];
+    
     /* draw annotations */
     for (NSUInteger i=0; i<_numAnnotationCoordinates; ++i) {
         [self drawAnnotationAtPoint:_annotationCoordinates[i]
                          viewRadius:radius];
     }
+    _frontColor = [UIColor blueColor];
     
     /* resore graphics context state */
 	CGContextRestoreGState(context);
@@ -137,6 +142,30 @@
     CGFloat y = distanceFromCenter * cosf(phi);
     _annotationCoordinates[_numAnnotationCoordinates] = CGPointMake(x, y);
     _numAnnotationCoordinates++;
+    [self setNeedsDisplay];
+}
+
+- (void)addAnnotationsForObjects:(NSArray*)arvosObjects {
+    
+    [self removeAllAnnotations];
+    
+    for (ArvosObject* arvosObject in arvosObjects) {
+        if (_numAnnotationCoordinates == MAX_NUM_ANNOTATIONS) {
+            NSLog(@"failed to add annotation, max %u allowed", MAX_NUM_ANNOTATIONS);
+            return;
+        }
+        CGFloat* position = [arvosObject getPosition];
+        if (position[0] < -99 || position[0] > 99 || position[2] < -99 || position[2] > 99) {
+            continue;
+        }
+        _annotationCoordinates[_numAnnotationCoordinates] = CGPointMake(position[0] / 100., position[2] / 100.);
+        
+        if (_numAnnotationCoordinates == 0) {
+            [mInstance.debugView setDebugStringWithKey:@"Radar position"
+                                          formatString:@"Radar position: %g %g", position[0], position[2]];
+        }
+        _numAnnotationCoordinates++;
+    }
     [self setNeedsDisplay];
 }
 

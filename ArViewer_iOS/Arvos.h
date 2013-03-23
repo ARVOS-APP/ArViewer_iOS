@@ -28,6 +28,7 @@
 #import <CoreLocation/CoreLocation.h>
 
 @class ArvosDebugView;
+@class ArvosRadarView;
 
 #define ArvosKeyName	                  @"name"
 #define ArvosKeyUrl	                      @"url"
@@ -62,7 +63,9 @@
 @property  BOOL                           useCache;
 
 @property(nonatomic) NSString*            augmentsUrl;
+
 @property ArvosDebugView*                 debugView;
+@property ArvosRadarView*			      radarView;
 
 /**
  * The singleton instance

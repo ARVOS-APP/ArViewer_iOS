@@ -28,8 +28,10 @@
 #import <OpenGLES/EAGLDrawable.h>
 
 #import "ArvosGlView.h"
+#import "Arvos.h"
 #import "ArvosAugment.h"
 #import "ArvosObject.h"
+#import "ArvosRadarView.h"
 
 
 // MACROS
@@ -61,8 +63,9 @@
 	
 	UIAccelerationValue	accel[3];
     
-    ArvosAugment* mAugment;
+    ArvosAugment*   mAugment;
     NSMutableArray* mArvosObjects;
+    Arvos*          mInstance;
 }
 
 @end
@@ -103,6 +106,7 @@
         
         mAugment = augment;
         mArvosObjects = [NSMutableArray array];
+        mInstance = [Arvos sharedInstance];
         
 		CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
         
@@ -189,6 +193,8 @@
     [mArvosObjects removeAllObjects];
     
     [mAugment getObjectsAtCurrentTime:millis arrayToFill:mArvosObjects existingObjects:existingArvosObjects];
+    
+    [mInstance.radarView addAnnotationsForObjects:mArvosObjects];
     
     for (ArvosObject* arvosObject in mArvosObjects) {
         glLoadIdentity();
