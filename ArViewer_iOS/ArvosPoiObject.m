@@ -102,10 +102,11 @@ static int mNextId = 0;
         return [@"Illegal value for billboardHandling: " stringByAppendingString:self.billboardHandling];
     }
     
-    self.startTime = [inDictionary objectForKey:@"startTime"] ? (long)inDictionary[@"startTime"] : 0;
-    self.animationDuration = [inDictionary objectForKey:@"duration"] ? (long)inDictionary[@"duration"] : 0;
-    self.loop = ([inDictionary valueForKey:@"loop"] != nil) ? [[inDictionary valueForKey:@"loop"] unsignedIntegerValue] : NO;
-    self.isActive = ([inDictionary valueForKey:@"isActive"] != nil) ? [[inDictionary valueForKey:@"isActive"] unsignedIntegerValue] : YES;
+    id valueForKey;
+    self.startTime = ((valueForKey = [inDictionary valueForKey:@"startTime"]) != nil) ? [valueForKey longValue] : 0;
+    self.animationDuration = ((valueForKey = [inDictionary valueForKey:@"duration"]) != nil) ? [valueForKey longValue] : 0;
+    self.loop = ((valueForKey = [inDictionary valueForKey:@"loop"]) != nil) ? [valueForKey unsignedIntegerValue] : NO;
+    self.isActive = ((valueForKey = [inDictionary valueForKey:@"isActive"]) != nil) ? [valueForKey unsignedIntegerValue] : YES;
        
     [self parseVec3f:inDictionary
                 name:@"startPosition"

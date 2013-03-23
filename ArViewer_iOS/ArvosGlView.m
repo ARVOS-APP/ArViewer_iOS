@@ -175,9 +175,15 @@
 // Updates the OpenGL view
 - (void)drawView {
     
+    static long startSeconds = 0L;
     struct timeval time;
     gettimeofday(&time, NULL);
-    long millis = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+    
+    if (startSeconds == 0L) {
+        startSeconds = time.tv_sec;
+    }
+        
+    long millisAfterStart = ((time.tv_sec - startSeconds) * 1000) + (time.tv_usec / 1000);
     
     // Make sure that you are drawing to the current context
 	[EAGLContext setCurrentContext:context];
@@ -189,7 +195,7 @@
     NSMutableArray * existingArvosObjects = [[NSMutableArray alloc] initWithArray:mArvosObjects];
     [mArvosObjects removeAllObjects];
     
-    [mAugment getObjectsAtCurrentTime:millis arrayToFill:mArvosObjects existingObjects:existingArvosObjects];
+    [mAugment getObjectsAtCurrentTime:millisAfterStart arrayToFill:mArvosObjects existingObjects:existingArvosObjects];
     
     [mInstance.radarView addAnnotationsForObjects:mArvosObjects];
     

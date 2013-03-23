@@ -70,6 +70,13 @@
  */
 - (NSString*)downloadTexturesSynchronously;
 
+/**
+ * Get the list of objects to display at the current time
+ *
+ * @param time time in milliseconds for which the objects are requested
+ * @param arrayToFill list to place resulting objects in
+ * @param existingObjects array of objects returned the last time, used for reusing existing objects
+ */
 - (void)getObjectsAtCurrentTime:(long)time
                     arrayToFill:(NSMutableArray*)resultObjects
                 existingObjects:(NSMutableArray*)arvosObjects;
