@@ -98,7 +98,7 @@ static Arvos* _sharedInstance = nil;
     
     self.yaw = self.yaw * (1-alpha) + newestYaw * alpha;
     
-    //[self.debugView setDebugStringWithKey:@"yaw" formatString:@"Yaw: %g", self.yaw];
+    [self.debugView setDebugStringWithKey:@"yaw" formatString:@"Yaw: %g", self.yaw];
 }
 - (CLLocationDirection)heading {
     return _heading;
