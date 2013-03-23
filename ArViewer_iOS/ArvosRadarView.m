@@ -160,10 +160,13 @@
         }
         _annotationCoordinates[_numAnnotationCoordinates] = CGPointMake(position[0] / 100., position[2] / 100.);
         
+        /*
         if (_numAnnotationCoordinates == 0) {
             [mInstance.debugView setDebugStringWithKey:@"Radar position"
                                           formatString:@"Radar position: %g %g", position[0], position[2]];
         }
+        */
+        
         _numAnnotationCoordinates++;
     }
     [self setNeedsDisplay];

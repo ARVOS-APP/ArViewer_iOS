@@ -163,9 +163,6 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 		   fromLocation:(CLLocation*)oldLocation {
 	/* We received the new location */
 
-	NBLog(@"Latitude = %f", newLocation.coordinate.latitude);
-	NBLog(@"Longitude = %f", newLocation.coordinate.longitude);
-
 	CLLocationDistance distance = [newLocation distanceFromLocation:oldLocation];
 	mInstance.location = newLocation;
 

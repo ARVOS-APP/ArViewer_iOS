@@ -29,11 +29,18 @@
 #import "ArvosPoiObject.h"
 #import "ArvosObject.h"
 
+@interface ArvosPoi () {
+    Arvos*  mInstance;
+}
+
+@end
+
 @implementation ArvosPoi
 
 - (id)initWithAugment:(ArvosAugment*)augment {
     self = [super init];
 	if (self) {
+        mInstance = [Arvos sharedInstance];
         self.parent = augment;
         self.poiObjects = [NSMutableArray array];
 	}
@@ -101,10 +108,64 @@
                     arrayToFill:(NSMutableArray*)resultObjects
                 existingObjects:(NSMutableArray*)arvosObjects {
     
+    GLfloat offsetX = 0.;
+    GLfloat offsetZ = 0.;
+    
+    if (self.coordinate.longitude != 0. || self.coordinate.latitude != 0.)
+    {
+        CLLocation * currentLocation = [[CLLocation alloc] initWithLatitude:mInstance.location.coordinate.latitude
+                                                                  longitude:0.];
+        
+        CLLocation * poiLocation = [[CLLocation alloc] initWithLatitude:self.coordinate.latitude
+                                                              longitude:0.];
+        offsetZ = [currentLocation distanceFromLocation:poiLocation];
+        
+        if (mInstance.location.coordinate.latitude > self.coordinate.latitude)
+        {
+            if (offsetZ < 0)
+            {
+                offsetZ = -offsetZ;
+            }
+        }
+        else
+        {
+            if (offsetZ > 0)
+            {
+                offsetZ = -offsetZ;
+            }
+        }
+        
+        currentLocation = [[CLLocation alloc] initWithLatitude:0.
+                                                     longitude:mInstance.location.coordinate.longitude];
+        poiLocation = [[CLLocation alloc] initWithLatitude:0.
+                                                 longitude:self.coordinate.longitude];
+       
+        offsetX = [currentLocation distanceFromLocation:poiLocation];
+        if (mInstance.location.coordinate.longitude > self.coordinate.longitude)
+        {
+            if (offsetX > 0)
+            {
+                offsetX = -offsetX;
+            }
+        }
+        else
+        {
+            if (offsetX < 0)
+            {
+                offsetX = -offsetX;
+            }
+        }
+    }
+    
     for (ArvosPoiObject* poiObject in self.poiObjects) {
         
         ArvosObject* arvosObject = [poiObject getObjectAtCurrentTime:time existingObjects:arvosObjects];
         if (arvosObject != nil) {
+            
+            GLfloat* position = [arvosObject getPosition];
+            position[0] += offsetX;
+            position[2] += offsetZ;
+
             [resultObjects addObject:arvosObject];
         }
     }

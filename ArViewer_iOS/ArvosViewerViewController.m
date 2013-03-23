@@ -94,7 +94,7 @@
 	mInstance.radarView = [[ArvosRadarView alloc] initWithFrame:CGRectMake(10., 30., 80., 80.)];
 	[self.view.layer addSublayer:mInstance.radarView.layer];
 
-	mInstance.debugView = [[ArvosDebugView alloc] initWithFrame:CGRectMake(100., 30., 280., 100.) fontSize:15.];
+	mInstance.debugView = [[ArvosDebugView alloc] initWithFrame:CGRectMake(100., 30., 280., 150.) fontSize:15.];
 	[self.view.layer addSublayer:mInstance.debugView.layer];
 }
 

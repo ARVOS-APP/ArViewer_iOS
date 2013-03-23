@@ -104,22 +104,9 @@ static int mNextId = 0;
     
     self.startTime = [inDictionary objectForKey:@"startTime"] ? (long)inDictionary[@"startTime"] : 0;
     self.animationDuration = [inDictionary objectForKey:@"duration"] ? (long)inDictionary[@"duration"] : 0;
-    self.loop = [inDictionary objectForKey:@"loop"] ? (BOOL)inDictionary[@"loop"] : NO;
-    self.isActive = [inDictionary objectForKey:@"isActive"] ? (BOOL)inDictionary[@"isActive"] : YES;
-    
-    /*
-     mStartPosition[0] = mStartPosition[1] = mStartPosition[2] = .0;
-     [inDictionary[@"startPosition"] parseVec3f:mStartPosition];
-     
-     mEndPosition[0] = mStartPosition[0];
-     mEndPosition[1] = mStartPosition[1];
-     mEndPosition[2] = mStartPosition[1];
-     [inDictionary[@"endPosition"] parseVec3f:mEndPosition];
-     
-     mStartScale[0] = mStartScale[1] = mStartScale[2] = .0;
-     [inDictionary[@"startScale"] parseVec3f:mStartScale];
-     */
-    
+    self.loop = ([inDictionary valueForKey:@"loop"] != nil) ? [[inDictionary valueForKey:@"loop"] unsignedIntegerValue] : NO;
+    self.isActive = ([inDictionary valueForKey:@"isActive"] != nil) ? [[inDictionary valueForKey:@"isActive"] unsignedIntegerValue] : YES;
+       
     [self parseVec3f:inDictionary
                 name:@"startPosition"
               buffer:mStartPosition

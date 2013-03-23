@@ -68,6 +68,13 @@ static Arvos* _sharedInstance = nil;
 
 - (void)setAccel:(UIAcceleration*)newAccel {
     
+    [self.debugView setDebugStringWithKey:@"longitude"
+                             formatString:@"Longitude: %g", self.location.coordinate.longitude];
+    
+    [self.debugView setDebugStringWithKey:@"latitude"
+                             formatString:@"Latitude: %g", self.location.coordinate.latitude];
+
+    
     UIAccelerationValue	accel[3];
     accel[0] = newAccel.x;
     accel[1] = newAccel.y;
