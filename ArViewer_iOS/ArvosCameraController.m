@@ -97,14 +97,22 @@
 - (void)setDeviceOrientation:(UIDeviceOrientation)newOrientation {
 	AVCaptureVideoOrientation videoOrientation = AVCaptureVideoOrientationPortrait;
 	CGRect applicationScreenFrame = [UIScreen mainScreen].applicationFrame;
-	CGRect layerRect = CGRectMake(0, 0, applicationScreenFrame.size.width, applicationScreenFrame.size.height);
+	CGRect layerRect = CGRectMake(.0, .0, applicationScreenFrame.size.width, applicationScreenFrame.size.height);
 
+	/*
+	 This is serious:
+	 UIDeviceOrientation means orientation of the device related to
+	 the home button at 'bottom', AVCaptureVideoOrientation is position of the 
+	 home button....
+	 */
 	if (UIDeviceOrientationLandscapeLeft == newOrientation) {
-		videoOrientation = AVCaptureVideoOrientationLandscapeLeft;
-		layerRect = CGRectMake(0, 0, applicationScreenFrame.size.height, applicationScreenFrame.size.width);
-	} else if (UIDeviceOrientationLandscapeRight == newOrientation) {
 		videoOrientation = AVCaptureVideoOrientationLandscapeRight;
-		layerRect = CGRectMake(0, 0, applicationScreenFrame.size.height, applicationScreenFrame.size.width);
+		layerRect.size = CGSizeMake(applicationScreenFrame.size.height,
+									applicationScreenFrame.size.width);
+	} else if (UIDeviceOrientationLandscapeRight == newOrientation) {
+		videoOrientation = AVCaptureVideoOrientationLandscapeLeft;
+		layerRect.size = CGSizeMake(applicationScreenFrame.size.height,
+									applicationScreenFrame.size.width);
 	} else if (UIDeviceOrientationPortraitUpsideDown == newOrientation) {
 		videoOrientation = UIDeviceOrientationPortraitUpsideDown;
 	}
