@@ -25,6 +25,12 @@
 
 #import "ArvosCameraController.h"
 
+@interface ArvosCameraController (Private)
+
+- (void)setDeviceOrientation:(UIDeviceOrientation)newOrientation;
+
+@end
+
 @implementation ArvosCameraController
 
 @synthesize captureSession;
@@ -32,9 +38,24 @@
 
 #pragma mark Capture Session Configuration
 
+- (void)dealloc {
+	[[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
+}
+
 - (id)init {
 	if ((self = [super init])) {
 		[self setCaptureSession:[[AVCaptureSession alloc] init]];
+		[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+
+		void(^deviceOrientationChanged)(NSNotification* notification) = ^(NSNotification* not) {
+			UIDeviceOrientation newOrientation = [[UIDevice currentDevice] orientation];
+			[self setDeviceOrientation:newOrientation];
+		};
+
+		[[NSNotificationCenter defaultCenter] addObserverForName:UIDeviceOrientationDidChangeNotification
+														  object:nil
+														   queue:[NSOperationQueue mainQueue]
+													  usingBlock:deviceOrientationChanged];
 	}
 	return self;
 }
@@ -42,7 +63,7 @@
 - (void)addVideoPreviewLayer {
 	[self setPreviewLayer:[[AVCaptureVideoPreviewLayer alloc] initWithSession:[self captureSession]]];
 	[[self previewLayer] setVideoGravity:AVLayerVideoGravityResizeAspectFill];
-    [[self.previewLayer connection] setVideoOrientation:AVCaptureVideoOrientationPortrait];
+	[self setDeviceOrientation:[UIDevice currentDevice].orientation];
 }
 
 - (void)addVideoInput {
@@ -63,28 +84,32 @@
 		NBLog(@"Couldn't create video capture device");
 }
 
-- (void)setPortrait {
-    [[self.previewLayer connection] setVideoOrientation:AVCaptureVideoOrientationPortrait];
-    CGRect layerRect = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
-    [self screenLayer:layerRect];
-}
-
-- (void)setLandscapeLeft {
-    [[self.previewLayer connection] setVideoOrientation:AVCaptureVideoOrientationLandscapeRight];
-    CGRect layerRect = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width);
-    [self screenLayer:layerRect];
-}
-
-- (void)setLandscapeRight {
-    [[self.previewLayer connection] setVideoOrientation:AVCaptureVideoOrientationLandscapeLeft];
-    CGRect layerRect = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width);
-    [self screenLayer:layerRect];
-}
-
 - (void)screenLayer:(CGRect)layerRect {
     [[self previewLayer] setBounds:layerRect];
     [[self previewLayer] setVideoGravity: AVLayerVideoGravityResizeAspectFill];
     [[self previewLayer] setPosition:CGPointMake(CGRectGetMidX(layerRect), CGRectGetMidY(layerRect))];
+}
+
+@end
+
+@implementation ArvosCameraController (Private)
+
+- (void)setDeviceOrientation:(UIDeviceOrientation)newOrientation {
+	AVCaptureVideoOrientation videoOrientation = AVCaptureVideoOrientationPortrait;
+	CGRect applicationScreenFrame = [UIScreen mainScreen].applicationFrame;
+	CGRect layerRect = CGRectMake(0, 0, applicationScreenFrame.size.width, applicationScreenFrame.size.height);
+
+	if (UIDeviceOrientationLandscapeLeft == newOrientation) {
+		videoOrientation = AVCaptureVideoOrientationLandscapeLeft;
+		layerRect = CGRectMake(0, 0, applicationScreenFrame.size.height, applicationScreenFrame.size.width);
+	} else if (UIDeviceOrientationLandscapeRight == newOrientation) {
+		videoOrientation = AVCaptureVideoOrientationLandscapeRight;
+		layerRect = CGRectMake(0, 0, applicationScreenFrame.size.height, applicationScreenFrame.size.width);
+	} else if (UIDeviceOrientationPortraitUpsideDown == newOrientation) {
+		videoOrientation = UIDeviceOrientationPortraitUpsideDown;
+	}
+	self.previewLayer.connection.videoOrientation = videoOrientation;
+    [self screenLayer:layerRect];
 }
 
 @end

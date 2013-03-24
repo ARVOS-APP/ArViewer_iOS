@@ -33,8 +33,4 @@
 
 - (void)addVideoPreviewLayer;
 - (void)addVideoInput;
-- (void)setPortrait;
-- (void)setLandscapeLeft;
-- (void)setLandscapeRight;
-
 @end

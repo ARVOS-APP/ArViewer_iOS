@@ -72,7 +72,6 @@
 	self.cameraController = [[ArvosCameraController alloc] init];
 	[self.cameraController addVideoInput];
 	[self.cameraController addVideoPreviewLayer];
-	[self.cameraController setPortrait];
 	[[self.view layer] addSublayer:[self.cameraController previewLayer]];
 	[[self.cameraController captureSession] startRunning];
 
