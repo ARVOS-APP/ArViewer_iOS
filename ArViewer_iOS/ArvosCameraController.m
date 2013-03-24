@@ -34,7 +34,6 @@
 
 - (id)init {
 	if ((self = [super init])) {
-        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO];
 		[self setCaptureSession:[[AVCaptureSession alloc] init]];
 	}
 	return self;
