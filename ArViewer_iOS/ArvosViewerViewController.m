@@ -52,7 +52,7 @@
 }
 
 - (id)initWithAugment:(ArvosAugment*)augment {
-	self = [super initWithNibName:nil bundle:nil];
+	self = [super initWithNibName:@"ArvosViewerViewController-iPhone" bundle:nil];
 	if (self) {
         mInstance = [Arvos sharedInstance];
 		self.augment = augment;
