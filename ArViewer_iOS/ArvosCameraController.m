@@ -24,8 +24,11 @@
 //
 
 #import "ArvosCameraController.h"
+#import "Arvos.h"
 
-@interface ArvosCameraController (Private)
+@interface ArvosCameraController () {
+    Arvos*                  mInstance;
+}
 
 - (void)setDeviceOrientation:(UIDeviceOrientation)newOrientation;
 
@@ -44,6 +47,7 @@
 
 - (id)init {
 	if ((self = [super init])) {
+        mInstance = [Arvos sharedInstance];
 		[self setCaptureSession:[[AVCaptureSession alloc] init]];
 		[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
 
@@ -90,15 +94,13 @@
     [[self previewLayer] setPosition:CGPointMake(CGRectGetMidX(layerRect), CGRectGetMidY(layerRect))];
 }
 
-@end
-
-@implementation ArvosCameraController (Private)
-
 - (void)setDeviceOrientation:(UIDeviceOrientation)newOrientation {
 	AVCaptureVideoOrientation videoOrientation = AVCaptureVideoOrientationPortrait;
 	CGRect applicationScreenFrame = [UIScreen mainScreen].applicationFrame;
 	CGRect layerRect = CGRectMake(.0, .0, applicationScreenFrame.size.width, applicationScreenFrame.size.height);
 
+    mInstance.orientation = newOrientation;
+    
 	/*
 	 This is serious:
 	 UIDeviceOrientation means orientation of the device related to

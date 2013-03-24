@@ -58,6 +58,7 @@
 @property(nonatomic) NSString*            sessionId;
 @property NSInteger                       version;
 
+@property  UIDeviceOrientation            orientation;
 @property  CLLocationDegrees              azimuth;
 @property  CLLocationDegrees              correctedAzimuth;
 @property  CLLocationDegrees              pitch;
@@ -79,5 +80,6 @@
 - (void)setAccel:(UIAcceleration*)newAccel;
 - (CLLocationDirection)heading;
 - (void)setHeading:(CLLocationDirection)heading;
+- (GLfloat) getRotationDegrees;
 
 @end

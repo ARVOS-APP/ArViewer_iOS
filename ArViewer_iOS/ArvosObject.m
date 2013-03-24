@@ -219,10 +219,9 @@ void l3dBillboardCylindricalBegin(GLfloat camX, GLfloat camY, GLfloat camZ, GLfl
         [self loadGlTexture:self.image];
     }
 
-    //glTranslatef(0.0, 0, -5.0);
     // Take the device orientation into account
     //
-    //gl.glRotatef(mInstance.getRotationDegrees(), 0f, 0f, 1f);
+    glRotatef([mInstance getRotationDegrees], 0., 0., 1.);
     
     // The device coordinates are flat on the table with X east, Y north and
     // Z up.
@@ -232,7 +231,7 @@ void l3dBillboardCylindricalBegin(GLfloat camX, GLfloat camY, GLfloat camZ, GLfl
     
     // Apply azimut, pitch and roll of the device
     //
-    glRotatef(mInstance.roll, 0., 0., -1.);
+    glRotatef(mInstance.roll, 0., 0., 1.);
     glRotatef(mInstance.pitch, 1., 0., 0.);
     glRotatef(mInstance.azimuth, 0., 1., 0.);
     

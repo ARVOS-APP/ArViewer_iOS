@@ -119,4 +119,29 @@ static Arvos* _sharedInstance = nil;
                              formatString:@"Azimuth: %g", self.azimuth];
 }
 
+/**
+ * Gets the device rotation derived from the UIDeviceOrientation, 0, 90, 180 or 270.
+ *
+ * @return The device rotation derived from the UIDeviceOrientation, 0, 90, 180 or
+ *         270 degrees.
+ */
+- (GLfloat) getRotationDegrees {
+    
+    GLfloat degrees = 0;
+    if (self.orientation == UIDeviceOrientationLandscapeLeft)
+    {
+        degrees = 270.;
+    }
+    else if (self.orientation == UIDeviceOrientationLandscapeRight)
+    {
+        degrees = 90.;
+    }
+    else if (self.orientation == UIDeviceOrientationPortraitUpsideDown)
+    {
+        degrees = 180.;
+    }
+
+    return degrees;
+}
+
 @end
