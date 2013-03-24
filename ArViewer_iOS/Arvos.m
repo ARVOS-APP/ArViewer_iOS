@@ -25,7 +25,11 @@
 
 #import "Arvos.h"
 #import "ArvosDebugView.h"
+#import "ArvosTriangle.h"
+#import "ArvosRay.h"
+#import "ArvosSquare.h"
 
+#include "vectorUtil.h"
 	
 @interface Arvos () {
     CLLocationDegrees _heading;
@@ -62,6 +66,7 @@ static Arvos* _sharedInstance = nil;
 		self.augmentsUrl = @"http://www.mission-base.com/arvos/augments-iOS.json";
 		self.useCache = YES;
 		self.version = 1;
+        self.hasBeenTouched = NO;
 	}
 	return self;
 }
@@ -142,6 +147,117 @@ static Arvos* _sharedInstance = nil;
     }
 
     return degrees;
+}
+
+/**
+ * Handle a touch event
+ */
+- (void)handleTouchForObject:(int)objectId
+                   modelView:(GLfloat*)modelView
+                  projection:(GLfloat*)projection
+                       width:(int)width
+                      height:(int)height {
+        
+    ArvosTriangle* triangle = [[ArvosTriangle alloc] init];
+    
+    float intersection [3];   
+    float convertedSquare [12];
+    float resultVector [4];
+    float inputVector [4];
+    
+    ArvosSquare* square = [[ArvosSquare alloc]init];
+    
+    ArvosRay* ray = [[ArvosRay alloc] initWithModelView:modelView
+                                             projection:projection
+                                                  width:width
+                                                 height:height
+                                                 xTouch:self.touchLocation.x
+                                                 yTouch:self.touchLocation.y];
+                  
+    inputVector[0] = square.vertices[0];
+    inputVector[1] = square.vertices[1];
+    inputVector[2] = 0.;
+    inputVector[3] = 1;
+    
+    vec4MultMatrix(resultVector, modelView, inputVector);
+    convertedSquare[0] = resultVector[0] / resultVector[3];
+    convertedSquare[1] = resultVector[1] / resultVector[3];
+    convertedSquare[2] = resultVector[2] / resultVector[3];
+    
+
+    inputVector[0] = square.vertices[2];
+    inputVector[1] = square.vertices[3];
+    inputVector[2] = 0.;
+    inputVector[3] = 1;
+    
+    vec4MultMatrix(resultVector, modelView, inputVector);
+    convertedSquare[3] = resultVector[0] / resultVector[3];
+    convertedSquare[4] = resultVector[1] / resultVector[3];
+    convertedSquare[5] = resultVector[2] / resultVector[3];
+    
+    inputVector[0] = square.vertices[4];
+    inputVector[1] = square.vertices[5];
+    inputVector[2] = 0.;
+    inputVector[3] = 1;
+    
+    vec4MultMatrix(resultVector, modelView, inputVector);
+    convertedSquare[6] = resultVector[0] / resultVector[3];
+    convertedSquare[7] = resultVector[1] / resultVector[3];
+    convertedSquare[8] = resultVector[2] / resultVector[3];
+    
+    inputVector[0] = square.vertices[6];
+    inputVector[1] = square.vertices[7];
+    inputVector[2] = 0.;
+    inputVector[3] = 1;
+    
+    vec4MultMatrix(resultVector, modelView, inputVector);
+    convertedSquare[9] = resultVector[0] / resultVector[3];
+    convertedSquare[10] = resultVector[1] / resultVector[3];
+    convertedSquare[11] = resultVector[2] / resultVector[3];
+    
+    triangle.v0[0] = convertedSquare[0];
+    triangle.v0[1] = convertedSquare[1];
+    triangle.v0[2] = convertedSquare[2];
+    triangle.v1[0] = convertedSquare[3];
+    triangle.v1[1] = convertedSquare[4];
+    triangle.v1[2] = convertedSquare[5];
+    triangle.v2[0] = convertedSquare[6];
+    triangle.v2[1] = convertedSquare[7];
+    triangle.v2[2] = convertedSquare[8];
+    
+    int result = [triangle intersectWithRay:ray resultPoint:intersection];
+    if (result == 1)
+    {
+        float length = vec3Length(intersection);
+        if( self.touchedObjectId == 0)
+        {
+            self.touchedObjectId = objectId;
+            self.touchedObjectDistance = length;
+        }
+        else if (length < self.touchedObjectDistance) {
+            self.touchedObjectId = objectId;
+            self.touchedObjectDistance = length;
+        }
+    }
+    
+    triangle.v0[0] = convertedSquare[9];
+    triangle.v0[1] = convertedSquare[10];
+    triangle.v0[2] = convertedSquare[11];
+    
+    result = [triangle intersectWithRay:ray resultPoint:intersection];
+    if (result == 1)
+    {
+        float length = vec3Length(intersection);
+        if( self.touchedObjectId == 0)
+        {
+            self.touchedObjectId = objectId;
+            self.touchedObjectDistance = length;
+        }
+        else if (length < self.touchedObjectDistance) {
+            self.touchedObjectId = objectId;
+            self.touchedObjectDistance = length;
+        }
+    }
 }
 
 @end

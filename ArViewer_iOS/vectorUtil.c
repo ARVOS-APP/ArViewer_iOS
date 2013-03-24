@@ -154,4 +154,11 @@ void vec3Normalize(float* vec, const float* src)
 	vec[2] = src[2]/length;
 }
 
+void vec4MultMatrix(float* res, float* mtx, float*vec)
+{
+    res[0] = mtx[0] * vec[0] + mtx[4] * vec[1] + mtx[8] * vec[2] + mtx[12] * vec[3];
+    res[1] = mtx[1] * vec[0] + mtx[2] * vec[1] + mtx[9] * vec[2] + mtx[13] * vec[3];
+    res[2] = mtx[2] * vec[0] + mtx[6] * vec[1] + mtx[10] * vec[2] + mtx[14] * vec[3];
+    res[3] = mtx[3] * vec[0] + mtx[7] * vec[1] + mtx[11] * vec[2] + mtx[15] * vec[3];
+}
 

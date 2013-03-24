@@ -97,4 +97,6 @@ float vec3Length(const float* vec);
 // Returns the distance between two 3D points
 float vec3Distance(const float* pointA, const float* pointB);
 
+void vec4MultMatrix(float* res, float* mtx, float*vec);
+
 #endif //__VECTOR_UTIL_H__

@@ -28,6 +28,7 @@
 #import "ArvosPoi.h"
 #import "ArvosPoiObject.h"
 #import "ArvosObject.h"
+#import "ArvosDebugView.h"
 
 @interface ArvosPoi () {
     Arvos*  mInstance;
@@ -189,5 +190,7 @@
 
 - (void)addClick:(ArvosPoiObject*)poiObject {
     
+    [mInstance.debugView setDebugStringWithKey:@"touchObject"
+                                  formatString:@"Object: %@", poiObject.name];
 }
 @end

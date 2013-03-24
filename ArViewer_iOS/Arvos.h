@@ -67,6 +67,11 @@
 
 @property  BOOL                           useCache;
 
+@property CGPoint                         touchLocation;
+@property BOOL                            hasBeenTouched;
+@property int                             touchedObjectId;
+@property GLfloat                         touchedObjectDistance;
+
 @property(nonatomic) NSString*            augmentsUrl;
 
 @property ArvosDebugView*                 debugView;
@@ -81,5 +86,14 @@
 - (CLLocationDirection)heading;
 - (void)setHeading:(CLLocationDirection)heading;
 - (GLfloat) getRotationDegrees;
+
+/**
+ * Handle a touch event
+ */
+- (void)handleTouchForObject:(int)objectId
+                   modelView:(GLfloat*)modelView
+                  projection:(GLfloat*)projection
+                       width:(int)width
+                      height:(int)height;
 
 @end

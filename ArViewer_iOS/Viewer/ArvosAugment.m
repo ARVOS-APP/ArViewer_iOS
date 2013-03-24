@@ -168,4 +168,18 @@
     return mPois;
 }
 
+- (void)addClickForObjectWithId:(int)objectId {
+    
+    for (ArvosPoi* poi in mPois) {
+        
+        for(ArvosPoiObject* poiObject in poi.poiObjects ) {
+            
+            if (poiObject.id == objectId) {
+                
+                [poi addClick:poiObject];
+                return;
+            }
+        }
+    }
+}
 @end

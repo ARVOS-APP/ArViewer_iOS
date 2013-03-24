@@ -32,6 +32,7 @@
 #import "ArvosAugment.h"
 #import "ArvosObject.h"
 #import "ArvosRadarView.h"
+#import "ArvosDebugView.h"
 
 
 @interface ArvosGlView () {
@@ -199,9 +200,38 @@
     
     [mInstance.radarView addAnnotationsForObjects:mArvosObjects];
     
+    GLfloat P[16];
+    BOOL hasBeenTouched = mInstance.hasBeenTouched;
+    if (hasBeenTouched) {
+        
+        glGetFloatv(GL_PROJECTION_MATRIX, P);
+        mInstance.touchedObjectId = 0;
+    }
+    
+   
     for (ArvosObject* arvosObject in mArvosObjects) {
         glLoadIdentity();
         [arvosObject draw];
+        
+        if (hasBeenTouched) {
+            
+            GLfloat M[16];
+            glGetFloatv(GL_MODELVIEW_MATRIX, M);
+            [mInstance handleTouchForObject:arvosObject.id
+                                  modelView:M
+                                 projection:P
+                                      width:self.frame.size.width
+                                     height:self.frame.size.height];
+        }
+    }
+    
+    if (hasBeenTouched) {
+        
+        if(mInstance.touchedObjectId != 0) {
+            
+            [mAugment addClickForObjectWithId:mInstance.touchedObjectId];
+        }
+        mInstance.hasBeenTouched = NO;
     }
     
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, viewRenderbuffer);
@@ -210,6 +240,21 @@
     GLenum err = glGetError();
     if (err != GL_NO_ERROR)
         NSLog(@"Error. glError: 0x%04X\n", err);
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+    if (mInstance.hasBeenTouched) {
+        return;
+    }
+    
+    NSSet *allTouches = [event allTouches];
+    for (UITouch *touch in allTouches) {
+        mInstance.touchLocation = [touch locationInView:touch.view];
+        mInstance.hasBeenTouched = YES;
+        [mInstance.debugView setDebugStringWithKey:@"touch"
+                                      formatString:@"Touch: %g %g", mInstance.touchLocation.x, mInstance.touchLocation.y];
+    }
 }
 
 // If our view is resized, we'll be asked to layout subviews.

@@ -31,6 +31,8 @@
 		61CB8C2016E9EA4A002002A9 /* ArvosAugment_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CB8C1F16E9EA4A002002A9 /* ArvosAugment_Test.m */; };
 		61CB8C2216E9F905002002A9 /* ArvosRootViewController-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61CB8C2116E9F905002002A9 /* ArvosRootViewController-iPhone.xib */; };
 		61CB8C2316E9F905002002A9 /* ArvosRootViewController-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61CB8C2116E9F905002002A9 /* ArvosRootViewController-iPhone.xib */; };
+		D002042116FF876A007FEF2C /* ArvosRay.m in Sources */ = {isa = PBXBuildFile; fileRef = D002042016FF876A007FEF2C /* ArvosRay.m */; };
+		D002042416FF9F90007FEF2C /* ArvosTriangle.m in Sources */ = {isa = PBXBuildFile; fileRef = D002042316FF9F90007FEF2C /* ArvosTriangle.m */; };
 		D0251A1416E3BFDB00800246 /* ArvosCameraController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0251A1316E3BFDB00800246 /* ArvosCameraController.m */; };
 		D0251A1616E3C24800800246 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0251A1516E3C24800800246 /* AVFoundation.framework */; };
 		D0251A2C16E3C59F00800246 /* vectorUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = D0251A2216E3C59E00800246 /* vectorUtil.c */; };
@@ -84,6 +86,10 @@
 		61CB8C1916E9E98B002002A9 /* ArViewer_iOS-Test-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ArViewer_iOS-Test-Prefix.pch"; sourceTree = "<group>"; };
 		61CB8C1F16E9EA4A002002A9 /* ArvosAugment_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArvosAugment_Test.m; sourceTree = "<group>"; };
 		61CB8C2116E9F905002002A9 /* ArvosRootViewController-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ArvosRootViewController-iPhone.xib"; sourceTree = "<group>"; };
+		D002041F16FF876A007FEF2C /* ArvosRay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArvosRay.h; sourceTree = "<group>"; };
+		D002042016FF876A007FEF2C /* ArvosRay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArvosRay.m; sourceTree = "<group>"; };
+		D002042216FF9F90007FEF2C /* ArvosTriangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArvosTriangle.h; sourceTree = "<group>"; };
+		D002042316FF9F90007FEF2C /* ArvosTriangle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArvosTriangle.m; sourceTree = "<group>"; };
 		D0251A1216E3BFDB00800246 /* ArvosCameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArvosCameraController.h; sourceTree = "<group>"; };
 		D0251A1316E3BFDB00800246 /* ArvosCameraController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArvosCameraController.m; sourceTree = "<group>"; };
 		D0251A1516E3C24800800246 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -261,6 +267,10 @@
 				D0251A2916E3C59E00800246 /* imageUtil.h */,
 				D0251A2216E3C59E00800246 /* vectorUtil.c */,
 				D0251A2316E3C59E00800246 /* vectorUtil.h */,
+				D002041F16FF876A007FEF2C /* ArvosRay.h */,
+				D002042016FF876A007FEF2C /* ArvosRay.m */,
+				D002042216FF9F90007FEF2C /* ArvosTriangle.h */,
+				D002042316FF9F90007FEF2C /* ArvosTriangle.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -506,6 +516,8 @@
 				61BF6F6316FA2CA00009A538 /* ArvosRadarView.m in Sources */,
 				6128F1C816FA6C3B005857BB /* NSDictionary+ArvosVecParsing.m in Sources */,
 				6112F4FA16FCA90500BD4989 /* ArvosDebugView.m in Sources */,
+				D002042116FF876A007FEF2C /* ArvosRay.m in Sources */,
+				D002042416FF9F90007FEF2C /* ArvosTriangle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

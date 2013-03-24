@@ -81,6 +81,14 @@
                     arrayToFill:(NSMutableArray*)resultObjects
                 existingObjects:(NSMutableArray*)arvosObjects;
 
+/**
+ * Handles a click on an object in the opengl view.
+ *
+ * @param id
+ *            The id of the object clicked.
+ */
+- (void)addClickForObjectWithId:(int)objectId;
+
 @property(strong) NSString*           name;
 @property(strong) NSString*           url;
 @property(strong) NSString*           author;

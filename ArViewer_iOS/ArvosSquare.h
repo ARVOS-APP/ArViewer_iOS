@@ -31,7 +31,8 @@
 
 @interface ArvosSquare : NSObject
 
-@property(readonly)  BOOL textureLoaded;
+@property(readonly)  BOOL     textureLoaded;
+@property GLfloat*            vertices;
 
 /**
  Load texture from image

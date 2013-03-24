@@ -31,12 +31,27 @@
 }
 @end
 
+static const float textureVertices[] = {
+    -0.5f, -0.5f,
+    -0.5f,  0.5f,
+    0.5f, -0.5f,
+    0.5f,  0.5f,
+};
+
+static const float textureCoords[] = {
+    -1.0f, 0.0f,
+    -1.0f, -1.0f,
+    0.0f, 0.0f,
+    0.0f, -1.0f,
+};
+
 @implementation ArvosSquare
 
 -(id)init {
     self = [super init];
 	if (self) {
         mTextures[0] = 0;
+        self.vertices = (GLfloat*)textureVertices;
 	}
 	return self;
 }
@@ -93,21 +108,7 @@
 }
 
 - (void)draw {
-       
-    static const float textureVertices[] = {
-        -0.5f, -0.5f,
-        -0.5f,  0.5f,
-        0.5f, -0.5f,
-        0.5f,  0.5f,
-    };
-    
-    static const float textureCoords[] = {
-        -1.0f, 0.0f,
-        -1.0f, -1.0f,
-        0.0f, 0.0f,
-        0.0f, -1.0f,
-    };
-    
+          
     glBindTexture(GL_TEXTURE_2D, mTextures[0]);
     
     glEnableClientState(GL_VERTEX_ARRAY);
