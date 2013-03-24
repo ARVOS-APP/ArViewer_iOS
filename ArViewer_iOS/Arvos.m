@@ -29,6 +29,7 @@
 	
 @interface Arvos () {
     CLLocationDegrees _heading;
+    UIAccelerationValue	_accel[3];
 }
 @end
 
@@ -74,31 +75,28 @@ static Arvos* _sharedInstance = nil;
     [self.debugView setDebugStringWithKey:@"latitude"
                              formatString:@"Latitude: %g", self.location.coordinate.latitude];
 
-    
-    UIAccelerationValue	accel[3];
-    accel[0] = newAccel.x;
-    accel[1] = newAccel.y;
-    accel[2] = newAccel.z;
-    
-    CLLocationDegrees newestRoll = -1 * atanf((accel[0]) / ((accel[1]*accel[1]) + (accel[2]*accel[2]))) * (180/M_PI);
-    CLLocationDegrees newestPitch = atanf((accel[1]) / ((accel[0]*accel[0]) + (accel[2]*accel[2]))) * (180/M_PI);
-    CLLocationDegrees newestYaw = atanf((accel[2]) / ((accel[1]*accel[1]) + (accel[0]*accel[0]))) * (180/M_PI);
-    
     static const CLLocationDegrees alpha = 0.3;
     
-    self.pitch = self.pitch * (1-alpha) + newestPitch * alpha;
+    _accel[0] = _accel[0] * (1-alpha) + newAccel.x * alpha;
+    _accel[1] = _accel[1] * (1-alpha) + newAccel.y * alpha;
+    _accel[2] = _accel[2] * (1-alpha) + newAccel.z * alpha;
+    
+    self.roll = atanf((_accel[0]) / ((_accel[1]*_accel[1]) + (_accel[2]*_accel[2]))) * (180/M_PI);
+    self.pitch = atanf((_accel[1]) / ((_accel[0]*_accel[0]) + (_accel[2]*_accel[2]))) * (180/M_PI);
+    self.yaw = atanf((_accel[2]) / ((_accel[1]*_accel[1]) + (_accel[0]*_accel[0]))) * (180/M_PI);
+    
+    if (self.yaw > 0) {
+        self.pitch = 180 - self.pitch;
+    }
     
     [self.debugView setDebugStringWithKey:@"pitch"
                              formatString:@"Pitch: %g", self.pitch];
     
-    self.roll = self.roll * (1-alpha) + newestRoll * alpha;
-    
     [self.debugView setDebugStringWithKey:@"roll"
                              formatString:@"Roll: %g", self.roll];
     
-    self.yaw = self.yaw * (1-alpha) + newestYaw * alpha;
-    
-    [self.debugView setDebugStringWithKey:@"yaw" formatString:@"Yaw: %g", self.yaw];
+    [self.debugView setDebugStringWithKey:@"yaw"
+                             formatString:@"Yaw: %g", self.yaw];
 }
 - (CLLocationDirection)heading {
     return _heading;
