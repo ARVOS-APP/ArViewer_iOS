@@ -293,35 +293,24 @@ static GLboolean gluProject(GLfloat objx, GLfloat objy, GLfloat objz,
 }
 
 
-
-/* transformation du point ecran (winx,winy,winz) en point objet */
-//GLint GLAPIENTRY
 static GLboolean gluUnProject(GLfloat winx, GLfloat winy, GLfloat winz,
                               const GLfloat model[16], const GLfloat proj[16],
                               const GLint viewport[4],
-                              GLfloat * objx, GLfloat * objy, GLfloat * objz)
+                              GLfloat * obj)
 {
-	/* matrice de transformation */
 	GLfloat m[16], A[16];
-	GLfloat in[4], out[4];
+	GLfloat in[4];
 	
-	/* transformation coordonnees normalisees entre -1 et 1 */
-	in[0] = (winx - viewport[0]) * 2.0f / viewport[2] - 1.0f;
-	in[1] = (winy - viewport[1]) * 2.0f / viewport[3] - 1.0f;
-	in[2] = 2.0f * winz - 1.0f;
-	in[3] = 1.0f;
-	
-	/* calcul transformation inverse */
 	matmul(A, proj, model);
 	invert_matrix(A, m);
 	
-	/* d'ou les coordonnees objets */
-	transform_point(out, m, in);
-	if (out[3] == 0.0f)
-		return GL_FALSE;
-	*objx = out[0] / out[3];
-	*objy = out[1] / out[3];
-	*objz = out[2] / out[3];
+	in[0] = (winx - viewport[0]) * 2.0f / viewport[2] - 1.0f;
+	in[1] = (winy - viewport[1]) * 2.0f / viewport[3] - 1.0f;
+	in[2] = 2.0f * winz - 1.0f; 
+	in[3] = 1.0f;
+
+    vec4MultMatrix(obj, A, in);
+    
 	return GL_TRUE;
 }
 
@@ -344,20 +333,36 @@ static GLboolean gluUnProject(GLfloat winx, GLfloat winy, GLfloat winz,
     if ((self = [super init])) {
         
         int viewport[] = { 0, 0, width, height };
+        
+        GLfloat temp[4];
+        GLfloat temp2[4];
                
 		// get the near and far cords for the click
         
 		float winx = xTouch, winy = (float) viewport[3] - yTouch;
+               
+        temp[3] = 0;
+		int result = gluUnProject(winx, winy, 1., modelView, projection, viewport, temp);
+        vec4MultMatrix(temp2, modelView, temp);
         
-		// Log.d(TAG, "modelView is =" +
-		// Arrays.toString(matrixGrabber.mModelView));
-		// Log.d(TAG, "projection view is =" + Arrays.toString(
-		// matrixGrabber.mProjection ));
+        if( result == GL_TRUE)
+        {
+            nearCoOrds[0] = temp2[0] / temp2[3];
+            nearCoOrds[1] = temp2[1] / temp2[3];
+            nearCoOrds[2] = temp2[3] / temp2[3];
+        }
         
-		int result = gluUnProject(winx, winy, 1.0, modelView, projection, viewport, nearCoOrds, nearCoOrds +1, nearCoOrds +2);      
-        
-		result = gluUnProject(winx, winy, 0, modelView, projection, viewport, farCoOrds, farCoOrds +1, farCoOrds +2);
+        temp[3] = 0;
+		result = gluUnProject(winx, winy, 0., modelView, projection, viewport, temp);
+        vec4MultMatrix(temp2, modelView, temp);
 
+        if( result == GL_TRUE)
+        {
+            farCoOrds[0] = temp2[0] / temp2[3];
+            farCoOrds[1] = temp2[1] / temp2[3];
+            farCoOrds[2] = temp2[3] / temp2[3];
+        }
+        
 		self.p0 = farCoOrds;
 		self.p1 = nearCoOrds;
     }
