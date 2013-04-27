@@ -59,11 +59,10 @@
 @property NSInteger                       version;
 
 @property  UIDeviceOrientation            orientation;
-@property  CLLocationDegrees              azimuth;
+@property  CLLocationDegrees              deviceAzimuth;
 @property  CLLocationDegrees              correctedAzimuth;
-@property  CLLocationDegrees              pitch;
-@property  CLLocationDegrees              roll;
-@property  CLLocationDegrees              yaw;
+@property  CLLocationDegrees              devicePitch;
+@property  CLLocationDegrees              deviceRoll;
 
 @property  BOOL                           useCache;
 

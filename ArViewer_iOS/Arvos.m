@@ -86,22 +86,14 @@ static Arvos* _sharedInstance = nil;
     _accel[1] = _accel[1] * (1-alpha) + newAccel.y * alpha;
     _accel[2] = _accel[2] * (1-alpha) + newAccel.z * alpha;
     
-    self.roll = atanf((_accel[0]) / ((_accel[1]*_accel[1]) + (_accel[2]*_accel[2]))) * (180/M_PI);
-    self.pitch = atanf((_accel[1]) / ((_accel[0]*_accel[0]) + (_accel[2]*_accel[2]))) * (180/M_PI);
-    self.yaw = atanf((_accel[2]) / ((_accel[1]*_accel[1]) + (_accel[0]*_accel[0]))) * (180/M_PI);
-    
-    if (self.yaw > 0) {
-        self.pitch = 180 - self.pitch;
-    }
+    self.deviceRoll = atanf((_accel[0]) / ((_accel[1]*_accel[1]) + (_accel[2]*_accel[2]))) * (180/M_PI);
+    self.devicePitch = atanf((_accel[1]) / ((_accel[0]*_accel[0]) + (_accel[2]*_accel[2]))) * (180/M_PI);
     
     [self.debugView setDebugStringWithKey:@"pitch"
-                             formatString:@"Pitch: %g", self.pitch];
+                             formatString:@"Pitch: %g", self.devicePitch];
     
     [self.debugView setDebugStringWithKey:@"roll"
-                             formatString:@"Roll: %g", self.roll];
-    
-    [self.debugView setDebugStringWithKey:@"yaw"
-                             formatString:@"Yaw: %g", self.yaw];
+                             formatString:@"Roll: %g", self.deviceRoll];
 }
 - (CLLocationDirection)heading {
     return _heading;
@@ -114,14 +106,14 @@ static Arvos* _sharedInstance = nil;
                                   formatString:@"Heading: %g", _heading];
 
     if (_heading > 180.) {
-        self.azimuth = _heading - 360.;
+        self.deviceAzimuth = _heading - 360.;
     }
     else {
-        self.azimuth = _heading;
+        self.deviceAzimuth = _heading;
     }
        
     [self.debugView setDebugStringWithKey:@"azimuth"
-                             formatString:@"Azimuth: %g", self.azimuth];
+                             formatString:@"Azimuth: %g", self.deviceAzimuth];
 }
 
 /**
@@ -135,17 +127,19 @@ static Arvos* _sharedInstance = nil;
     GLfloat degrees = 0;
     if (self.orientation == UIDeviceOrientationLandscapeLeft)
     {
-        degrees = 270.;
+        degrees = 90.;
     }
     else if (self.orientation == UIDeviceOrientationLandscapeRight)
     {
-        degrees = 90.;
+        degrees = 270.;
     }
     else if (self.orientation == UIDeviceOrientationPortraitUpsideDown)
     {
         degrees = 180.;
     }
 
+    [self.debugView setDebugStringWithKey:@"ori"
+                             formatString:@"Ori: %g", degrees];
     return degrees;
 }
 

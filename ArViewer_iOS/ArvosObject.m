@@ -231,9 +231,9 @@ void l3dBillboardCylindricalBegin(GLfloat camX, GLfloat camY, GLfloat camZ, GLfl
     
     // Apply azimut, pitch and roll of the device
     //
-    glRotatef(mInstance.roll, 0., 0., 1.);
-    glRotatef(mInstance.pitch, 1., 0., 0.);
-    glRotatef(mInstance.azimuth, 0., 1., 0.);
+    glRotatef(mInstance.deviceRoll, 0., 0., 1.);
+    glRotatef(mInstance.devicePitch, 1., 0., 0.);
+    glRotatef(mInstance.deviceAzimuth, 0., 1., 0.);
     
     // Move the object
     //
