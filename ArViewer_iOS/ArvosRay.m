@@ -309,7 +309,7 @@ static GLboolean gluUnProject(GLfloat winx, GLfloat winy, GLfloat winz,
 	in[2] = 2.0f * winz - 1.0f; 
 	in[3] = 1.0f;
 
-    vec4MultMatrix(obj, A, in);
+    vec4MultMatrix(obj, m, in);
     
 	return GL_TRUE;
 }
@@ -333,10 +333,9 @@ static GLboolean gluUnProject(GLfloat winx, GLfloat winy, GLfloat winz,
     if ((self = [super init])) {
         
         int viewport[] = { 0, 0, width, height };
-        
         GLfloat temp[4];
         GLfloat temp2[4];
-               
+        
 		// get the near and far cords for the click
         
 		float winx = xTouch, winy = (float) viewport[3] - yTouch;
@@ -349,7 +348,7 @@ static GLboolean gluUnProject(GLfloat winx, GLfloat winy, GLfloat winz,
         {
             nearCoOrds[0] = temp2[0] / temp2[3];
             nearCoOrds[1] = temp2[1] / temp2[3];
-            nearCoOrds[2] = temp2[3] / temp2[3];
+            nearCoOrds[2] = temp2[2] / temp2[3];
         }
         
         temp[3] = 0;
@@ -360,7 +359,7 @@ static GLboolean gluUnProject(GLfloat winx, GLfloat winy, GLfloat winz,
         {
             farCoOrds[0] = temp2[0] / temp2[3];
             farCoOrds[1] = temp2[1] / temp2[3];
-            farCoOrds[2] = temp2[3] / temp2[3];
+            farCoOrds[2] = temp2[2] / temp2[3];
         }
         
 		self.p0 = farCoOrds;
