@@ -70,6 +70,8 @@
  */
 - (NSString*)downloadTexturesSynchronously;
 
+- (void)downloadTexturesAsync:(void(^)(BOOL success, NSError* error))completion;
+
 /**
  * Get the list of objects to display at the current time
  *

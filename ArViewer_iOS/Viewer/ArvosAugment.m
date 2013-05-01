@@ -27,6 +27,7 @@
 #import "ArvosAugment.h"
 #import "ArvosPoi.h"
 #import "ArvosPoiObject.h"
+#import "ArvosURLRequest.h"
 
 @interface ArvosAugment () {
 	NSMutableArray* mPois;
@@ -122,13 +123,29 @@
     return nil;
 }
 
-- (UIImage*)downloadTextureFromUrl:(NSString*)baseUrl {
-           
-	NSURL* url = [NSURL URLWithString:baseUrl];
+- (void)downloadTexturesAsync:(void(^)(BOOL success, NSError* error))completion {
+    for (ArvosPoi* poi in mPois) {
+        for (ArvosPoiObject* poiObject in poi.poiObjects) {
+            if (!poiObject.image && poiObject.textureUrl) {
+                [ArvosURLRequest requestWithURL:[NSURL URLWithString:poiObject.textureUrl]
+                                     completion:^(NSData * data, NSError *error) {
+                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                             if (data) {
+                                                 UIImage* img = [UIImage imageWithData:data];
+                                                 poiObject.image = img;
+                                             }
+                                             completion(error == nil, error);
+                                         });
+                                     }];
+            }
+        }
+    }
+}
+
+- (UIImage*)downloadTextureFromUrl:(NSString*)url {
     if (url != nil) {
-        NSData *data = [NSData dataWithContentsOfURL:url];
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
         if (data != nil) {
-            NBLog(@"Downloaded = %@", baseUrl);
             return [[UIImage alloc] initWithData:data];
         }
     }
