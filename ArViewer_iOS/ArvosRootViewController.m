@@ -408,9 +408,7 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 											   NSError* error) {
                                if ([data length] > 0  && error == nil) {
                                    [self successHTTPResponse:baseUrl responseData:data];
-                               } else if ([data length] == 0 && error == nil) {
-                                   [self failedHTTPResponse:error];
-                               } else if (error != nil) {
+                               } else if ([data length] == 0 || error) {
                                    [self failedHTTPResponse:error];
                                }
                            }];
@@ -428,7 +426,9 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
     
     if ([baseUrl isEqualToString:mInstance.augmentsUrl])
     {
-        [mAugments removeAllObjects];
+        @synchronized(mAugments) {
+            [mAugments removeAllObjects];
+        }
         
         // TODO: this is quite unsafe. NSJSONSerialization is iOS 5 and above.
         NSDictionary* jsonAugmentsList = [NSJSONSerialization JSONObjectWithData:data
@@ -448,9 +448,10 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
         for (NSDictionary* dictionary in jsonAugmentsList[@"augments"]) {
             ArvosAugment* newAugment = [[ArvosAugment alloc] initWithDictionary:dictionary];
             if (newAugment != nil) {
-                if( newAugment.url != nil)
-                {
-                    [mAugments addObject:newAugment];
+                if(newAugment.url != nil) {
+                    @synchronized(mAugments) {
+                        [mAugments addObject:newAugment];
+                    }
                 }
             } else {
                 [self onAugmentParseError:@"JSON parse failed." augmentName:@"Augment list."];
@@ -509,15 +510,11 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
 }
 
 - (void)disableAugmentsWithUrl:(NSString*)url {
-    NSMutableArray* augmentsToRemove = [NSMutableArray array];
-    for (ArvosAugment* augment in mAugments) {
-        if ([url isEqualToString:augment.url])
-        {
-            [augmentsToRemove addObject:augment];
-        }
-    }
-    for (ArvosAugment* augment in augmentsToRemove) {
-        [mAugments removeObject:augment];
+    @synchronized(mAugments) {
+        NSIndexSet* indexesToRemove = [mAugments indexesOfObjectsPassingTest:^BOOL(ArvosAugment* augment, NSUInteger idx, BOOL *stop) {
+            return [url isEqualToString:augment.url];
+        }];
+        [mAugments removeObjectsAtIndexes:indexesToRemove];
     }
     dispatch_async(dispatch_get_main_queue(), ^(void) {
         [self.augmentsTableView reloadData];
