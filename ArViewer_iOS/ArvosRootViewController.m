@@ -467,21 +467,20 @@ static const CLLocationDistance _reloadDistanceThreshold = 1000.;
         // received the contents of an augment
         //
         ArvosAugment* newAugment = [[ArvosAugment alloc] init];
-        if (newAugment != nil)
-        {
-            NSString* result = [newAugment parseFromData:data];               
-            if (nil != result) {
-                [self onAugmentParseError:result augmentName:mAugmentName];
-                [self disableAugmentsWithUrl:baseUrl];
-                return;
-            }
-            result = [newAugment downloadTexturesSynchronously];
-            if (nil != result) {
-                [self onTextureDownloadError:result augmentName:mAugmentName];
-                [self disableAugmentsWithUrl:baseUrl];
-                return;
-            }
+        NSString* result = [newAugment parseFromData:data];
+        if (nil != result) {
+            [self onAugmentParseError:result augmentName:mAugmentName];
+            [self disableAugmentsWithUrl:baseUrl];
+            return;
         }
+        [newAugment downloadTexturesAsync:^(BOOL success, NSError *error) {
+            if (!success) {
+                [self disableAugmentsWithUrl:baseUrl];
+                [self onTextureDownloadError:error.localizedDescription
+                                 augmentName:mAugmentName];
+                
+            }
+        }];
         dispatch_async(dispatch_get_main_queue(), ^(void) {
             [self pushViewerController:newAugment];
         });
