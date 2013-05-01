@@ -21,6 +21,7 @@
 		6128F1D316FA7383005857BB /* ArvosSquare.m in Sources */ = {isa = PBXBuildFile; fileRef = D04567C416F90E26006F75ED /* ArvosSquare.m */; };
 		617B2C541731790C00194367 /* ArvosURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 617B2C531731790C00194367 /* ArvosURLRequest.m */; };
 		617B2C551731790C00194367 /* ArvosURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 617B2C531731790C00194367 /* ArvosURLRequest.m */; };
+		617B2C571731AF0900194367 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 617B2C561731AF0900194367 /* Accelerate.framework */; };
 		61BA040816FF062600B8C5ED /* ArvosViewerViewController-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61BA040716FF062600B8C5ED /* ArvosViewerViewController-iPhone.xib */; };
 		61BA040916FF062600B8C5ED /* ArvosViewerViewController-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61BA040716FF062600B8C5ED /* ArvosViewerViewController-iPhone.xib */; };
 		61BF6F6316FA2CA00009A538 /* ArvosRadarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BF6F6216FA2CA00009A538 /* ArvosRadarView.m */; };
@@ -80,6 +81,7 @@
 		6128F1CB16FA6ED0005857BB /* ArvosNSDictionary_VecParsing_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArvosNSDictionary_VecParsing_Test.m; sourceTree = "<group>"; };
 		617B2C521731790C00194367 /* ArvosURLRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArvosURLRequest.h; sourceTree = "<group>"; };
 		617B2C531731790C00194367 /* ArvosURLRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArvosURLRequest.m; sourceTree = "<group>"; };
+		617B2C561731AF0900194367 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		61BA040716FF062600B8C5ED /* ArvosViewerViewController-iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ArvosViewerViewController-iPhone.xib"; sourceTree = "<group>"; };
 		61BF6F6116FA2CA00009A538 /* ArvosRadarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArvosRadarView.h; sourceTree = "<group>"; };
 		61BF6F6216FA2CA00009A538 /* ArvosRadarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArvosRadarView.m; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				617B2C571731AF0900194367 /* Accelerate.framework in Frameworks */,
 				D051C7AD16E91D6F0006B8AF /* CoreLocation.framework in Frameworks */,
 				D0251A3316E3C61400800246 /* QuartzCore.framework in Frameworks */,
 				D0251A3116E3C5D400800246 /* OpenGLES.framework in Frameworks */,
@@ -284,6 +287,7 @@
 		D0F50AF416E362BB00B0E66A = {
 			isa = PBXGroup;
 			children = (
+				617B2C561731AF0900194367 /* Accelerate.framework */,
 				D0F50B0616E362BB00B0E66A /* ArViewer_iOS */,
 				61CB8C1016E9E98B002002A9 /* ArViewer_iOS-Test */,
 				D0F50AFF16E362BB00B0E66A /* Frameworks */,
