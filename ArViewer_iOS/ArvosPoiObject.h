@@ -55,6 +55,8 @@
 - (ArvosObject*)getObjectAtCurrentTime:(long)time
                 existingObjects:(NSMutableArray*)arvosObjects;
 
+- (void)onClick;
+
 @property int                       id;
 @property(strong) NSString*         name;
 @property(strong) NSString*         textureUrl;

@@ -87,6 +87,10 @@ static int mNextId = 0;
 	return self;
 }
 
+- (void)onClick {
+
+}
+
 - (NSString*)parseFromDictionary:(NSDictionary*)inDictionary {
     
     self.textureUrl = inDictionary[@"texture"];
