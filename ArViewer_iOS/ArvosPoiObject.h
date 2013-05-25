@@ -55,7 +55,10 @@
 - (ArvosObject*)getObjectAtCurrentTime:(long)time
                 existingObjects:(NSMutableArray*)arvosObjects;
 
+- (void)start:(long)time;
+- (void)stop;
 - (void)onClick;
+- (void)onDurationEnd;
 
 @property int                       id;
 @property(strong) NSString*         name;

@@ -62,6 +62,8 @@
 - (void)requestDeactivate:(ArvosPoiObject*)poiObject;
 - (void)addClick:(ArvosPoiObject*)poiObject;
 
+- (ArvosPoiObject*)findPoiObject:(NSString*)name;
+
 @property(strong) NSMutableArray*   poiObjects;
 
 @property long                      animationDuration;

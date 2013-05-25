@@ -32,6 +32,10 @@
 
 @interface ArvosPoi () {
     Arvos*  mInstance;
+    NSMutableArray* objectsClicked;
+    NSMutableArray* objectsToStart;
+    NSMutableArray* objectsToDeactivate;
+    NSMutableDictionary* objectsToDraw;
 }
 
 @end
@@ -44,6 +48,11 @@
         mInstance = [Arvos sharedInstance];
         self.parent = augment;
         self.poiObjects = [NSMutableArray array];
+        
+        objectsClicked = [NSMutableArray array];
+        objectsToStart = [NSMutableArray array];
+        objectsToDeactivate = [NSMutableArray array];
+        objectsToDraw = [NSMutableDictionary dictionaryWithCapacity:4];
 	}
 	return self;
 }
@@ -158,6 +167,7 @@
         }
     }
     
+    [objectsToDraw removeAllObjects];
     for (ArvosPoiObject* poiObject in self.poiObjects) {
         
         ArvosObject* arvosObject = [poiObject getObjectAtCurrentTime:time existingObjects:arvosObjects];
@@ -168,29 +178,86 @@
             position[2] += offsetZ;
 
             [resultObjects addObject:arvosObject];
+            objectsToDraw[arvosObject.name] = arvosObject;
         }
     }
+    
+    for (ArvosPoiObject* poiObject in objectsClicked) {
+        [poiObject onClick];
+    }
+    [objectsClicked removeAllObjects];
+    
+    for (ArvosPoiObject* poiObject in objectsToDeactivate) {
+        [poiObject stop];
+    }
+    [objectsToDeactivate removeAllObjects];
+    
+    for (ArvosPoiObject* poiObject in objectsToStart) {
+        [poiObject start:time];
+        
+        if([objectsToDraw objectForKey:poiObject.name] == nil) {
+            
+            ArvosObject* arvosObject = [poiObject getObjectAtCurrentTime:time
+                                                         existingObjects:arvosObjects];
+            if( arvosObject != nil) {
+                
+                [resultObjects addObject:arvosObject];
+                objectsToDraw[arvosObject.name] = arvosObject;
+            }
+        }
+    }
+    [objectsToStart removeAllObjects];
 }
 
 - (void)requestActivate:(ArvosPoiObject*)poiObject {
     
+    poiObject.isActive = YES;
+    [self requestStart:poiObject];
 }
 
 - (void)requestStart:(ArvosPoiObject*)poiObject {
     
+    [objectsToStart addObject:poiObject];
 }
 
 - (void)requestStop:(ArvosPoiObject*)poiObject {
     
+    [objectsToDeactivate addObject:poiObject];
 }
 
 - (void)requestDeactivate:(ArvosPoiObject*)poiObject {
     
+    poiObject.isActive = NO;
+    [self requestStop:poiObject];
 }
 
 - (void)addClick:(ArvosPoiObject*)poiObject {
     
     [mInstance.debugView setDebugStringWithKey:@"touchObject"
                                   formatString:@"Object: %@", poiObject.name];
+    
+    [objectsClicked addObject:poiObject];
+}
+
+- (ArvosPoiObject*)findPoiObject:(NSString*)name {
+    
+    for (ArvosPoiObject* poiObject in self.poiObjects)
+    {
+        if ([name isEqualToString:poiObject.name])
+        {
+            return poiObject;
+        }
+    }
+    for (ArvosPoi* poi in self.parent.pois)
+    {
+        for (ArvosPoiObject* poiObject in poi.poiObjects)
+        {
+            if ([name isEqualToString:poiObject.name])
+            {
+                return poiObject;
+            }
+        }
+    }
+    return NULL;
 }
 @end

@@ -63,6 +63,10 @@
 
 - (ArvosObject*)findArvosObject:(NSArray*)arvosObjects;
 
+- (void) handleAction:(NSArray*)activates
+          deactivates:(NSArray*)deactivates
+                 urls:(NSArray*)urls;
+
 @end
 
 static int mNextId = 0;
@@ -87,8 +91,71 @@ static int mNextId = 0;
 	return self;
 }
 
-- (void)onClick {
+- (void)start:(long)time {
+    self.timeStarted = time;
+}
+- (void)stop {
+    [self onDurationEnd];
+    
+    if (self.loop)
+    {
+        [self.parent requestStart:self];
+    }
+    else
+    {
+        self.isActive = NO;
+    }
+}
 
+- (void)onClick {
+    [self handleAction:self.onClickActivates
+           deactivates:self.onClickDeactivates
+                  urls:self.onClickUrls];
+}
+
+- (void)onDurationEnd {
+    [self handleAction:self.onDurationEndActivates
+           deactivates:self.onDurationEndDeactivates
+                  urls:self.onDurationEndUrls];
+}
+
+- (void) handleAction:(NSArray*)activates
+          deactivates:(NSArray*)deactivates
+                 urls:(NSArray*)urls {
+    if (activates != nil)
+    {
+        for (NSString* otherObjectName in activates)
+        {
+            ArvosPoiObject* poiObject = [self.parent findPoiObject:otherObjectName];
+            if (poiObject != nil)
+            {
+                poiObject.isActive = YES;
+                [self.parent requestActivate:poiObject];
+            }
+        }
+    }
+    if (deactivates != nil)
+    {
+        for (NSString* otherObjectName in activates)
+        {
+            ArvosPoiObject* poiObject = [self.parent findPoiObject:otherObjectName];
+            if (poiObject != nil)
+            {
+                poiObject.isActive = NO;
+                [self.parent requestDeactivate:poiObject];
+            }
+        }
+    }
+
+    /* TODO handle urls
+    if (urls != null)
+    {
+        for (String url : urls)
+        {
+            Arvos.getInstance().startWebViewer(url);
+        }
+    }
+    */
 }
 
 - (NSString*)parseFromDictionary:(NSDictionary*)inDictionary {
