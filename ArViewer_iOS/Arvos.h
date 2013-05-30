@@ -38,7 +38,7 @@
 #define ArvosKeyUrl	                      @"url"
 #define ArvosKeyAuthor	                  @"author"
 #define ArvosKeyDescription               @"description"
-#define ArvosKeyLon	                      @"long"
+#define ArvosKeyLon	                      @"lon"
 #define ArvosKeyLat	                      @"lat"
 #define ArvosKeyDeveloperKey	          @"developerKey"
 #define ArvosKeyPois                      @"pois"

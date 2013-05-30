@@ -163,20 +163,24 @@ static int mNextId = 0;
     self.textureUrl = inDictionary[@"texture"];
     self.image = nil;
     self.name = inDictionary[ArvosKeyName];
+    if (self.name == nil) {
+        
+        self.name = [NSString stringWithFormat:@"\" %d", self.id];
+    }
     self.billboardHandling = inDictionary[@"billboardHandling"];
     
     if (self.billboardHandling != nil
         && ![ArvosBillboardHandlingNone isEqualToString:self.billboardHandling]
         && ![ArvosBillboardHandlingCylinder isEqualToString:self.billboardHandling]
-        && ![ArvosBillboardHandlingSphere isEqualToString:self.billboardHandling])
-    {
+        && ![ArvosBillboardHandlingSphere isEqualToString:self.billboardHandling]) {
+        
         return [@"Illegal value for billboardHandling: " stringByAppendingString:self.billboardHandling];
     }
     
     id objectForKey;
     self.startTime = ((objectForKey = [inDictionary objectForKey:@"startTime"]) != nil) ? [objectForKey longValue] : 0;
     self.animationDuration = ((objectForKey = [inDictionary objectForKey:@"duration"]) != nil) ? [objectForKey longValue] : 0;
-    self.loop = ((objectForKey = [inDictionary objectForKey:@"loop"]) != nil) ? [objectForKey unsignedIntegerValue] : NO;
+    self.loop = ((objectForKey = [inDictionary objectForKey:@"loop"]) != nil) ? [objectForKey unsignedIntegerValue] : YES;
     self.isActive = ((objectForKey = [inDictionary objectForKey:@"isActive"]) != nil) ? [objectForKey unsignedIntegerValue] : YES;
        
     [self parseVec3f:inDictionary
