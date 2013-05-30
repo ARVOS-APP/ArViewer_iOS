@@ -136,7 +136,7 @@ static int mNextId = 0;
     }
     if (deactivates != nil)
     {
-        for (NSString* otherObjectName in activates)
+        for (NSString* otherObjectName in deactivates)
         {
             ArvosPoiObject* poiObject = [self.parent findPoiObject:otherObjectName];
             if (poiObject != nil)
