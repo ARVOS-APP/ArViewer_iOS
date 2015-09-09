@@ -1,6 +1,7 @@
-ArViewer_iOS
-============
 
-Arvos iOS version
+ArViewer_Android
+================
 
-An open source augmented reality viewer.
+ARVOS ArViewer for iOS with integration of 2d augments.
+
+ARVOS - An open source augmented reality viewer.
